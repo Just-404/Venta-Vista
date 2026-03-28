@@ -1,55 +1,56 @@
 <?php
 namespace app\controllers;
+use app\core\Controller;
 use app\models\Usuario;
-class AuthController {
 
-    public function login() {
+class AuthController extends Controller {
 
-    // Si el usuario está logueado, se redirigue a dashboard
+    // GET /
+    public function login(): void {
         if (isset($_SESSION['usuario'])) {
-            header("Location: " . BASE_URL . "dashboard");
-            exit;
+            $this->redirect('dashboard');
         }
-        require '../app/views/auth/login.php';
+
+        $this->render('auth/login', [
+            'flash' => $this->getFlash(),
+        ]);
     }
 
-    public function autenticar(){
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $nombreUsuario = $_POST['usuario'] ?? '';
-            $password = $_POST['password'] ?? '';
-            
-            $usuario = Usuario::buscarPorUsuario($nombreUsuario);
-
-            if($usuario && password_verify($password, trim($usuario['contrasena']))){
-                $_SESSION['usuario'] = [
-                    'id' => $usuario['idUsuario'],
-                    'username' => $usuario['nombreUsuario'],
-                    'rol' => $usuario['idRol']
-                ];
-
-                header("Location: " . BASE_URL . "dashboard");
-                exit;
-            }
-            else{
-                $error = "Usuario o contraseña incorrectas";
-                require '../app/views/auth/login.php';
-            }
+    // POST /login
+    public function autenticar(): void {
+        if (!$this->isPost()) {
+            $this->redirect('');
         }
+
+        $nombreUsuario = $this->post('usuario');
+        $password      = $this->post('password');
+        $usuario       = Usuario::buscarPorUsuario($nombreUsuario);
+        
+        if ($usuario && password_verify($password, $usuario['contrasena'])) {
+            $_SESSION['usuario'] = [
+                'id'       => $usuario['idUsuario'],
+                'username' => $usuario['nombreUsuario'],
+                'rol'      => $usuario['idRol'],
+            ];
+
+            $this->redirect('dashboard');
+        }
+
+        $this->setFlash('error', 'Usuario o contraseña incorrectos.');
+        $this->redirect('');
     }
 
-    public function logout(){
+    // GET /logout
+    public function logout(): void {
         session_destroy();
-
-        header("Location: " . BASE_URL);
-        exit;
+        $this->redirect('');
     }
 
-    // Funcion para proteger rutas que no esten autorizadas
-    public static function checkAuth(){
-        if(!isset($_SESSION['usuario'])){
-
-        header("Location: ".BASE_URL);
-        exit;
+    // Método estático usado por Controller::requireAuth()
+    public static function checkAuth(): void {
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: ' . BASE_URL);
+            exit;
         }
     }
 }

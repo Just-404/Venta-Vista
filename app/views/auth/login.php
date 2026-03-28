@@ -73,8 +73,8 @@
 
     <h2>Iniciar Sesión</h2>
 
-    <?php if (isset($error)): ?>
-        <div class="error"><?= $error ?></div>
+    <?php if (!empty($flash) && $flash['tipo'] === 'error'): ?>
+        <div class="error"><?= htmlspecialchars($flash['mensaje']) ?></div>
     <?php endif; ?>
 
     <form method="POST" action="<?= BASE_URL ?>login">
