@@ -13,7 +13,7 @@ class ClienteController extends Controller {
     public function index(): void {
         $this->requireAuth();
 
-        $this->render('clientes/index', [
+        $this->render('clientes', [
             'clientes' => Cliente::obtenerTodos(),
             'flash'    => $this->getFlash(),
             'usuario'  => $this->usuarioActual(),

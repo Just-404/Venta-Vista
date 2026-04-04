@@ -12,7 +12,7 @@ class UsuarioController extends Controller {
     public function index(): void {
         $this->requireAuth();
  
-        $this->render('usuarios/index', [
+        $this->render('usuarios', [
             'usuarios' => Usuario::obtenerTodos(),
             'flash'    => $this->getFlash(),
             'usuario'  => $this->usuarioActual(),

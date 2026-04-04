@@ -14,7 +14,7 @@ class ReporteController extends Controller {
     public function index(): void {
         $this->requireAuth();
  
-        $this->render('reportes/index', [
+        $this->render('reportes', [
             'usuario' => $this->usuarioActual(),
         ]);
     }

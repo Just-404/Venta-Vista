@@ -11,7 +11,7 @@ class AuthController extends Controller {
             $this->redirect('dashboard');
         }
 
-        $this->render('auth/login', [
+        $this->renderSinLayout('auth/login', [
             'flash' => $this->getFlash(),
         ]);
     }

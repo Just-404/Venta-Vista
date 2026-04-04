@@ -1,0 +1,255 @@
+/* ───────────────────────────────────────────────────────────────────
+   VARIABLES CSS GLOBALES
+   Se definen aquí para ser reutilizadas en todo el documento.
+   Cambiar un valor aquí afecta a todo el sistema automáticamente.
+   ─────────────────────────────────────────────────────────────────── */
+:root {
+  /* Paleta de colores principal */
+  --primario:        #1e2a4a;   /* Azul oscuro — color de marca */
+  --primario-claro:  #2d3f6b;   /* Variante más clara del primario */
+  --acento:          #e85d26;   /* Naranja — color de acción principal */
+  --acento-claro:    #ff7a45;   /* Naranja más suave para hovers */
+  --acento2:         #f5a623;   /* Amarillo dorado — uso secundario */
+
+  /* Colores de fondo y superficie */
+  --fondo:           #f4f6fb;   /* Fondo general de la aplicación */
+  --superficie:      #ffffff;   /* Superficie de tarjetas y paneles */
+  --superficie2:     #eef1f8;   /* Superficie alternativa (inputs, thead) */
+  --borde:           #dde2ef;   /* Color de bordes y separadores */
+
+  /* Colores de texto */
+  --texto:           #1a1f2e;   /* Texto principal oscuro */
+  --texto-muted:     #6b7494;   /* Texto secundario / atenuado */
+
+  /* Colores de estado del sistema */
+  --exito:           #22c55e;   /* Verde — estados exitosos */
+  --advertencia:     #f59e0b;   /* Amarillo — advertencias */
+  --peligro:         #ef4444;   /* Rojo — errores y cancelaciones */
+  --info:            #3b82f6;   /* Azul — información neutral */
+
+  /* Medidas y espaciado */
+  --ancho-sidebar:   260px;     /* Ancho fijo del menú lateral */
+  --radio:           12px;      /* Radio de borde para tarjetas grandes */
+  --radio-sm:        8px;       /* Radio de borde para elementos pequeños */
+
+  /* Sombras */
+  --sombra:          0 4px 24px rgba(30,42,74,.08);   /* Sombra suave */
+  --sombra-md:       0 8px 40px rgba(30,42,74,.13);   /* Sombra pronunciada */
+
+  /* Tipografías */
+  --fuente-display:  'Sora', sans-serif;              /* Para títulos */
+  --fuente-cuerpo:   'Plus Jakarta Sans', sans-serif; /* Para texto general */
+}
+
+
+/* ───────────────────────────────────────────────────────────────────
+   RESET Y ESTILOS BASE
+   Normaliza el comportamiento del navegador para consistencia.
+   ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased; /* Mejor rendering de fuentes en Mac */
+}
+
+body {
+  font-family: var(--fuente-cuerpo);
+  background: var(--fondo);
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+.app-wrapper{ 
+  min-height: 100vh;
+  display: grid; 
+  grid-template-columns: 0.2fr 3fr;
+  grid-template-rows: 1fr;
+}
+
+.main-area {
+    grid-column: 2/3;
+    margin-left: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left .25s;
+}
+.content {
+    flex: 1;
+    padding: 24px;
+}
+.footer {
+    padding: 14px 24px;
+    font-size: 12px;
+    color: var(--color-muted);
+    border-top: 1px solid var(--color-border);
+    background: #ffffff;
+}
+
+a    { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--fuente-cuerpo); }
+input, select, textarea { font-family: var(--fuente-cuerpo); }
+
+/* Barra de desplazamiento personalizada (solo Webkit/Chrome/Edge) */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--borde); border-radius: 99px; }
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--radio-sm);
+  font-weight: 600;
+  font-size: .875rem;
+  border: none;
+  transition: .2s;
+  cursor: pointer;
+  font-family: var(--fuente-cuerpo);
+}
+
+/* Variantes de color */
+.btn-primario   { background: var(--acento);     color: white; }
+.btn-primario:hover { background: var(--acento-claro); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,93,38,.35); }
+
+.btn-secundario { background: var(--superficie2); color: var(--texto); }
+.btn-secundario:hover { background: var(--borde); }
+
+.btn-contorno   { background: transparent; color: var(--texto); border: 1.5px solid var(--borde); }
+.btn-contorno:hover { background: var(--superficie2); }
+
+.btn-peligro    { background: var(--peligro); color: white; }
+.btn-peligro:hover { background: #dc2626; }
+
+.btn-exito      { background: var(--exito); color: white; }
+
+/* Variantes de tamaño */
+.btn-sm     { padding: 7px 12px; font-size: .8rem; }
+.btn-icono  { padding: 8px; border-radius: var(--radio-sm); }
+.btn-completo { width: 100%; } /* Ocupa el ancho total del contenedor */
+
+/* ───────────────────────────────────────────────────────────────────
+   COMPONENTES DE FORMULARIO
+   Estilos reutilizables para campos de entrada, selects y etiquetas.
+   Usados tanto en el login como en los modales de cada módulo.
+   ─────────────────────────────────────────────────────────────────── */
+
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Agrupador que contiene etiqueta + campo */
+.grupo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+/* Etiqueta de campo de formulario */
+form label {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--texto-muted);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+/* Versión más compacta de etiqueta (usada en modales) */
+.etiqueta-form-sm {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--texto-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Input de texto / correo / número / fecha */
+.input-form {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio-sm);
+  font-size: .9rem;
+  transition: .2s;
+  background: var(--fondo);
+  color: var(--texto);
+  outline: none;
+}
+.input-form:focus {
+  border-color: var(--acento);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(232,93,38,.1);
+}
+
+/* Yo: Muy bien pensado para el feedback */
+
+/* Select con flecha personalizada (sobreescribe la del navegador) */
+.select-form {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio-sm);
+  font-size: .9rem;
+  background: var(--fondo);
+  color: var(--texto);
+  outline: none;
+  cursor: pointer;
+  transition: .2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7494' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+.select-form:focus { border-color: var(--acento); box-shadow: 0 0 0 3px rgba(232,93,38,.1); }
+
+/* Grid de dos columnas para organizar campos en modales */
+.grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-form .grupo-form { margin-bottom: 0; } /* Sin margen extra dentro del grid */
+.grupo-form.completo { grid-column: 1 / -1; } /* Ocupa las dos columnas del grid */
+
+/* Contenedor que muestra información flash como errores o mensajes*/
+
+#contenedor-toast{ position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+
+.toast {
+  background: white;
+  border-radius: var(--radio-sm);
+  padding: 12px 16px;
+  box-shadow: var(--sombra-md);
+  font-size: .85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+  animation: animarToast .3s ease;
+  border-left: 4px solid var(--exito); /* Verde por defecto */
+}
+.toast.error { border-left-color: var(--peligro); }
+.toast.info  { border-left-color: var(--info); }
+
+
+@keyframes animarToast {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar--open { transform: translateX(0); }
+    .main-area { margin-left: 0; }
+
+}

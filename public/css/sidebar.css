@@ -1,0 +1,85 @@
+.sidebar {
+  width: var(--ancho-sidebar);
+  min-width: var(--ancho-sidebar);
+  background: var(--primario);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: sticky; /* Queda fijo mientras el contenido hace scroll */
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  transition: .3s;
+}
+
+/* Área del logo/marca en el sidebar */
+.sidebar-header {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.sidebar-marca { display: flex; align-items: center; gap: 10px; }
+.marca-icono {
+  width: 36px; height: 36px;
+  background: var(--acento);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.marca-texto { font-family: var(--fuente-display); font-weight: 800; font-size: 1.05rem; }
+.marca-sub   { font-size: .65rem; opacity: .5; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; margin-top: 1px; }
+
+/* Información del usuario conectado */
+.sidebar-usuario {
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.usuario-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--acento);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .95rem; flex-shrink: 0;
+}
+.usuario-nombre { font-size: .88rem; font-weight: 600; }
+.usuario-rol    { font-size: .72rem; opacity: .5; margin-top: 1px; }
+
+/* Zona de ítems de navegación */
+.sidebar-nav { flex: 1; padding: 12px 10px; }
+
+/* Título de sección dentro del menú */
+.nav-seccion-titulo {
+  font-size: .65rem;
+  font-weight: 700;
+  opacity: .35;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 8px 10px 4px;
+}
+
+/* Ítem individual del menú */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radio-sm);
+  color: rgba(255,255,255,.65);
+  font-size: .875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .15s;
+  margin-bottom: 1px;
+}
+.nav-item:hover { background: rgba(255,255,255,.07); color: white; }
+.nav-item.activo { background: var(--acento); color: white; box-shadow: 0 2px 8px rgba(232,93,38,.4); }
+
+/* Pie del sidebar con botón de logout */
+.sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.08); }
+.sidebar-logout {
+  display: flex; align-items: center; gap: 8px;
+  color: rgba(255,255,255,.45);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: .15s;
+}
+.sidebar-logout:hover { color: white; }

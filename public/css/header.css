@@ -1,0 +1,53 @@
+/* ───────────────────────────────────────────────────────────────────
+   SECCIÓN 8: BARRA SUPERIOR (TOPBAR)
+   Franja horizontal superior con título de página y acciones rápidas.
+   ─────────────────────────────────────────────────────────────────── */
+.contenido-principal {
+  flex: 1;
+  margin-left: var(--ancho-sidebar); /* Desplaza el contenido para no quedar bajo el sidebar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: white;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--borde);
+  position: sticky; /* Se queda pegado arriba al hacer scroll */
+  top: 0;
+  z-index: 50;
+}
+.topbar-izquierda { display: flex; align-items: center; gap: 16px; }
+.topbar-derecha   { display: flex; align-items: center; gap: 10px; }
+
+.titulo-pagina    { font-family: var(--fuente-display); font-size: 1.1rem; font-weight: 700; color: var(--primario); }
+.breadcrumb-pagina { font-size: .8rem; color: var(--texto-muted); }
+
+/* Botones de acción del topbar (carrito, notif, config) */
+.accion-topbar {
+  width: 36px; height: 36px;
+  border-radius: var(--radio-sm);
+  background: var(--superficie2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  color: var(--texto-muted);
+  transition: .15s;
+}
+.accion-topbar:hover { background: var(--borde); color: var(--texto); }
+
+/* Punto indicador rojo sobre los botones del topbar */
+.indicador-badge {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 7px; height: 7px;
+  background: var(--acento);
+  border-radius: 50%;
+  border: 1.5px solid white;
+}

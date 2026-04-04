@@ -2,92 +2,81 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/common.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <title>Login - Ventas por Catálogo</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #4e73df, #1cc88a);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 350px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        .login-container h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background: #4e73df;
-            border: none;
-            color: white;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .login-container button:hover {
-            background: #2e59d9;
-        }
-
-        .error {
-            color: red;
-            margin-bottom: 10px;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #4e73df;
-        }
-    </style>
 </head>
 <body>
-
-<div class="login-container">
-
-    <div class="logo">Ventas Catálogo</div>
-
-    <h2>Iniciar Sesión</h2>
-
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+<div id="contenedor-login">
     <?php if (!empty($flash) && $flash['tipo'] === 'error'): ?>
-        <div class="error"><?= htmlspecialchars($flash['mensaje']) ?></div>
+        <div id="contenedor-toast">
+            <div class="toast <?= $flash['tipo'] ?>">
+                 <?= htmlspecialchars($flash['mensaje']) ?>
+            </div>
+           
+        </div>
     <?php endif; ?>
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icono">Logo</div>
+      <div>
+        <h1>Venta Vista</h1>
+        <p class="login-logo-sub">Sistema de Ventas por Catálogo</p>
+      </div>
+    </div>
 
+    <div>
+      <h2 class="login-titulo">Bienvenido de vuelta</h2>
+      <p class="login-sub">Ingresa tus credenciales para acceder al sistema.</p>
+    </div>
+
+    <div class="separador-seccion"></div>
+
+    <!-- Formulario principal de login -->
     <form method="POST" action="<?= BASE_URL ?>login">
 
-        <input type="text" name="usuario" placeholder="Usuario" required>
+    <div class="grupo-form">
+      <label for="login-usuario">Usuario</label>
+      <input class="input-form" type="text" id="login-usuario"
+             placeholder="Usuario" value="" name="usuario" required/>
+    </div>
 
-        <input type="password" name="password" placeholder="Contraseña" required>
+    <div class="grupo-form">
+      <label for="login-pass">Contraseña</label>
+      <input class="input-form" type="password" id="login-pass"
+             placeholder="Contraseña" value="" name="password" required/>
+    </div>
 
-        <button type="submit">Ingresar</button>
+    <a class="login-olvidaste">¿Olvidaste tu contraseña?</a>
+
+    <button class="btn btn-primario btn-completo" type="submit">Iniciar Sesión</button>
 
     </form>
 
+  </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toast = document.querySelector("#contenedor-toast .toast");
 
+    if (toast) {
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(50px)";
+
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000); // 3 segundos
+    }
+});
+</script>
 </body>
 </html>

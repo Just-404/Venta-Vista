@@ -14,14 +14,25 @@ abstract class Controller {
      */
     protected function render(string $vista, array $datos = []): void {
         extract($datos);
+        $content = dirname(__DIR__) . "/views/{$vista}.php";
+
+        if (!file_exists($content)) {
+            die("Vista no encontrada: {$vista}");
+        }
+
+        require dirname(__DIR__) . '/views/layouts/layout.php';
+    }
+
+    protected function renderSinLayout(string $vista, array $datos = []): void {
+        extract($datos);
         $ruta = dirname(__DIR__) . "/views/{$vista}.php";
 
         if (!file_exists($ruta)) {
             die("Vista no encontrada: {$vista}");
-        }
+         }
 
         require $ruta;
-    }
+}
 
     // Redirecciones 
 

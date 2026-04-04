@@ -2,7 +2,10 @@
 
 namespace app\models;
 
-class Carrito {
+use app\core\Model;
+use PDO;
+
+class Carrito extends Model {
 
     public static function obtenerPorCliente(int $idCliente): array|false {
         $stmt = self::db()->prepare(

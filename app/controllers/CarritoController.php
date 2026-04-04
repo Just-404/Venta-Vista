@@ -16,7 +16,7 @@ class CarritoController extends Controller {
         $idCliente = $this->getIdCliente();
         $carrito   = $this->obtenerOCrearCarrito($idCliente);
  
-        $this->render('carrito/index', [
+        $this->render('carrito', [
             'items'   => Carrito::obtenerItems($carrito['idCarrito']),
             'total'   => Carrito::calcularTotal($carrito['idCarrito']),
             'carrito' => $carrito,
@@ -92,7 +92,18 @@ class CarritoController extends Controller {
  
     private function getIdCliente(): int {
         $usuario = $this->usuarioActual();
+
+         if ((int) $usuario['rol'] !== 3) {
+            $this->setFlash('error', 'Solo los clientes pueden acceder al carrito.');
+            $this->redirect('dashboard');
+         }
+
         $cliente = Cliente::obtenerPorUsuario((int) $usuario['id']);
+
+        if (!$cliente) {
+            $this->setFlash('error', 'Perfil de cliente no encontrado.');
+            $this->redirect('dashboard');
+        }
         return (int) $cliente['idCliente'];
     }
  
