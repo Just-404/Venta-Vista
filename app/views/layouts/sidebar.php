@@ -34,13 +34,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         </div>
     </div>
 
-    <div class="sidebar-usuario">
-        <div class="usuario-avatar" id="sb-avatar"><?= $iniciales ?></div>
-        <div>
-          <div class="usuario-nombre" id="sb-nombre"><?= $nombreUsuario ?></div>
-          <div class="usuario-rol" id="sb-rol"><?= $nombreRol ?></div>
-        </div>
-      </div>
+    
 
 <nav class="sidebar-nav" id="sidebar-nav">
     <div class="nav-seccion">
@@ -141,7 +135,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
 
         </nav>
 <div class="sidebar-footer">
-        <div class="sidebar-logout" onclick="cerrarSesion()">
+        <div class="sidebar-logout">
           <!-- Ícono de salida SVG inline -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path>
