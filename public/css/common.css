@@ -241,6 +241,28 @@ form label {
 .toast.error { border-left-color: var(--peligro); }
 .toast.info  { border-left-color: var(--info); }
 
+.tabla-wrap { overflow-x: auto; border-radius: var(--radio-sm); }
+
+table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+
+thead th {
+  background: var(--superficie2);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--texto-muted);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+thead th:first-child { border-radius: var(--radio-sm) 0 0 var(--radio-sm); }
+thead th:last-child  { border-radius: 0 var(--radio-sm) var(--radio-sm) 0; }
+
+tbody td { padding: 12px 14px; border-bottom: 1px solid var(--borde); vertical-align: middle; color: var(--texto); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: .15s; }
+tbody tr:hover { background: var(--fondo); }
 
 @keyframes animarToast {
   from { opacity: 0; transform: translateX(30px); }
