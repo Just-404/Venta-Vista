@@ -12,7 +12,7 @@ class ProductoController extends Controller {
     public function index(): void {
         $this->requireAuth();
 
-        $this->render('productos', [
+        $this->render('catalogo/productos', [
             'productos' => Producto::obtenerTodos(),
             'flash'     => $this->getFlash(),
             'usuario'   => $this->usuarioActual(),
@@ -45,7 +45,7 @@ class ProductoController extends Controller {
             $this->redirect('productos');
         }
 
-        $this->render('productos/crear', [
+        $this->render('catalogo/crear', [
             'categorias' => Categoria::obtenerTodas(),
             'usuario'    => $this->usuarioActual(),
         ]);

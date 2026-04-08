@@ -18,7 +18,7 @@ class PedidoController extends Controller {
     public function index(): void {
         $this->requireAuth();
 
-        $this->render('pedidos', [
+        $this->render('pedidos/index', [
             'pedidos' => Pedido::obtenerTodos(),
             'flash'   => $this->getFlash(),
             'usuario' => $this->usuarioActual(),

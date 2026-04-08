@@ -599,14 +599,14 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 INSERT INTO usuarios (nombreUsuario, contrasena, email, idRol) VALUES 
 
     ('admin', '$2y$10$9eQyuIVk9YIXzvc0dQOcPeDAqT4XuBfU7Hks7La1Gu8gVaY2gxg1K', 'admin@catalogopro.do', 1),
-    ('vendedor1',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'vendedor1@ventavista.do',  2),
-    ('vendedor2',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'vendedor2@ventavista.do',  2),
-    ('cliente1',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente1@gmail.com',       3),
-    ('cliente2',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente2@gmail.com',       3),
-    ('cliente3',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente3@gmail.com',       3),
-    ('cliente4',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente4@gmail.com',       3),
-    ('cliente5',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente5@hotmail.com',     3),
-    ('cliente6',   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uFpXfelC/', 'cliente6@hotmail.com',     3); 
+    ('vendedor1',  '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'vendedor1@ventavista.do',  2),
+    ('vendedor2',  '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'vendedor2@ventavista.do',  2),
+    ('cliente1',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente1@gmail.com',       3),
+    ('cliente2',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente2@gmail.com',       3),
+    ('cliente3',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente3@gmail.com',       3),
+    ('cliente4',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente4@gmail.com',       3),
+    ('cliente5',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente5@hotmail.com',     3),
+    ('cliente6',   '$2y$10$S2YgQCiQ5TXf4DAkbYXhbOMRN2Uc2duz/ziYfUwWExthSh0S8TAFa', 'cliente6@hotmail.com',     3); 
 
 INSERT INTO administradores (nombre, apellidos, cedula, telefono, idUsuario) 
 

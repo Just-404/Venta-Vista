@@ -11,7 +11,7 @@ class CuponController extends Controller {
     public function index(): void {
         $this->requireAuth();
  
-        $this->render('cupones', [
+        $this->render('cupones/index', [
             'cupones' => Cupon::obtenerTodos(),
             'flash'   => $this->getFlash(),
             'usuario' => $this->usuarioActual(),

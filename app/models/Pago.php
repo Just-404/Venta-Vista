@@ -3,7 +3,7 @@
 namespace app\models;
 
 use app\core\Model;
-
+use PDO;
 /*
     Estados: Pendiente | Aprobado | Rechazado | Reembolsado
     Métodos:  Tarjeta_Credito | Tarjeta_Debito | Transferencia | Efectivo 

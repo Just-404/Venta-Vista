@@ -23,6 +23,6 @@ class DashboardController extends Controller{
             'usuario'        => $this->usuarioActual(),
         ];
  
-        $this->render('dashboard', $datos);
+        $this->render('dashboard/index', $datos);
     }
 }

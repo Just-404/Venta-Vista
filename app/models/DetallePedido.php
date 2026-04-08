@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\core\Model;
+use PDO;
 
 class DetallePedido extends Model {
  
