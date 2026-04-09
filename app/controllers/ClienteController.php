@@ -60,7 +60,7 @@ class ClienteController extends Controller {
             $this->redirect('clientes');
         }
 
-        $this->render('clientes', [
+        $this->render('clientes/crear', [
             'usuario' => $this->usuarioActual(),
         ]);
     }

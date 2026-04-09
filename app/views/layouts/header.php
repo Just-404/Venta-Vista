@@ -1,3 +1,6 @@
+<?php
+$rol     = $usuario['rol'] ?? 0;
+?>
 <header class="topbar">
         
       <div class="usuario">
@@ -11,10 +14,12 @@
         <!-- Acciones del topbar: carrito, notificaciones, ajustes -->
         <div class="topbar-derecha">
           <!-- Botón carrito con punto indicador de ítems -->
+           <?php if ($rol != 3): ?>
           <button class="accion-topbar">
             🛒
             <span class="indicador-badge" id="badge-carrito" style="display:none"></span>
           </button>
+         <?php endif; ?>
           <!-- Botón notificaciones -->
           <button class="accion-topbar">
             🔔<span class="indicador-badge"></span>

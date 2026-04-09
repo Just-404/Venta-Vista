@@ -69,4 +69,6 @@ return [
     'reportes/productos' => ['controller' => 'ReporteController', 'action' => 'productos'],
     'reportes/clientes'  => ['controller' => 'ReporteController', 'action' => 'clientes'],
 
+    // Inventario
+    'inventario' => ['controller' => 'InventarioController', 'action' => 'index'],
 ];
