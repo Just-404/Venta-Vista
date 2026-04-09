@@ -85,7 +85,7 @@ class ProductoController extends Controller {
             $this->redirect('productos');
         }
 
-        $this->render('productos/editar', [
+        $this->render('catalogo/editar', [
             'producto'   => $producto,
             'categorias' => Categoria::obtenerTodas(),
             'usuario'    => $this->usuarioActual(),
@@ -119,7 +119,7 @@ class ProductoController extends Controller {
             $this->redirect('productos');
         }
 
-        $this->render('productos/ver', [
+        $this->render('catalogo/ver', [
             'producto' => $producto,
             'usuario'  => $this->usuarioActual(),
         ]);
