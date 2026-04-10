@@ -40,13 +40,14 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
     <div class="nav-seccion">
       <div class="nav-seccion-titulo">Principal</div>
 
-        <!-- Dashboard — todos los roles -->
+        <!-- Dashboard — solo Admin y Vendedor -->
+        <?php if (in_array($rol, [1, 2])): ?>
         <a href="<?= BASE_URL ?>dashboard"
-           class="nav-item <?= $current === 'dashboard' ? 'activo' : '' ?>">
-            <span>📊</span>
-            <span>Dashboard</span>
-        </a>
-    </div>
+        class="nav-item <?= $current === 'dashboard' ? 'activo' : '' ?>">
+        <span>📊</span>
+       <span>Dashboard</span>
+     </a>
+      <?php endif; ?>
     
 <!-- Solo Administrador (idRol = 1) y Vendedor (idRol = 2) -->
         <?php if (in_array($rol, [1, 2])): ?>
