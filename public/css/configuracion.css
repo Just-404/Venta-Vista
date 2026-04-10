@@ -1,0 +1,124 @@
+/* ── Toggle Switch ─────────────────────────────────────────────────────────── */
+.toggle-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .85rem 0;
+    border-bottom: 1px solid var(--borde);
+}
+.toggle-fila:last-of-type { border-bottom: none; }
+.toggle-label { font-size: .9rem; color: var(--texto); }
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background .25s;
+}
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    left: 3px; top: 3px;
+    width: 20px; height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .25s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.toggle-switch input:checked + .toggle-slider            { background: var(--acento); }
+.toggle-switch input:checked + .toggle-slider::before    { transform: translateX(20px); }
+
+/* ── Sección configuración ──────────────────────────────────────────────────── */
+.config-seccion {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+.config-seccion-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--borde);
+    background: var(--superficie2);
+}
+.config-seccion-header h2 {
+    font-size: .95rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--texto);
+}
+.config-seccion-body { padding: 1.5rem; }
+.config-acciones {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.25rem;
+}
+/* ── Tarjetas de dirección ──────────────────────────────────────────────── */
+.direccion-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--superficie2);
+    flex-wrap: wrap;
+}
+.direccion-card--principal {
+    border-color: var(--acento);
+    background: rgba(249,115,22,.04);
+}
+.direccion-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    flex-wrap: wrap;
+}
+.direccion-texto { display: flex; flex-direction: column; gap: .2rem; }
+.direccion-texto strong { font-size: .9rem; color: var(--texto); }
+.direccion-texto span   { font-size: .82rem; color: var(--texto-muted); }
+.direccion-acciones     { display: flex; gap: .5rem; flex-shrink: 0; }
+
+/* ── Toggle details ─────────────────────────────────────────────────────── */
+.agregar-dir-toggle summary { list-style: none; }
+.agregar-dir-toggle summary::-webkit-details-marker { display: none; }
+
+/* ── Sistema de Tabs ────────────────────────────────────────────────────── */
+.config-tabs {
+    display: flex;
+    gap: .25rem;
+    border-bottom: 2px solid var(--borde);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+.config-tab-btn {
+    padding: .6rem 1.1rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--texto-muted);
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    border-radius: var(--radio-sm) var(--radio-sm) 0 0;
+    transition: color .2s, border-color .2s, background .2s;
+    white-space: nowrap;
+}
+.config-tab-btn:hover   { color: var(--texto); background: var(--superficie2); }
+.config-tab-btn.activo  { color: var(--acento); border-bottom-color: var(--acento); font-weight: 600; }
+
+.config-panel { display: none; }
+.config-panel.activo { display: block; }
