@@ -27,11 +27,11 @@ class Cliente extends Model {
     }
  
     public static function obtenerPorUsuario(int $idUsuario): array|false {
-        $stmt = self::db()->prepare(
-            "SELECT * FROM clientes WHERE idUsuario = :idUsuario"
-        );
-        $stmt->execute(['idUsuario' => $idUsuario]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = self::db()->prepare(
+        "SELECT * FROM clientes WHERE idUsuario = :idUsuario"
+    );
+    $stmt->execute(['idUsuario' => $idUsuario]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
     }
  
     public static function buscarPorEmail(string $email): array|false {
