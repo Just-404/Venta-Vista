@@ -4,6 +4,35 @@
 
 USE ventas_catalogo;
 
+CREATE TABLE IF NOT EXISTS notificaciones (
+    idNotificacion  INT          NOT NULL AUTO_INCREMENT,
+    idUsuario       INT          NOT NULL,
+    tipo            ENUM('pedido_nuevo','estado_pedido','stock_bajo','factura','sistema')
+                                 NOT NULL DEFAULT 'sistema',
+    titulo          VARCHAR(120) NOT NULL,
+    mensaje         TEXT,
+    url             VARCHAR(255),
+    leida           TINYINT(1)   NOT NULL DEFAULT 0,
+    fechaCreacion   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (idNotificacion),
+    INDEX idx_notif_usuario_leida (idUsuario, leida),
+    CONSTRAINT fk_notif_usuario FOREIGN KEY (idUsuario)
+        REFERENCES usuarios (idUsuario) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB COMMENT='Notificaciones in-app por usuario';
+
+ALTER TABLE notificaciones
+    MODIFY COLUMN tipo ENUM(
+        'pedido_nuevo',
+        'estado_pedido',
+        'stock_bajo',
+        'factura',
+        'sistema',
+        'nuevo_cliente',
+        'cupon_vence',
+        'envio_actualizado',
+        'pago'
+    ) NOT NULL DEFAULT 'sistema';
+    
 -- Tabla: configuracion_sistema (clave → valor, singleton por clave)
 CREATE TABLE IF NOT EXISTS configuracion_sistema (
     clave       VARCHAR(60)  NOT NULL,
