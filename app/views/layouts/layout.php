@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/configuracion.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>css/configuracion.css">
+    <script>window.APP_BASE = '<?= BASE_URL ?>';</script>
+
 </head>
 <body>
 <div class="app-wrapper">
@@ -43,6 +45,6 @@
 
 </div>
 
-<script src="<?= BASE_URL ?>public/js/app.js"></script>
+<script src="<?= BASE_URL ?>js/app.js"></script>
 </body>
 </html>
