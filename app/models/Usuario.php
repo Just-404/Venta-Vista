@@ -107,4 +107,11 @@ class Usuario extends Model{
         );
         return $stmt->execute(['id' => $id]);
     }
+
+    public static function actualizarEmail(int $id, string $email): bool {
+    $stmt = self::db()->prepare(
+        "UPDATE usuarios SET email = :email WHERE idUsuario = :id"
+    );
+    return $stmt->execute(['email' => $email, 'id' => $id]);
+    }
 }
