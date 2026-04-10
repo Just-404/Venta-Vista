@@ -34,8 +34,6 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         </div>
     </div>
 
-    
-
 <nav class="sidebar-nav" id="sidebar-nav">
     <div class="nav-seccion">
       <div class="nav-seccion-titulo">Principal</div>
@@ -48,43 +46,42 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
        <span>Dashboard</span>
      </a>
       <?php endif; ?>
-    
-<!-- Solo Administrador (idRol = 1) y Vendedor (idRol = 2) -->
+
+        <!-- Solo Administrador (idRol = 1) y Vendedor (idRol = 2) -->
         <?php if (in_array($rol, [1, 2])): ?>
 
             <div class="nav-seccion">
                 <div class="nav-seccion-titulo">Catálogo</div>
 
-            <a href="<?= BASE_URL ?>productos" class="nav-item <?= str_starts_with($current, 'productos') ? 'activo' : '' ?>">
-                <span>🏷️</span>
-                <span>Catálogo</span>
-            </a>
-            
-            <a href="<?= BASE_URL ?>pedidos"
-               class="nav-item <?= str_starts_with($current, 'pedidos') ? 'activo' : '' ?>">
-                <span>📦</span>
-                <span>Pedidos</span>
-            </a>
-        </div>
+                <a href="<?= BASE_URL ?>productos" class="nav-item <?= str_starts_with($current, 'productos') ? 'activo' : '' ?>">
+                    <span>🏷️</span>
+                    <span>Catálogo</span>
+                </a>
 
-        <div class="nav-seccion">
-            <div class="nav-seccion-titulo">Administración</div>
-            <a href="<?= BASE_URL ?>clientes" class="nav-item <?= str_starts_with($current, 'clientes') ? 'activo' : '' ?>">
-                <span>👥</span>
-                <span>Clientes</span>
-            </a>
-            <a href="<?= BASE_URL ?>inventario"
-               class="nav-item <?= str_starts_with($current, 'inventario') ? 'activo' : '' ?>">
-                <span>📋</span>
-                <span>Inventario</span>
-            </a> 
-            <a href="<?= BASE_URL ?>cupones"
-               class="nav-item <?= str_starts_with($current, 'cupones') ? 'activo' : '' ?>">
-                <span>🎟️</span>
-                <span>Cupones</span>
-            </a> 
-            
-        </div>
+                <a href="<?= BASE_URL ?>pedidos"
+                   class="nav-item <?= str_starts_with($current, 'pedidos') ? 'activo' : '' ?>">
+                    <span>📦</span>
+                    <span>Pedidos</span>
+                </a>
+            </div>
+
+            <div class="nav-seccion">
+                <div class="nav-seccion-titulo">Administración</div>
+                <a href="<?= BASE_URL ?>clientes" class="nav-item <?= str_starts_with($current, 'clientes') ? 'activo' : '' ?>">
+                    <span>👥</span>
+                    <span>Clientes</span>
+                </a>
+                <a href="<?= BASE_URL ?>inventario"
+                   class="nav-item <?= str_starts_with($current, 'inventario') ? 'activo' : '' ?>">
+                    <span>📋</span>
+                    <span>Inventario</span>
+                </a>
+                <a href="<?= BASE_URL ?>cupones"
+                   class="nav-item <?= str_starts_with($current, 'cupones') ? 'activo' : '' ?>">
+                    <span>🎟️</span>
+                    <span>Cupones</span>
+                </a>
+            </div>
 
         <?php endif; ?>
 
@@ -102,19 +99,22 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
                 <span>📈</span>
                 <span>Reportes</span>
             </a>
-            
+
+        <?php endif; ?>
+
+        <!-- Configuración — Admin y Vendedor -->
+        <?php if (in_array($rol, [1, 2])): ?>
             <a href="<?= BASE_URL ?>configuracion"
                class="nav-item <?= str_starts_with($current, 'configuracion') ? 'activo' : '' ?>">
                 <span>⚙️</span>
                 <span>Configuración</span>
             </a>
-
         <?php endif; ?>
-        
-         <!-- Cliente (idRol = 3) -->
+
+        <!-- Cliente (idRol = 3) -->
         <?php if ($rol === 3): ?>
 
-            <div class="nav-section">Mi cuenta</div>
+            <div class="nav-seccion-titulo">Mi Cuenta</div>
 
             <a href="<?= BASE_URL ?>productos" class="nav-item <?= str_starts_with($current, 'productos') ? 'activo' : '' ?>">
                 <span>🏷️</span>
@@ -125,23 +125,29 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
                 <span>🛒</span>
                 <span>Carrito</span>
             </a>
-
             <a href="<?= BASE_URL ?>pedidos"
                class="nav-item <?= str_starts_with($current, 'pedidos') ? 'activo' : '' ?>">
                 <span>📦</span>
                 <span>Mis Pedidos</span>
             </a>
+            <a href="<?= BASE_URL ?>configuracion"
+               class="nav-item <?= str_starts_with($current, 'configuracion') ? 'activo' : '' ?>">
+                <span>⚙️</span>
+                <span>Mi Cuenta</span>
+            </a>
 
         <?php endif; ?>
 
-        </nav>
+    </div>
+</nav>
+
 <div class="sidebar-footer">
-        <div class="sidebar-logout">
-          <!-- Ícono de salida SVG inline -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16">
+    <div class="sidebar-logout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path>
-          </svg>
-          <a href="<?= BASE_URL ?>logout">Cerrar Sesión</a>
-        </div>
-      </div>
+        </svg>
+        <a href="<?= BASE_URL ?>logout">Cerrar Sesión</a>
+    </div>
+</div>
+
 </aside>
