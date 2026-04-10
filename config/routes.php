@@ -82,4 +82,11 @@ return [
     'configuracion/direccion/agregar'   => ['controller' => 'ConfiguracionController', 'action' => 'agregarDireccion'],
     'configuracion/direccion/eliminar'  => ['controller' => 'ConfiguracionController', 'action' => 'eliminarDireccion'],
     'configuracion/direccion/principal' => ['controller' => 'ConfiguracionController', 'action' => 'setPrincipal'],
+
+    // ── Notificaciones (AJAX) ────────────────────────────────────────────────
+    'notificaciones/obtener'    => ['controller' => 'NotificacionController', 'action' => 'obtener'],
+    'notificaciones/leer'       => ['controller' => 'NotificacionController', 'action' => 'leer'],
+    'notificaciones/leer-todas' => ['controller' => 'NotificacionController', 'action' => 'leerTodas'],
+    'notificaciones/limpiar'       => ['controller' => 'NotificacionController', 'action' => 'limpiar'],
+    'notificaciones/limpiar-todas' => ['controller' => 'NotificacionController', 'action' => 'limpiarTodas'],
 ];
