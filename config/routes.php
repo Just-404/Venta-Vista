@@ -71,4 +71,15 @@ return [
 
     // Inventario
     'inventario' => ['controller' => 'InventarioController', 'action' => 'index'],
+
+    // ── Configuración ────────────────────────────────────────────────────────────
+    'configuracion'              => ['controller' => 'ConfiguracionController', 'action' => 'index'],
+    'configuracion/fiscal'       => ['controller' => 'ConfiguracionController', 'action' => 'fiscal'],
+    'configuracion/impuestos'    => ['controller' => 'ConfiguracionController', 'action' => 'impuestos'],
+    'configuracion/perfil'       => ['controller' => 'ConfiguracionController', 'action' => 'perfil'],
+    'configuracion/password'     => ['controller' => 'ConfiguracionController', 'action' => 'password'],
+    'configuracion/preferencias' => ['controller' => 'ConfiguracionController', 'action' => 'preferencias'],
+    'configuracion/direccion/agregar'   => ['controller' => 'ConfiguracionController', 'action' => 'agregarDireccion'],
+    'configuracion/direccion/eliminar'  => ['controller' => 'ConfiguracionController', 'action' => 'eliminarDireccion'],
+    'configuracion/direccion/principal' => ['controller' => 'ConfiguracionController', 'action' => 'setPrincipal'],
 ];
