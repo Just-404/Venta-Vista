@@ -11,6 +11,10 @@ use app\models\Cupon;
 use app\models\Pago;
 use app\models\Envio;
 use app\models\Direccion;
+use app\models\Notificacion;
+use app\models\Usuario;
+use app\models\Configuracion;
+use app\helpers\MailHelper;
 
 class PedidoController extends Controller {
 
@@ -50,8 +54,9 @@ class PedidoController extends Controller {
             $total    = $subtotal - $descuento;
 
             // 2. Crear cabecera del pedido
+            $numeroPedido = Pedido::generarNumeroPedido();
             $idPedido = Pedido::crear([
-                'numeroPedido' => Pedido::generarNumeroPedido(),
+                'numeroPedido' => $numeroPedido,
                 'subtotal'     => $subtotal,
                 'descuento'    => $descuento,
                 'total'        => max(0, $total),
@@ -81,7 +86,18 @@ class PedidoController extends Controller {
             }
 
             DetallePedido::crearLote($items);
+             
+            // ── Notificaciones: nuevo pedido ────────────────────────────
+            $this->notificarNuevoPedido($idPedido, $numeroPedido, max(0, $total));
 
+            // ── Alertas: stock bajo tras descontar ──────────────────────
+            foreach ($items as $item) {
+                $prod = Producto::obtenerPorId($item['idProducto']);
+                if ($prod && (int) $prod['stock'] <= 5 && (int) $prod['stock'] >= 0) {
+                    $this->notificarStockBajo($prod);
+                }
+            }
+            
             // 4. Registrar uso del cupón si aplica
             if ($idCupon) Cupon::registrarUso($idCupon);
 
@@ -118,7 +134,7 @@ class PedidoController extends Controller {
         ]);
     }
 
-    // POST /pedidos/estado para cambiar el estado del pedido
+   // POST /pedidos/estado para cambiar el estado del pedido
     public function estado(): void {
         $this->requireAuth();
 
@@ -126,6 +142,10 @@ class PedidoController extends Controller {
         $estado = (string) $this->post('estado');
 
         $ok = Pedido::actualizarEstado($id, $estado);
+
+        if ($ok) {
+            $this->notificarCambioEstado($id, $estado);
+        }
 
         $this->setFlash($ok ? 'success' : 'error',
             $ok ? "Estado actualizado a: $estado." : 'Error al cambiar estado.');
@@ -146,5 +166,84 @@ class PedidoController extends Controller {
         }
 
         $this->redirect('pedidos');
+    }
+
+    // ── Helpers de notificación ──────────────────────────────────────────────
+
+    private function notificarNuevoPedido(int $idPedido, string $numeroPedido, float $total): void {
+        $data = [
+            'tipo'    => 'pedido_nuevo',
+            'titulo'  => "Nuevo pedido: $numeroPedido",
+            'mensaje' => 'Total: RD$ ' . number_format($total, 2),
+            'url'     => BASE_URL . 'pedidos/ver?id=' . $idPedido,
+        ];
+
+        // Notificación in-app a admins (rol 1) y vendedores (rol 2) con confirmar_pedido activo
+        Notificacion::crearParaRol(1, $data, 'confirmar_pedido');
+        Notificacion::crearParaRol(2, $data, 'confirmar_pedido');
+
+        // Correo electrónico a los mismos destinatarios
+        $destinatarios = array_merge(
+            Notificacion::obtenerDestinatariosEmail(1, 'confirmar_pedido'),
+            Notificacion::obtenerDestinatariosEmail(2, 'confirmar_pedido')
+        );
+        foreach ($destinatarios as $dest) {
+            MailHelper::pedidoNuevo($dest['email'], $dest['nombreUsuario'], $numeroPedido, $total);
+        }
+    }
+
+    private function notificarCambioEstado(int $idPedido, string $estado): void {
+        $pedido  = Pedido::obtenerPorId($idPedido);
+        if (!$pedido) return;
+
+        $cliente = Cliente::obtenerPorId((int) $pedido['idCliente']);
+        if (!$cliente) return;
+
+        $idUsuario = (int) $cliente['idUsuario'];
+        $prefs     = Configuracion::obtenerPreferencias($idUsuario);
+
+        if (empty($prefs['notif_estado_pedido'])) return;
+
+        // Notificación in-app al cliente
+        Notificacion::crear([
+            'idUsuario' => $idUsuario,
+            'tipo'      => 'estado_pedido',
+            'titulo'    => "Pedido {$pedido['numeroPedido']} — $estado",
+            'mensaje'   => "El estado de tu pedido cambió a: $estado",
+            'url'       => BASE_URL . 'pedidos/ver?id=' . $idPedido,
+        ]);
+
+        // Correo electrónico al cliente
+        $usuario = Usuario::obtenerPorId($idUsuario);
+        if ($usuario) {
+            MailHelper::estadoPedido(
+                $usuario['email'],
+                $cliente['nombre'],
+                $pedido['numeroPedido'],
+                $estado
+            );
+        }
+    }
+
+    private function notificarStockBajo(array $producto): void {
+        $data = [
+            'tipo'    => 'stock_bajo',
+            'titulo'  => "Stock bajo: {$producto['nombre']}",
+            'mensaje' => "Quedan {$producto['stock']} unidades en inventario.",
+            'url'     => BASE_URL . 'inventario',
+        ];
+
+        // Notificación in-app a admins y vendedores con alerta_stock activo
+        Notificacion::crearParaRol(1, $data, 'alerta_stock');
+        Notificacion::crearParaRol(2, $data, 'alerta_stock');
+
+        // Correo electrónico
+        $destinatarios = array_merge(
+            Notificacion::obtenerDestinatariosEmail(1, 'alerta_stock'),
+            Notificacion::obtenerDestinatariosEmail(2, 'alerta_stock')
+        );
+        foreach ($destinatarios as $dest) {
+            MailHelper::alertaStock($dest['email'], $dest['nombreUsuario'], $producto['nombre'], (int) $producto['stock']);
+        }
     }
 }
