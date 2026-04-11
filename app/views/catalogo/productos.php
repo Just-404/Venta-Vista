@@ -12,63 +12,48 @@
     <div class="panel-header">
         <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar producto...">
     </div>
-    <div class="tabla-wrapper">
-        <table class="tabla" id="tabla-productos">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                    <th>Descuento</th>
-                    <th>Stock</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($productos)): ?>
-                    <tr><td colspan="8" class="tabla-vacia">No hay productos registrados.</td></tr>
-                <?php else: ?>
-                    <?php foreach ($productos as $p): ?>
-                    <tr>
-                        <td class="texto-muted"><?= $p['idProducto'] ?></td>
-                        <td><strong><?= htmlspecialchars($p['nombre']) ?></strong></td>
-                        <td><?= htmlspecialchars($p['categoria']) ?></td>
-                        <td>RD$ <?= number_format($p['precio'], 2) ?></td>
-                        <td><?= $p['descuento'] > 0 ? $p['descuento'] . '%' : '—' ?></td>
-                        <td>
-                            <span class="<?= $p['stock'] <= 5 ? 'texto-peligro' : '' ?>">
-                                <?= $p['stock'] ?> uds.
-                            </span>
-                        </td>
-                        <td>
-                            <span class="badge <?= $p['activo'] ? 'badge--verde' : 'badge--rojo' ?>">
-                                <?= $p['activo'] ? 'Activo' : 'Inactivo' ?>
-                            </span>
-                        </td>
-                        <td class="acciones">
-                            <a href="<?= BASE_URL ?>productos/ver?id=<?= $p['idProducto'] ?>" class="btn-tabla">Ver</a>
-                            <a href="<?= BASE_URL ?>productos/editar?id=<?= $p['idProducto'] ?>" class="btn-tabla btn-tabla--editar">Editar</a>
-                            <form method="POST" action="<?= BASE_URL ?>productos/eliminar" style="display:inline"
-                                  onsubmit="return confirm('¿Desactivar este producto?')">
-                                <input type="hidden" name="id" value="<?= $p['idProducto'] ?>">
-                                <button class="btn-tabla btn-tabla--eliminar" type="submit">Desactivar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+    <div class="catalogo-grid">
+        <!-- Tarjeta de producto -->
+        <?php foreach ($productos as $producto): ?>
+            <div class="producto-card">
+                <span class="imagen"><img src="<?= htmlspecialchars($producto['imagenes']) ?>"
+                        alt="<?= htmlspecialchars($producto['nombre']) ?>"></span>
+                <span class="categoria"><?= htmlspecialchars($producto['categoria']) ?></span>
+                <h3 class="nombre"><?= htmlspecialchars($producto['nombre']) ?></h3>
+                <?php if ($producto['descuento'] > 0): ?>
+                    <span class="descuento">-<?= $producto['descuento'] ?>%</span>
                 <?php endif; ?>
-            </tbody>
-        </table>
+                <div class="calificacion">
+                </div>
+                <div class="precio">
+                    <span class="precio-actual">RD$
+                        <?= number_format($producto['precio'] * (1 - $producto['descuento'] / 100), 2) ?></span>
+                    <?php if ($producto['descuento'] > 0): ?>
+                        <span class="precio-anterior">RD$ <?= number_format($producto['precio'], 2) ?></span>
+                    <?php endif; ?>
+                </div>
+                <span class="stock">Stock: <?= $producto['stock'] ?></span>
+                <form action="<?= BASE_URL ?>productos/agregarAlCarrito" method="post">
+                    <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
+                    <input type="number" name="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>" required>
+                    <button type="submit" class="btn btn-primario">Agregar 🛒</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
 <script>
-document.getElementById('buscador').addEventListener('input', function () {
-    const q = this.value.toLowerCase();
-    document.querySelectorAll('#tabla-productos tbody tr').forEach(tr => {
-        tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+    document.getElementById('buscador').addEventListener('input', function () {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('.producto-card').forEach(card => {
+            const nombre = card.querySelector('.nombre').textContent.toLowerCase();
+            const categoria = card.querySelector('.categoria').textContent.toLowerCase();
+            if (nombre.includes(q) || categoria.includes(q)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     });
-});
 </script>

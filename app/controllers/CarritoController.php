@@ -16,7 +16,7 @@ class CarritoController extends Controller {
         $idCliente = $this->getIdCliente();
         $carrito   = $this->obtenerOCrearCarrito($idCliente);
  
-        $this->render('carrito', [
+        $this->render('carrito/index', [
             'items'   => Carrito::obtenerItems($carrito['idCarrito']),
             'total'   => Carrito::calcularTotal($carrito['idCarrito']),
             'carrito' => $carrito,

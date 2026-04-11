@@ -5,6 +5,7 @@
         <h1 class="page-titulo">Inventario</h1>
         <p class="page-sub">Control de stock de productos</p>
     </div>
+    <a href="<?= BASE_URL ?>productos/crear" class="btn btn-primario">+ Nuevo producto</a>
 </div>
 
 <!-- Alertas de stock bajo -->
