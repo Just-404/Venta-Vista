@@ -395,6 +395,27 @@
     margin-bottom: 2rem;
 }
 
+.form-carrito {
+    display: flex;
+    flex-direction: row;   /* asegura que estén en fila */
+    align-items: center;   /* centra verticalmente */
+    gap: 10px;             /* espacio entre input y botón */
+    justify-content: flex-start;
+}
+
+.form-carrito .input-form {
+    width: 70px;           /* ancho fijo para el input */
+    flex: 0 0 auto;        /* evita que se expanda */
+}
+
+.form-carrito .btn-primario {
+    flex: 0 0 auto;        /* evita que se expanda */
+}
+.carrito-blanco{
+    color: white;
+}
+
+
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 640px) {
     .stats-grid { grid-template-columns: 1fr 1fr; }

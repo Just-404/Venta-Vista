@@ -1,17 +1,26 @@
-<?php $productos = $productos ?? []; ?>
+<?php
+$productos = $productos ?? [];
+$usuario = $usuario ?? null;
+$carrito = $carrito ?? [];
+?>
 
 <div class="page-header">
     <div>
         <h1 class="page-titulo">Catálogo de Productos</h1>
         <p class="page-sub"><?= count($productos) ?> productos registrados</p>
     </div>
-    <a href="<?= BASE_URL ?>productos/crear" class="btn btn-primario">+ Nuevo producto</a>
+    <?php if ($usuario['rol'] != 3): ?>
+        <a href="<?= BASE_URL ?>productos/crear" class="btn btn-primario">+ Nuevo producto</a>
+    <?php endif; ?>
 </div>
 
 <div class="panel">
     <div class="panel-header">
         <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar producto...">
     </div>
+    <?php if (empty($productos)): ?>
+        <p class="panel-empty">No hay productos disponibles.</p>
+    <?php endif; ?>
     <div class="catalogo-grid">
         <!-- Tarjeta de producto -->
         <?php foreach ($productos as $producto): ?>
@@ -33,11 +42,18 @@
                     <?php endif; ?>
                 </div>
                 <span class="stock">Stock: <?= $producto['stock'] ?></span>
-                <form action="<?= BASE_URL ?>productos/agregarAlCarrito" method="post">
-                    <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
-                    <input type="number" name="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>" required>
-                    <button type="submit" class="btn btn-primario">Agregar 🛒</button>
-                </form>
+                <?php if ($usuario['rol'] == 3): ?>
+                    <div class="acciones-carrito">
+                        <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
+                            <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
+                            <input class="input-form" type="number" name="cantidad" value="1" min="1"
+                                max="<?= $producto['stock'] ?>" required>
+                            <button type="submit" class="btn btn-primario"> Agregar <span class="carrito-blanco">🛒</span></button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+                <a href="<?= BASE_URL ?>productos/ver?id=<?= $producto['idProducto'] ?>" class="btn btn-secundario">Ver
+                    Detalles</a>
             </div>
         <?php endforeach; ?>
     </div>
