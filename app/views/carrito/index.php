@@ -2,6 +2,7 @@
 $items = $items ?? [];
 $total = $total ?? 0;
 $carrito = $carrito ?? [];
+$estadoProductos = $estadoProductos ?? [];
 ?>
 
 <div class="page-header">
@@ -11,6 +12,24 @@ $carrito = $carrito ?? [];
     </div>
     <a href="<?= BASE_URL ?>productos" class="btn btn-contorno">← Seguir comprando</a>
 </div>
+
+<?php if (!empty($inactivos)): ?>
+    <div class="alert-stock">
+        <span>⚠️</span>
+        <span>
+            <strong>
+                <?= count($inactivos) ?> producto(s)
+            </strong> fueron removidos porque están inactivos:
+        </span>
+        <ul style="list-style: none;">
+            <?php foreach ($inactivos as $prod): ?>
+                <li>
+                    <?= htmlspecialchars($prod['nombre']) ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 
 <?php if (empty($items)): ?>
     <div class="panel" style="text-align:center;padding:60px 20px">
@@ -152,7 +171,7 @@ $carrito = $carrito ?? [];
         } else if (cupon.tipo === 'Porcentaje') {
             nuevoTotal = Math.max(0, total * (1 - cupon.descuento / 100));
         }
-        
+
         document.getElementById('subtotal').textContent = 'RD$ ' + nuevoTotal.toFixed(2);
         document.getElementById('total').textContent = 'RD$ ' + nuevoTotal.toFixed(2);
 

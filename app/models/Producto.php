@@ -97,7 +97,7 @@ class Producto extends Model
 
         $stmt = self::db()->prepare($sql);
         if ($stmt->execute($data)) {
-            return (int) self::db()->lastInsertId(); // devuelve el ID del nuevo producto
+            return (int) self::db()->lastInsertId(); 
         }
         return false;
     }
@@ -132,7 +132,6 @@ class Producto extends Model
         );
         return $stmt->execute(['activo' => (int) $activo, 'id' => $id]);
     }
-
 
     public static function eliminar(int $id): bool
     {

@@ -56,6 +56,7 @@ class ProductoController extends Controller
         $this->render('catalogo/crear', [
             'categorias' => Categoria::obtenerTodas(),
             'usuario' => $this->usuarioActual(),
+            'origen' => $origen,
         ]);
     }
 

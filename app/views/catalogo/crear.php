@@ -5,7 +5,7 @@
         <h1 class="page-titulo">Nuevo Producto</h1>
         <p class="page-sub">Completa los datos para agregar al catálogo</p>
     </div>
-    <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos' ?>" class="btn btn-contorno">←
+    <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos'?>" class="btn btn-contorno">←
         Volver</a>
 </div>
 
