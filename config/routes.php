@@ -59,6 +59,7 @@ return [
     // ── Usuarios ────────────────────────────────────────────────
     'usuarios'          => ['controller' => 'UsuarioController', 'action' => 'index'],
     'usuarios/crear'    => ['controller' => 'UsuarioController', 'action' => 'crear'],
+    'usuarios/ver'    => ['controller' => 'UsuarioController', 'action' => 'ver'],
     'usuarios/estado'   => ['controller' => 'UsuarioController', 'action' => 'estado'],
     'usuarios/password' => ['controller' => 'UsuarioController', 'action' => 'password'],
     'usuarios/eliminar' => ['controller' => 'UsuarioController', 'action' => 'eliminar'],

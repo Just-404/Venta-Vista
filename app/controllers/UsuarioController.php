@@ -5,6 +5,7 @@ use app\core\Controller;
 use app\models\Usuario;
 use app\models\Administrador;
 use app\models\Vendedor;
+use app\models\Direccion;
  
 class UsuarioController extends Controller {
  
@@ -18,7 +19,26 @@ class UsuarioController extends Controller {
             'usuario'  => $this->usuarioActual(),
         ]);
     }
+    
+    // GET /usuarios/ver?id=X
+    public function ver(): void {
+        $this->requireAuth();
  
+        $id      = (int) $this->get('id');
+        $usuario = Usuario::obtenerPerfilCompleto($id);
+ 
+        if (!$usuario) {
+            $this->setFlash('error', 'Usuario no encontrado.');
+            $this->redirect('usuarios');
+        }
+ 
+        $this->render('usuarios/ver', [
+            'perfil'  => $usuario,
+            'flash'   => $this->getFlash(),
+            'usuario' => $this->usuarioActual(),
+        ]);
+    }
+
     // GET  /usuarios/crear
     // POST /usuarios/crear
     public function crear(): void {

@@ -48,12 +48,6 @@
                         </td>
                         <td class="acciones">
                             <a href="<?= BASE_URL ?>clientes/ver?id=<?= $c['idCliente'] ?>" class="btn-tabla">Ver</a>
-                            <a href="<?= BASE_URL ?>clientes/editar?id=<?= $c['idCliente'] ?>" class="btn-tabla btn-tabla--editar">Editar</a>
-                            <form method="POST" action="<?= BASE_URL ?>clientes/eliminar" style="display:inline"
-                                  onsubmit="return confirm('¿Eliminar este cliente?')">
-                                <input type="hidden" name="id" value="<?= $c['idCliente'] ?>">
-                                <button class="btn-tabla btn-tabla--eliminar" type="submit">Eliminar</button>
-                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>

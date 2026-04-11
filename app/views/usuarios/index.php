@@ -51,6 +51,7 @@
                             </span>
                         </td>
                         <td class="acciones">
+                            <a href="<?= BASE_URL ?>usuarios/ver?id=<?= $u['idUsuario'] ?>" class="btn-tabla">Ver</a>
                             <form method="POST" action="<?= BASE_URL ?>usuarios/estado" style="display:inline">
                                 <input type="hidden" name="id" value="<?= $u['idUsuario'] ?>">
                                 <input type="hidden" name="activo" value="<?= $u['activo'] ? 0 : 1 ?>">

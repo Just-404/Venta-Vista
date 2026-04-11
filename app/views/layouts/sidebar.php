@@ -26,7 +26,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
 
     <div class="sidebar-header">
         <div class="sidebar-marca">
-            <div class="marca-icono">Logo</div>
+            <div class="marca-icono"><img src="<?= BASE_URL ?>images/Logo_VentaVista.png" alt="logo sistema"></div>
             <div>
                 <div class="marca-texto">Venta Vista</div>
                 <div class="marca-sub">Catálogo Pro</div>
@@ -42,7 +42,6 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         <?php if (in_array($rol, [1, 2])): ?>
         <a href="<?= BASE_URL ?>dashboard"
         class="nav-item <?= $current === 'dashboard' ? 'activo' : '' ?>">
-        <span>📊</span>
        <span>Dashboard</span>
      </a>
       <?php endif; ?>
@@ -67,10 +66,12 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
 
             <div class="nav-seccion">
                 <div class="nav-seccion-titulo">Administración</div>
-                <a href="<?= BASE_URL ?>clientes" class="nav-item <?= str_starts_with($current, 'clientes') ? 'activo' : '' ?>">
-                    <span>👥</span>
-                    <span>Clientes</span>
-                </a>
+                <?php if ($rol == 2): ?>
+                    <a href="<?= BASE_URL ?>clientes" class="nav-item <?= str_starts_with($current, 'clientes') ? 'activo' : '' ?>">
+                        <span>👥</span>
+                        <span>Clientes</span>
+                    </a>
+                <?php endif; ?>
                 <a href="<?= BASE_URL ?>inventario"
                    class="nav-item <?= str_starts_with($current, 'inventario') ? 'activo' : '' ?>">
                     <span>📋</span>

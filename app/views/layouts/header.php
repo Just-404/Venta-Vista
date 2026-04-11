@@ -15,11 +15,6 @@
       🛒
       <span class="indicador-badge" id="badge-carrito" style="display:none"></span>
     </a>
-    <?php else: ?>
-    <button class="accion-topbar">
-      🛒
-      <span class="indicador-badge" id="badge-carrito" style="display:none"></span>
-    </button>
     <?php endif; ?>
 
 <!-- Notificaciones -->

@@ -16,7 +16,7 @@ class CarritoController extends Controller {
         $idCliente = $this->getIdCliente();
         $carrito   = $this->obtenerOCrearCarrito($idCliente);
  
-        $this->render('carrito', [
+        $this->render('carrito/index', [
             'items'   => Carrito::obtenerItems($carrito['idCarrito']),
             'total'   => Carrito::calcularTotal($carrito['idCarrito']),
             'carrito' => $carrito,
@@ -47,7 +47,7 @@ class CarritoController extends Controller {
         ]);
  
         $this->setFlash('success', 'Producto agregado al carrito.');
-        $this->redirect('carrito');
+        $this->redirect('carrito/index');
     }
  
     // POST /carrito/actualizar
@@ -74,7 +74,7 @@ class CarritoController extends Controller {
         $carrito    = $this->obtenerOCrearCarrito($idCliente);
  
         Carrito::eliminarItem($carrito['idCarrito'], (int) $this->post('idProducto'));
-        $this->redirect('carrito');
+        $this->redirect('carrito/index');
     }
  
     // POST /carrito/vaciar
@@ -85,7 +85,7 @@ class CarritoController extends Controller {
         $carrito   = $this->obtenerOCrearCarrito($idCliente);
  
         Carrito::vaciar($carrito['idCarrito']);
-        $this->redirect('carrito');
+        $this->redirect('carrito/index');
     }
  
     // Helpers privados
@@ -95,14 +95,14 @@ class CarritoController extends Controller {
 
          if ((int) $usuario['rol'] !== 3) {
             $this->setFlash('error', 'Solo los clientes pueden acceder al carrito.');
-            $this->redirect('dashboard');
+            $this->redirect('dashboard/index');
          }
 
         $cliente = Cliente::obtenerPorUsuario((int) $usuario['id']);
 
         if (!$cliente) {
             $this->setFlash('error', 'Perfil de cliente no encontrado.');
-            $this->redirect('dashboard');
+            $this->redirect('dashboard/index');
         }
         return (int) $cliente['idCliente'];
     }

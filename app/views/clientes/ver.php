@@ -10,7 +10,6 @@ $direcciones = $direcciones ?? [];
         <p class="page-sub">Perfil del cliente</p>
     </div>
     <div style="display:flex;gap:8px">
-        <a href="<?= BASE_URL ?>clientes/editar?id=<?= $cliente['idCliente'] ?>" class="btn btn-primario">Editar</a>
         <a href="<?= BASE_URL ?>clientes" class="btn btn-contorno">← Volver</a>
     </div>
 </div>

@@ -25,7 +25,7 @@
     <?php endif; ?>
   <div class="login-box">
     <div class="login-logo">
-      <div class="login-logo-icono">Logo</div>
+      <div class="login-logo-icono"><img src="<?= BASE_URL ?>images/Logo_VentaVista.png" alt="logo sistema"></div>
       <div>
         <h1>Venta Vista</h1>
         <p class="login-logo-sub">Sistema de Ventas por Catálogo</p>
