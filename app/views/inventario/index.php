@@ -59,7 +59,7 @@
                         $stockData = $p['stock'] <= 5 ? 'critico' : ($p['stock'] <= 20 ? 'bajo' : 'ok');
                     ?>
                     <tr data-stock="<?= $stockData ?>">
-                        <td><strong><?= htmlspecialchars($p['nombre']) ?></strong></td>
+                        <td><a href="<?= BASE_URL ?>productos/ver?id=<?= $p['idProducto'] ?>&origen=inventario"><strong><?= htmlspecialchars($p['nombre']) ?></strong></a></td>
                         <td><?= htmlspecialchars($p['categoria']) ?></td>
                         <td>RD$ <?= number_format($p['precio'], 2) ?></td>
                         <td>
@@ -81,6 +81,7 @@
                                class="btn-tabla btn-tabla--editar">Editar</a>
                             <form method="POST" action="<?= BASE_URL ?>/productos/cambiarEstado?origen=inventario" onsubmit="return confirm('¿Desea cambiar el estado de este producto?');" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $p['idProducto'] ?>">
+                                <input type="hidden" name="activo" value="<?= $p['activo'] ? 0 : 1 ?>">
                                 <button type="submit" class="btn-tabla <?= $p['activo'] ? 'btn-tabla--eliminar' : 'btn-tabla--activar' ?>">
                                     <?= $p['activo'] ? 'Desactivar' : 'Activar' ?>
                                 </button>

@@ -9,6 +9,7 @@ $calificaciones = $calificaciones ?? [];
         <p class="page-sub">Detalle del producto</p>
     </div>
     <div style="display:flex;gap:8px">
+        <?php $origen = $_GET['origen'] ?? 'catalogo'; ?>
         <?php if ($usuario['rol'] != 3): ?>
             <a href="<?= BASE_URL ?>productos/editar?id=<?= $producto['idProducto'] ?>" class="btn btn-primario">Editar</a>
         <?php endif; ?>
@@ -22,7 +23,7 @@ $calificaciones = $calificaciones ?? [];
                 </form>
             </div>
         <?php endif; ?>
-        <a href="<?= BASE_URL ?>productos" class="btn btn-contorno">← Volver</a>
+        <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos' ?>" class="btn btn-contorno">← Volver</a>
     </div>
 </div>
 
@@ -85,7 +86,7 @@ $calificaciones = $calificaciones ?? [];
             <?php endif; ?>
         </div>
     </div>
-
+    
     <!-- Calificaciones -->
     <div class="panel">
         <div class="panel-header">

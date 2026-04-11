@@ -588,8 +588,6 @@
     cursor: pointer;
 }
 
-
-
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 640px) {
     .stats-grid {

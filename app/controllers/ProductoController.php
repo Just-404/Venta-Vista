@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\models\Producto;
 use app\models\Categoria;
+use app\models\Calificacion;
 
 class ProductoController extends Controller
 {
@@ -103,6 +104,7 @@ class ProductoController extends Controller
         ]);
     }
 
+    // POST /productos/cambiarEstado  (llamado por form con id y estado oculto)
     public function cambiarEstado(): void
     {
         $this->requireAuth();
@@ -110,23 +112,21 @@ class ProductoController extends Controller
         $origen = $_GET['origen'] ?? 'catalogo';
 
         $id = (int) $this->post('id');
-        $activo = (bool) $this->post('activo');
-        $nuevoEstado = (bool) $activo ? false : true;
-
+        $nuevoEstado = (bool) $this->post('activo');
         if (Producto::cambiarEstado($id, $nuevoEstado)) {
             $this->setFlash('success', "Producto actualizado a " . ($nuevoEstado ? 'Activo' : 'Inactivo') . ".");
         } else {
             $this->setFlash('error', 'Error al actualizar el estado del producto.');
         }
 
-         $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
+        $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
     }
 
     // POST /productos/eliminar  (llamado por form con id oculto)
     public function eliminar(): void
     {
         $this->requireAuth();
-        
+
         $origen = $_GET['origen'] ?? 'catalogo';
 
         $id = (int) $this->post('id');
@@ -156,6 +156,8 @@ class ProductoController extends Controller
         $this->render('catalogo/ver', [
             'producto' => $producto,
             'usuario' => $this->usuarioActual(),
+            'calificaciones' => Calificacion::obtenerPorProducto($id),
         ]);
     }
+    
 }
