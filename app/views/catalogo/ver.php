@@ -12,6 +12,16 @@ $calificaciones = $calificaciones ?? [];
         <?php if ($usuario['rol'] != 3): ?>
             <a href="<?= BASE_URL ?>productos/editar?id=<?= $producto['idProducto'] ?>" class="btn btn-primario">Editar</a>
         <?php endif; ?>
+        <?php if ($usuario['rol'] == 3): ?>
+            <div class="acciones-carrito">
+                <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
+                    <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
+                    <input class="input-form" type="number" name="cantidad" value="1" min="1"
+                        max="<?= $producto['stock'] ?>" required>
+                    <button type="submit" class="btn btn-primario"> Agregar <span class="carrito-blanco">🛒</span></button>
+                </form>
+            </div>
+        <?php endif; ?>
         <a href="<?= BASE_URL ?>productos" class="btn btn-contorno">← Volver</a>
     </div>
 </div>
@@ -22,6 +32,15 @@ $calificaciones = $calificaciones ?? [];
     <div class="panel">
         <div class="panel-header">
             <h2 class="panel-titulo">Información general</h2>
+        </div>
+        <div style="padding:20px">
+            <div class="detalle-fila">
+                <span class="detalle-label">Imagen</span>
+                <img src="<?= htmlspecialchars($producto['imagenes']) ?>"
+                    alt="<?= htmlspecialchars($producto['nombre']) ?>"
+                    style="width:30%;height:auto;object-fit:cover;border-radius:6px;margin-bottom:20px"
+                    onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';">
+            </div>
         </div>
         <div style="padding:20px">
             <div class="detalle-fila">
@@ -96,5 +115,6 @@ $calificaciones = $calificaciones ?? [];
             <?php endif; ?>
         </div>
     </div>
+
 
 </div>

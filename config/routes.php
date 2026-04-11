@@ -14,6 +14,7 @@ return [
     'productos'          => ['controller' => 'ProductoController', 'action' => 'index'],
     'productos/crear'    => ['controller' => 'ProductoController', 'action' => 'crear'],
     'productos/editar'   => ['controller' => 'ProductoController', 'action' => 'editar'],
+    'productos/cambiarEstado' => ['controller' => 'ProductoController', 'action' => 'cambiarEstado'],
     'productos/eliminar' => ['controller' => 'ProductoController', 'action' => 'eliminar'],
     'productos/ver'      => ['controller' => 'ProductoController', 'action' => 'ver'],
 
