@@ -37,7 +37,6 @@ class Vendedor extends Model {
     /*
       $data = ['nombre','apellidos','cedula','telefono','idUsuario']
      */
-
     public static function crear(array $data): bool {
         $sql = "INSERT INTO vendedores
                     (nombre, apellidos, cedula, telefono, idUsuario)
@@ -65,10 +64,14 @@ class Vendedor extends Model {
         return $stmt->execute(['id' => $id]);
     }
  
-    /** Usa la vista v_ventas_vendedor del schema */
+    /**
+     * Resumen total por vendedor.
+     * Usa la vista v_ventas_vendedor (corregida en 001_fix_ventas_vendedor.sql).
+     * Cadena: vendedores → productos → detalle_pedido → pedidos
+     */
     public static function obtenerResumenVentas(): array {
         return self::db()
-            ->query("SELECT * FROM v_ventas_vendedor")
+            ->query("SELECT * FROM v_ventas_vendedor ORDER BY montoTotal DESC")
             ->fetchAll(PDO::FETCH_ASSOC);
     }
  
@@ -80,22 +83,20 @@ class Vendedor extends Model {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Serie mensual por vendedor para el gráfico de líneas del reporte.
+     * Usa la vista v_ventas_vendedor_mensual (creada en 001_fix_ventas_vendedor.sql).
+     * Resultado: [['vendedor'=>'Carlos M.','mes'=>'2026-03','total'=>4500.00], ...]
+     */
     public static function obtenerSerieVentasMensual(int $meses = 6): array {
-        $sql = "SELECT
-                    CONCAT(v.nombre,' ',v.apellidos)       AS vendedor,
-                    DATE_FORMAT(pe.fechaPedido, '%Y-%m')   AS mes,
-                    SUM(pe.total)                          AS total
-                FROM vendedores v
-                JOIN clientes cl ON cl.idUsuario = v.idUsuario
-                JOIN pedidos  pe ON pe.idCliente = cl.idCliente
-                WHERE pe.estado NOT IN ('Cancelado','Devuelto')
-                  AND pe.fechaPedido >= DATE_SUB(CURDATE(), INTERVAL :meses MONTH)
-                GROUP BY v.idVendedor, mes
+        $sql = "SELECT vendedor, mes, total
+                FROM v_ventas_vendedor_mensual
+                WHERE mes >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL :meses MONTH), '%Y-%m')
                 ORDER BY mes ASC, vendedor ASC";
- 
+
         $stmt = self::db()->prepare($sql);
-        $stmt->bindValue(':meses', $meses, \PDO::PARAM_INT);
+        $stmt->bindValue(':meses', $meses, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
