@@ -54,6 +54,20 @@ class Producto extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /** Productos asignados a un vendedor específico */
+    public static function obtenerPorVendedor(int $idVendedor): array
+    {
+        $sql = "SELECT p.*, c.nombre AS categoria
+                FROM productos p
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                WHERE p.idVendedor = :idVendedor AND p.activo = 1
+                ORDER BY p.nombre";
+
+        $stmt = self::db()->prepare($sql);
+        $stmt->execute(['idVendedor' => $idVendedor]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /** Usa la vista v_productos_rating del schema */
     public static function obtenerConRating(): array
     {
@@ -88,20 +102,30 @@ class Producto extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /*
+      $data = ['nombre','descripcion','precio','descuento','stock','imagenes',
+               'idCategoria','idVendedor']
+     */
     public static function crear(array $data): bool
     {
         $sql = "INSERT INTO productos
-                    (nombre, descripcion, precio, descuento, stock, imagenes, idCategoria)
+                    (nombre, descripcion, precio, descuento, stock, imagenes,
+                     idCategoria, idVendedor)
                 VALUES
-                    (:nombre, :descripcion, :precio, :descuento, :stock, :imagenes, :idCategoria)";
+                    (:nombre, :descripcion, :precio, :descuento, :stock, :imagenes,
+                     :idCategoria, :idVendedor)";
 
         $stmt = self::db()->prepare($sql);
         if ($stmt->execute($data)) {
-            return (int) self::db()->lastInsertId(); 
+            return (int) self::db()->lastInsertId();
         }
         return false;
     }
 
+    /*
+      $data = ['nombre','descripcion','precio','descuento','stock','imagenes',
+               'idCategoria','idVendedor','idProducto']
+     */
     public static function actualizar(array $data): bool
     {
         $sql = "UPDATE productos
@@ -111,7 +135,8 @@ class Producto extends Model
                     descuento   = :descuento,
                     stock       = :stock,
                     imagenes    = :imagenes,
-                    idCategoria = :idCategoria
+                    idCategoria = :idCategoria,
+                    idVendedor  = :idVendedor
                 WHERE idProducto = :idProducto";
 
         return self::db()->prepare($sql)->execute($data);
