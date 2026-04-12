@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\models\Cliente;
 use app\models\Usuario;
 use app\models\Direccion;
+use app\models\Notificacion;
 
 class ClienteController extends Controller {
 
@@ -53,6 +54,17 @@ class ClienteController extends Controller {
 
             if ($ok) {
                 $this->setFlash('success', 'Cliente registrado correctamente.');
+
+                // Notificar a admins y vendedores del nuevo cliente
+                $nombreCompleto = $this->post('nombre') . ' ' . $this->post('apellidos');
+                $notifData = [
+                    'tipo'    => 'nuevo_cliente',
+                    'titulo'  => 'Nuevo cliente registrado',
+                    'mensaje' => $nombreCompleto . ' se ha registrado en el sistema.',
+                    'url'     => BASE_URL . 'clientes',
+                ];
+                Notificacion::crearParaRol(1, $notifData);
+                Notificacion::crearParaRol(2, $notifData);
             } else {
                 $this->setFlash('error', 'Error al crear el cliente.');
             }

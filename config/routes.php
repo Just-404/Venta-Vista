@@ -59,6 +59,7 @@ return [
     // ── Usuarios ────────────────────────────────────────────────
     'usuarios'          => ['controller' => 'UsuarioController', 'action' => 'index'],
     'usuarios/crear'    => ['controller' => 'UsuarioController', 'action' => 'crear'],
+    'usuarios/ver'    => ['controller' => 'UsuarioController', 'action' => 'ver'],
     'usuarios/estado'   => ['controller' => 'UsuarioController', 'action' => 'estado'],
     'usuarios/password' => ['controller' => 'UsuarioController', 'action' => 'password'],
     'usuarios/eliminar' => ['controller' => 'UsuarioController', 'action' => 'eliminar'],
@@ -68,7 +69,26 @@ return [
     'reportes/ventas'    => ['controller' => 'ReporteController', 'action' => 'ventas'],
     'reportes/productos' => ['controller' => 'ReporteController', 'action' => 'productos'],
     'reportes/clientes'  => ['controller' => 'ReporteController', 'action' => 'clientes'],
+    'reportes/exportar' => ['controller' => 'ReporteController', 'action' => 'exportar'],
 
     // Inventario
     'inventario' => ['controller' => 'InventarioController', 'action' => 'index'],
+
+    // ── Configuración ────────────────────────────────────────────────────────────
+    'configuracion'              => ['controller' => 'ConfiguracionController', 'action' => 'index'],
+    'configuracion/fiscal'       => ['controller' => 'ConfiguracionController', 'action' => 'fiscal'],
+    'configuracion/impuestos'    => ['controller' => 'ConfiguracionController', 'action' => 'impuestos'],
+    'configuracion/perfil'       => ['controller' => 'ConfiguracionController', 'action' => 'perfil'],
+    'configuracion/password'     => ['controller' => 'ConfiguracionController', 'action' => 'password'],
+    'configuracion/preferencias' => ['controller' => 'ConfiguracionController', 'action' => 'preferencias'],
+    'configuracion/direccion/agregar'   => ['controller' => 'ConfiguracionController', 'action' => 'agregarDireccion'],
+    'configuracion/direccion/eliminar'  => ['controller' => 'ConfiguracionController', 'action' => 'eliminarDireccion'],
+    'configuracion/direccion/principal' => ['controller' => 'ConfiguracionController', 'action' => 'setPrincipal'],
+
+    // ── Notificaciones (AJAX) ────────────────────────────────────────────────
+    'notificaciones/obtener'    => ['controller' => 'NotificacionController', 'action' => 'obtener'],
+    'notificaciones/leer'       => ['controller' => 'NotificacionController', 'action' => 'leer'],
+    'notificaciones/leer-todas' => ['controller' => 'NotificacionController', 'action' => 'leerTodas'],
+    'notificaciones/limpiar'       => ['controller' => 'NotificacionController', 'action' => 'limpiar'],
+    'notificaciones/limpiar-todas' => ['controller' => 'NotificacionController', 'action' => 'limpiarTodas'],
 ];

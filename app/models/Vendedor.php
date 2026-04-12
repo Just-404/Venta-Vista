@@ -79,4 +79,23 @@ class Vendedor extends Model {
         $stmt->execute(['cedula' => $cedula]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function obtenerSerieVentasMensual(int $meses = 6): array {
+        $sql = "SELECT
+                    CONCAT(v.nombre,' ',v.apellidos)       AS vendedor,
+                    DATE_FORMAT(pe.fechaPedido, '%Y-%m')   AS mes,
+                    SUM(pe.total)                          AS total
+                FROM vendedores v
+                JOIN clientes cl ON cl.idUsuario = v.idUsuario
+                JOIN pedidos  pe ON pe.idCliente = cl.idCliente
+                WHERE pe.estado NOT IN ('Cancelado','Devuelto')
+                  AND pe.fechaPedido >= DATE_SUB(CURDATE(), INTERVAL :meses MONTH)
+                GROUP BY v.idVendedor, mes
+                ORDER BY mes ASC, vendedor ASC";
+ 
+        $stmt = self::db()->prepare($sql);
+        $stmt->bindValue(':meses', $meses, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

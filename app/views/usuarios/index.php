@@ -10,7 +10,8 @@
 
 <div class="panel">
     <div class="panel-header">
-        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar usuario...">
+        <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="busqueda">
+        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar usuario...">
     </div>
     <div class="tabla-wrapper">
         <table class="tabla" id="tabla-usuarios">
@@ -51,6 +52,7 @@
                             </span>
                         </td>
                         <td class="acciones">
+                            <a href="<?= BASE_URL ?>usuarios/ver?id=<?= $u['idUsuario'] ?>" class="btn-tabla">Ver</a>
                             <form method="POST" action="<?= BASE_URL ?>usuarios/estado" style="display:inline">
                                 <input type="hidden" name="id" value="<?= $u['idUsuario'] ?>">
                                 <input type="hidden" name="activo" value="<?= $u['activo'] ? 0 : 1 ?>">

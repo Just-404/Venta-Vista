@@ -48,6 +48,33 @@ class Usuario extends Model{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function obtenerPerfilCompleto(int $id): array|false {
+        $usuario = self::obtenerPorId($id);
+        if (!$usuario) return false;
+    
+        switch ((int) $usuario['idRol']) {
+            case 1:
+                $usuario['perfil'] = Administrador::obtenerPorUsuario($id);
+                break;
+            case 2:
+                $usuario['perfil'] = Vendedor::obtenerPorUsuario($id);
+                break;
+            case 3:
+                $cliente = Cliente::obtenerPorUsuario($id);
+                if ($cliente) {
+                    $cliente['direcciones'] = Direccion::obtenerPorCliente(
+                        (int) $cliente['idCliente']
+                    );
+                }
+                $usuario['perfil'] = $cliente;
+                break;
+            default:
+                $usuario['perfil'] = null;
+        }
+ 
+        return $usuario;
+    }
+
     public static function crear(array $data): bool{
         /* Estrcutura esperada de $data = [
             'nombreUsuario' => 'juan123',
@@ -106,5 +133,12 @@ class Usuario extends Model{
             "DELETE FROM usuarios WHERE idUsuario = :id"
         );
         return $stmt->execute(['id' => $id]);
+    }
+
+    public static function actualizarEmail(int $id, string $email): bool {
+    $stmt = self::db()->prepare(
+        "UPDATE usuarios SET email = :email WHERE idUsuario = :id"
+    );
+    return $stmt->execute(['email' => $email, 'id' => $id]);
     }
 }
