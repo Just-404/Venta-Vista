@@ -80,7 +80,7 @@ class CarritoController extends Controller
             'idProducto' => (int) $this->post('idProducto'),
         ]);
 
-        $this->redirect('carrito');
+        $this->redirect('carrito/index');
     }
 
     // POST /carrito/eliminar-item

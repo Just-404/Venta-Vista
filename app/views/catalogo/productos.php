@@ -17,18 +17,14 @@ $categorias = $categorias ?? [];
 
 <div class="panel">
     <div class="panel-header">
-<<<<<<< HEAD
         <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
         <input class="input-buscar" type="text" id="buscador" placeholder="Buscar producto...">
-=======
-        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar producto..." style="width: 67%;">
         <select id="filtro-categoria" class="select-form" style="width: 30%;">
             <option value="">Todas las categorías</option>
             <?php foreach ($categorias as $categoria): ?>
                 <option value="<?= htmlspecialchars($categoria['nombre']) ?>"><?= $categoria['nombre'] ?></option>
             <?php endforeach; ?>
         </select>
->>>>>>> develop-v1.3
     </div>
     <?php if (empty($productos)): ?>
         <p class="panel-empty">No hay productos disponibles.</p>

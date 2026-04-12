@@ -9,28 +9,29 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
 ?>
 <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
     <div class="stat-card">
-        <div class="stat-icono stat-icono--azul">📦</div>
+        <div class="stat-icono stat-icono--azul"><img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="pedido"></div>
         <div>
             <div class="stat-valor"><?= $total ?></div>
             <div class="stat-label">Total pedidos</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--naranja">⏳</div>
+        <div class="stat-icono stat-icono--naranja"><img src="<?= BASE_URL ?>images/icons/pedido-pendiente-icon.png" class="icon" alt="pedido pendiente"></div>
         <div>
             <div class="stat-valor"><?= $pendientes ?></div>
             <div class="stat-label">Pendientes</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--verde">✅</div>
+        <div class="stat-icono stat-icono--verde"><img src="<?= BASE_URL ?>images/icons/checkmark-icon.png" class="icon" alt="Cotejo verde"></div>
         <div>
             <div class="stat-valor"><?= $entregados ?></div>
             <div class="stat-label">Entregados</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--morado">💰</div>
+        <div class="stat-icono stat-icono--morado">
+            <img src="<?= BASE_URL ?>images/icons/bolsa-dinero-icon.png" class="icon" alt="bolsa dinero"></div>
         <div>
             <div class="stat-valor">RD$<?= number_format($facturado / 1000, 0) ?>K</div>
             <div class="stat-label">Total facturado</div>

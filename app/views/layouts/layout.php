@@ -44,7 +44,22 @@
     </div>
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toast = document.querySelector("#contenedor-toast .toast");
 
+    if (toast) {
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(50px)";
+
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
 <script src="<?= BASE_URL ?>js/app.js"></script>
 </body>
 </html>

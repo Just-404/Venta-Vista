@@ -33,7 +33,7 @@ class PedidoController extends Controller {
     // POST /pedidos/crear
     public function crear(): void {
         $this->requireAuth();
-
+        $this->redirect('catalogo/index');
         if ($this->isPost()) {
             // 1. Validar cupón si se envió
             $idCupon  = null;
