@@ -112,4 +112,16 @@ class Carrito extends Model {
         return (int) $stmt->fetchColumn();
     }
 
+    // Verifica el estado de los productos en el carrito (activo, inactivo) para mostrar alertas
+    public static function obtenerEstadoProductos(int $idCarrito): array {
+        $sql = "SELECT p.idProducto, p.activo, p.nombre
+                FROM items_carrito ic
+                JOIN productos p ON ic.idProducto = p.idProducto
+                WHERE ic.idCarrito = :idCarrito";
+
+        $stmt = self::db()->prepare($sql);
+        $stmt->execute(['idCarrito' => $idCarrito]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -5,55 +5,145 @@ namespace app\controllers;
 use app\core\Controller;
 use app\models\Producto;
 use app\models\Categoria;
+use app\models\Calificacion;
 
-class ProductoController extends Controller {
+class ProductoController extends Controller
+{
 
     // GET /productos
-    public function index(): void {
+    public function index(): void
+    {
         $this->requireAuth();
 
         $this->render('catalogo/productos', [
             'productos' => Producto::obtenerTodos(),
-            'flash'     => $this->getFlash(),
-            'usuario'   => $this->usuarioActual(),
+            'flash' => $this->getFlash(),
+            'usuario' => $this->usuarioActual(),
+            'categorias' => Categoria::obtenerTodas(),
         ]);
     }
 
     // GET  /productos/crear para mostrar formulario
     // POST /productos/crear para procesar creación
 
-    public function crear(): void {
+    public function crear(): void
+    {
         $this->requireAuth();
+
+        $origen = $_GET['origen'] ?? 'catalogo';
 
         if ($this->isPost()) {
             $data = [
-                'nombre'      => $this->post('nombre'),
+                'nombre' => $this->post('nombre'),
                 'descripcion' => $this->post('descripcion'),
-                'precio'      => $this->post('precio'),
-                'descuento'   => $this->post('descuento', 0),
-                'stock'       => $this->post('stock', 0),
-                'imagenes'    => $this->post('imagenes'),
+                'precio' => $this->post('precio'),
+                'descuento' => $this->post('descuento', 0),
+                'stock' => $this->post('stock', 0),
+                'imagenes' => $this->post('imagenes'),
                 'idCategoria' => $this->post('idCategoria'),
             ];
 
-            if (Producto::crear($data)) {
+            $id = Producto::crear($data);
+            if ($id !== false) {
                 $this->setFlash('success', 'Producto creado correctamente.');
             } else {
                 $this->setFlash('error', 'Error al crear el producto.');
             }
 
-            $this->redirect('productos');
+            $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
         }
 
         $this->render('catalogo/crear', [
             'categorias' => Categoria::obtenerTodas(),
-            'usuario'    => $this->usuarioActual(),
+            'usuario' => $this->usuarioActual(),
+            'origen' => $origen,
         ]);
     }
 
     // GET  /productos/editar?id=X para mostrar formulario
     // POST /productos/editar para procesar actualización
-    public function editar(): void {
+    public function editar(): void
+    {
+        $this->requireAuth();
+
+        $id = (int) $this->get('id');
+        $producto = Producto::obtenerPorId($id);
+        $origen = $_GET['origen'] ?? 'catalogo';
+
+        if (!$producto) {
+            $this->setFlash('error', 'Producto no encontrado.');
+            $this->redirect('productos');
+        }
+
+        if ($this->isPost()) {
+            $data = [
+                'nombre' => $this->post('nombre'),
+                'descripcion' => $this->post('descripcion'),
+                'precio' => $this->post('precio'),
+                'descuento' => $this->post('descuento', 0),
+                'stock' => $this->post('stock'),
+                'imagenes' => $this->post('imagenes'),
+                'idCategoria' => $this->post('idCategoria'),
+                'idProducto' => $id,
+            ];
+
+            if (Producto::actualizar($data)) {
+                Producto::cambiarEstado($id, $this->post('activo', 1));
+                $this->setFlash('success', 'Producto actualizado.');
+
+            } else {
+                $this->setFlash('error', 'Error al actualizar el producto.');
+            }
+
+            $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
+        }
+
+        $this->render('catalogo/editar', [
+            'producto' => $producto,
+            'categorias' => Categoria::obtenerTodas(),
+            'usuario' => $this->usuarioActual(),
+        ]);
+    }
+
+    // POST /productos/cambiarEstado  (llamado por form con id y estado oculto)
+    public function cambiarEstado(): void
+    {
+        $this->requireAuth();
+
+        $origen = $_GET['origen'] ?? 'catalogo';
+
+        $id = (int) $this->post('id');
+        $nuevoEstado = (bool) $this->post('activo');
+        if (Producto::cambiarEstado($id, $nuevoEstado)) {
+            $this->setFlash('success', "Producto actualizado a " . ($nuevoEstado ? 'Activo' : 'Inactivo') . ".");
+        } else {
+            $this->setFlash('error', 'Error al actualizar el estado del producto.');
+        }
+
+        $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
+    }
+
+    // POST /productos/eliminar  (llamado por form con id oculto)
+    public function eliminar(): void
+    {
+        $this->requireAuth();
+
+        $origen = $_GET['origen'] ?? 'catalogo';
+
+        $id = (int) $this->post('id');
+
+        if (Producto::eliminar($id)) {
+            $this->setFlash('success', 'Producto desactivado.');
+        } else {
+            $this->setFlash('error', 'Error al eliminar el producto.');
+        }
+
+        $this->redirect($origen === 'inventario' ? 'inventario' : 'productos');
+    }
+
+    // GET /productos/ver?id=X
+    public function ver(): void
+    {
         $this->requireAuth();
 
         $id = (int) $this->get('id');
@@ -64,64 +154,11 @@ class ProductoController extends Controller {
             $this->redirect('productos');
         }
 
-        if ($this->isPost()) {
-            $data = [
-                'nombre'      => $this->post('nombre'),
-                'descripcion' => $this->post('descripcion'),
-                'precio'      => $this->post('precio'),
-                'descuento'   => $this->post('descuento', 0),
-                'stock'       => $this->post('stock'),
-                'imagenes'    => $this->post('imagenes'),
-                'idCategoria' => $this->post('idCategoria'),
-                'idProducto'  => $id,
-            ];
-
-            if (Producto::actualizar($data)) {
-                $this->setFlash('success', 'Producto actualizado.');
-            } else {
-                $this->setFlash('error', 'Error al actualizar el producto.');
-            }
-
-            $this->redirect('productos');
-        }
-
-        $this->render('catalogo/editar', [
-            'producto'   => $producto,
-            'categorias' => Categoria::obtenerTodas(),
-            'usuario'    => $this->usuarioActual(),
-        ]);
-    }
-
-    // POST /productos/eliminar  (llamado por form con id oculto)
-    public function eliminar(): void {
-        $this->requireAuth();
-
-        $id = (int) $this->post('id');
-
-        if (Producto::eliminar($id)) {
-            $this->setFlash('success', 'Producto desactivado.');
-        } else {
-            $this->setFlash('error', 'Error al eliminar el producto.');
-        }
-
-        $this->redirect('productos');
-    }
-
-    // GET /productos/ver?id=X
-    public function ver(): void {
-        $this->requireAuth();
-
-        $id      = (int) $this->get('id');
-        $producto = Producto::obtenerPorId($id);
-
-        if (!$producto) {
-            $this->setFlash('error', 'Producto no encontrado.');
-            $this->redirect('productos');
-        }
-
         $this->render('catalogo/ver', [
             'producto' => $producto,
-            'usuario'  => $this->usuarioActual(),
+            'usuario' => $this->usuarioActual(),
+            'calificaciones' => Calificacion::obtenerPorProducto($id),
         ]);
     }
+    
 }
