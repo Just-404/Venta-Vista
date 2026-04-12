@@ -191,7 +191,9 @@ $catTotals = json_encode(array_column($ventasCategorias, 'total'));
 
     <!-- Ventas del Mes -->
     <div class="db-card">
-        <div class="db-card-icon db-card-icon--orange">💰</div>
+        <div class="db-card-icon db-card-icon--orange">
+            <img src="<?= BASE_URL ?>images/icons/bolsa-dinero-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="db-card-body">
             <div class="db-card-value">RD$<?= number_format($ventasMes, 0, '.', ',') ?></div>
             <div class="db-card-label">Ventas del Mes</div>
@@ -205,7 +207,9 @@ $catTotals = json_encode(array_column($ventasCategorias, 'total'));
 
     <!-- Pedidos Activos -->
     <div class="db-card">
-        <div class="db-card-icon db-card-icon--blue">📦</div>
+        <div class="db-card-icon db-card-icon--blue">
+            <img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="db-card-body">
             <div class="db-card-value"><?= $pedidosActivos ?></div>
             <div class="db-card-label">Pedidos Activos</div>
@@ -217,7 +221,9 @@ $catTotals = json_encode(array_column($ventasCategorias, 'total'));
 
     <!-- Clientes Registrados -->
     <div class="db-card">
-        <div class="db-card-icon db-card-icon--green">👥</div>
+        <div class="db-card-icon db-card-icon--green">
+            <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="db-card-body">
             <div class="db-card-value"><?= $clientesRegistrados ?></div>
             <div class="db-card-label">Clientes Registrados</div>
@@ -229,7 +235,10 @@ $catTotals = json_encode(array_column($ventasCategorias, 'total'));
 
     <!-- Productos Sin Stock -->
     <div class="db-card <?= $sinStock > 0 ? 'db-card--warn' : '' ?>">
-        <div class="db-card-icon db-card-icon--yellow">⚠️</div>
+        <div class="db-card-icon db-card-icon--yellow">
+            <img src="<?= BASE_URL ?>images/icons/warning-icon.png" class="icon" alt="logo sistema">
+
+        </div>
         <div class="db-card-body">
             <div class="db-card-value"><?= $sinStock ?></div>
             <div class="db-card-label">Productos Sin Stock</div>

@@ -18,7 +18,8 @@
 
 <div class="panel">
     <div class="panel-header">
-        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar producto...">
+        <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
+        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar producto...">
         <select class="select-form" id="filtro-stock" style="width:auto">
             <option value="">Todo el inventario</option>
             <option value="critico">Stock crítico (≤ 5)</option>

@@ -69,7 +69,9 @@ $chartBarJson = json_encode(['labels' => $labMeses, 'data' => $valMeses]);
 <!-- Título -->
 <div class="page-header" style="margin-bottom:20px">
     <div>
-        <h1 class="page-titulo">📊 Detalle de Ventas</h1>
+        <h1 class="page-titulo">
+            <img src="<?= BASE_URL ?>images/icons/reportes-icon.png" class="icon" alt="logo sistema"> Detalle de Ventas
+        </h1>
         <p class="page-sub">Análisis completo del rendimiento de ventas</p>
     </div>
     <div class="export-group">

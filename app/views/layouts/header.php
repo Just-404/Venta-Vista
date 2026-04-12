@@ -12,7 +12,7 @@
     <!-- Carrito (solo clientes) -->
     <?php if (($usuario['rol'] ?? 0) == 3): ?>
     <a href="<?= BASE_URL ?>carrito" class="accion-topbar" style="text-decoration:none">
-      🛒
+      <img src="<?= BASE_URL ?>images/icons/carrito-icon.png" class="icon" alt="logo sistema">
       <span class="indicador-badge" id="badge-carrito" style="display:none"></span>
     </a>
     <?php endif; ?>
@@ -20,7 +20,8 @@
 <!-- Notificaciones -->
     <div class="notif-wrapper" id="notif-wrapper">
       <button class="accion-topbar" id="notif-btn" title="Notificaciones">
-        🔔<span class="indicador-badge" id="notif-badge" style="display:none"></span>
+        <img src="<?= BASE_URL ?>images/icons/notificacion-icon.png" class="icon" alt="logo sistema">
+        <span class="indicador-badge" id="notif-badge" style="display:none"></span>
       </button>
       <div class="notif-panel" id="notif-panel" style="display:none">
         <div class="notif-panel-header">
@@ -38,7 +39,7 @@
 
     <!-- Configuración → redirige según rol -->
     <a href="<?= BASE_URL ?>configuracion" class="accion-topbar" style="text-decoration:none" title="Configuración">
-      ⚙️
+      <img src="<?= BASE_URL ?>images/icons/configuracion-icon.png" class="icon" alt="logo sistema">
     </a>
   </div>
 

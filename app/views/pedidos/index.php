@@ -10,7 +10,8 @@
 
 <div class="panel">
     <div class="panel-header">
-        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar pedido...">
+        <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
+        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar pedido...">
         <select class="select-form" id="filtro-estado" style="width:auto">
             <option value="">Todos los estados</option>
             <option>Pendiente</option>

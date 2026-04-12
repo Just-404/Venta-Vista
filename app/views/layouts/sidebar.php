@@ -42,6 +42,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         <?php if (in_array($rol, [1, 2])): ?>
         <a href="<?= BASE_URL ?>dashboard"
         class="nav-item <?= $current === 'dashboard' ? 'activo' : '' ?>">
+        <img src="<?= BASE_URL ?>images/icons/dashboard-icon.png" class="icon" alt="logo sistema">
        <span>Dashboard</span>
      </a>
       <?php endif; ?>
@@ -53,13 +54,13 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
                 <div class="nav-seccion-titulo">Catálogo</div>
 
                 <a href="<?= BASE_URL ?>productos" class="nav-item <?= str_starts_with($current, 'productos') ? 'activo' : '' ?>">
-                    <span>🏷️</span>
+                    <img src="<?= BASE_URL ?>images/icons/catalogo-icon.png" class="icon" alt="logo sistema">
                     <span>Catálogo</span>
                 </a>
 
                 <a href="<?= BASE_URL ?>pedidos"
                    class="nav-item <?= str_starts_with($current, 'pedidos') ? 'activo' : '' ?>">
-                    <span>📦</span>
+                    <img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="logo sistema">
                     <span>Pedidos</span>
                 </a>
             </div>
@@ -68,18 +69,18 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
                 <div class="nav-seccion-titulo">Administración</div>
                 <?php if ($rol == 2): ?>
                     <a href="<?= BASE_URL ?>clientes" class="nav-item <?= str_starts_with($current, 'clientes') ? 'activo' : '' ?>">
-                        <span>👥</span>
+                        <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema">
                         <span>Clientes</span>
                     </a>
                 <?php endif; ?>
                 <a href="<?= BASE_URL ?>inventario"
                    class="nav-item <?= str_starts_with($current, 'inventario') ? 'activo' : '' ?>">
-                    <span>📋</span>
+                    <img src="<?= BASE_URL ?>images/icons/inventario-icon.png" class="icon" alt="logo sistema">
                     <span>Inventario</span>
                 </a>
                 <a href="<?= BASE_URL ?>cupones"
                    class="nav-item <?= str_starts_with($current, 'cupones') ? 'activo' : '' ?>">
-                    <span>🎟️</span>
+                    <img src="<?= BASE_URL ?>images/icons/cupon-icon.png" class="icon" alt="logo sistema">
                     <span>Cupones</span>
                 </a>
             </div>
@@ -91,13 +92,13 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
 
             <a href="<?= BASE_URL ?>usuarios"
                class="nav-item <?= str_starts_with($current, 'usuarios') ? 'activo' : '' ?>">
-                <span>👥</span>
+                <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema">
                 <span>Usuarios</span>
             </a>
 
             <a href="<?= BASE_URL ?>reportes"
                class="nav-item <?= str_starts_with($current, 'reportes') ? 'activo' : '' ?>">
-                <span>📈</span>
+                <img src="<?= BASE_URL ?>images/icons/reportes-icon.png" class="icon" alt="logo sistema">
                 <span>Reportes</span>
             </a>
 
@@ -107,7 +108,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         <?php if (in_array($rol, [1, 2])): ?>
             <a href="<?= BASE_URL ?>configuracion"
                class="nav-item <?= str_starts_with($current, 'configuracion') ? 'activo' : '' ?>">
-                <span>⚙️</span>
+                <img src="<?= BASE_URL ?>images/icons/configuracion-icon.png" class="icon" alt="logo sistema">
                 <span>Configuración</span>
             </a>
         <?php endif; ?>
@@ -118,22 +119,22 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
             <div class="nav-seccion-titulo">Mi Cuenta</div>
 
             <a href="<?= BASE_URL ?>productos" class="nav-item <?= str_starts_with($current, 'productos') ? 'activo' : '' ?>">
-                <span>🏷️</span>
+                <img src="<?= BASE_URL ?>images/icons/catalogo-icon.png" class="icon" alt="logo sistema">
                 <span>Catálogo</span>
             </a>
             <a href="<?= BASE_URL ?>carrito"
                class="nav-item <?= str_starts_with($current, 'carrito') ? 'activo' : '' ?>">
-                <span>🛒</span>
+                <img src="<?= BASE_URL ?>images/icons/carrito-icon.png" class="icon" alt="logo sistema">
                 <span>Carrito</span>
             </a>
             <a href="<?= BASE_URL ?>pedidos"
                class="nav-item <?= str_starts_with($current, 'pedidos') ? 'activo' : '' ?>">
-                <span>📦</span>
+                <img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="logo sistema">
                 <span>Mis Pedidos</span>
             </a>
             <a href="<?= BASE_URL ?>configuracion"
                class="nav-item <?= str_starts_with($current, 'configuracion') ? 'activo' : '' ?>">
-                <span>⚙️</span>
+                <img src="<?= BASE_URL ?>images/icons/configuracion-icon.png" class="icon" alt="logo sistema">
                 <span>Mi Cuenta</span>
             </a>
 

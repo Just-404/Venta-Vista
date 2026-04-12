@@ -47,6 +47,10 @@
     overflow: hidden;
 }
 .config-seccion-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--borde);
     background: var(--superficie2);
@@ -98,12 +102,18 @@
 /* ── Sistema de Tabs ────────────────────────────────────────────────────── */
 .config-tabs {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: .25rem;
     border-bottom: 2px solid var(--borde);
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
 .config-tab-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     padding: .6rem 1.1rem;
     font-size: .875rem;
     font-weight: 500;

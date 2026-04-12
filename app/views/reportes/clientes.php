@@ -68,7 +68,9 @@ $chartLetraJson = json_encode(['labels' => array_keys($porLetra), 'data' => arra
 
 <div class="page-header" style="margin-bottom:20px">
     <div>
-        <h1 class="page-titulo">👥 Reporte de Clientes</h1>
+        <h1 class="page-titulo">
+            <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema"> 
+            Reporte de Clientes</h1>
         <p class="page-sub">Análisis y estado de la base de clientes</p>
     </div>
     <div class="export-group">

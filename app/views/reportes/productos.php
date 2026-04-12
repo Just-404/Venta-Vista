@@ -56,7 +56,9 @@ $chartDona  = json_encode([
 
 <div class="page-header" style="margin-bottom:20px">
     <div>
-        <h1 class="page-titulo">📦 Reporte de Productos</h1>
+        <h1 class="page-titulo">
+             <img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="logo sistema"> Reporte de Productos
+            </h1>
         <p class="page-sub">Desempeño, stock y calificaciones del catálogo</p>
     </div>
     <div class="export-group">

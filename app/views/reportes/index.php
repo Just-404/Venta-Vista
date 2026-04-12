@@ -187,28 +187,36 @@ $vendedorJson = json_encode($porVendedor);
 <!-- ── Estadísticas rápidas ───────────────────────────────────────────────── -->
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icono stat-icono--naranja">💰</div>
+        <div class="stat-icono stat-icono--naranja">
+            <img src="<?= BASE_URL ?>images/icons/bolsa-dinero-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="stat-info">
             <div class="stat-valor">RD$ <?= number_format($totalVentas, 0) ?></div>
             <div class="stat-label">Ingresos totales</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--verde">✅</div>
+        <div class="stat-icono stat-icono--verde">
+            <img src="<?= BASE_URL ?>images/icons/checkmark-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="stat-info">
             <div class="stat-valor"><?= $pedidosEntregados ?></div>
             <div class="stat-label">Pedidos entregados</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--azul">⏳</div>
+        <div class="stat-icono stat-icono--azul">
+            <img src="<?= BASE_URL ?>images/icons/pedido-pendiente-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="stat-info">
             <div class="stat-valor"><?= $pedidosPendientes ?></div>
             <div class="stat-label">Pedidos pendientes</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--morado">❌</div>
+        <div class="stat-icono stat-icono--morado">
+            <img src="<?= BASE_URL ?>images/icons/cancelado-icon.png" class="icon" alt="logo sistema">
+        </div>
         <div class="stat-info">
             <div class="stat-valor"><?= $pedidosCancelados ?></div>
             <div class="stat-label">Pedidos cancelados</div>
@@ -333,15 +341,21 @@ $vendedorJson = json_encode($porVendedor);
             <div class="rep-tabs">
                 <a href="<?= BASE_URL ?>reportes/ventas"
                    class="rep-tab">
-                    <span class="rep-tab-icon">📊</span> Detalle ventas
+                    <span class="rep-tab-icon">
+                        <img src="<?= BASE_URL ?>images/icons/reportes-icon.png" class="icon" alt="logo sistema">
+                    </span> Detalle ventas
                 </a>
                 <a href="<?= BASE_URL ?>reportes/productos"
                    class="rep-tab">
-                    <span class="rep-tab-icon">📦</span> Productos
+                    <span class="rep-tab-icon">
+                        <img src="<?= BASE_URL ?>images/icons/pedido-icon.png" class="icon" alt="logo sistema">
+                    </span> Productos
                 </a>
                 <a href="<?= BASE_URL ?>reportes/clientes"
                    class="rep-tab">
-                    <span class="rep-tab-icon">👥</span> Clientes
+                    <span class="rep-tab-icon">
+                        <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema">
+                    </span> Clientes
                 </a>
             </div>
             <!-- Exportar historial -->

@@ -14,17 +14,27 @@ $u      = $usuario ?? [];
 
 <!-- Tabs -->
 <div class="config-tabs">
-    <button class="config-tab-btn activo" data-tab="fiscal">📋 Datos Fiscales</button>
-    <button class="config-tab-btn" data-tab="impuestos">💰 Impuestos y Envío</button>
-    <button class="config-tab-btn" data-tab="notificaciones">🔔 Notificaciones</button>
-    <button class="config-tab-btn" data-tab="perfil">👤 Mi Perfil</button>
-    <button class="config-tab-btn" data-tab="password">🔑 Contraseña</button>
+    <button class="config-tab-btn activo" data-tab="fiscal">
+        <img src="<?= BASE_URL ?>images/icons/reporte-fiscal-icon.png" class="icon" alt="logo sistema"> Datos Fiscales</button>
+    <button class="config-tab-btn" data-tab="impuestos">
+        <img src="<?= BASE_URL ?>images/icons/bolsa-dinero-icon.png" class="icon" alt="logo sistema"> Impuestos y Envío</button>
+    <button class="config-tab-btn" data-tab="notificaciones">
+        <img src="<?= BASE_URL ?>images/icons/notificacion-icon.png" class="icon" alt="logo sistema"> Notificaciones</button>
+    <button class="config-tab-btn" data-tab="perfil">
+        <img src="<?= BASE_URL ?>images/icons/user-icon.png" class="icon" alt="logo sistema"> Mi Perfil</button>
+    <button class="config-tab-btn" data-tab="password">
+        <img src="<?= BASE_URL ?>images/icons/access-icon.png" class="icon" alt="logo sistema"> Contraseña</button>
 </div>
 
 <!-- Tab: Datos Fiscales -->
 <div class="config-panel activo" id="tab-fiscal">
     <div class="config-seccion">
-        <div class="config-seccion-header"><h2>📋 Datos Fiscales del Negocio</h2></div>
+        <div class="config-seccion-header">
+            <img src="<?= BASE_URL ?>images/icons/reporte-fiscal-icon.png" class="icon" alt="logo sistema">
+            <h2>
+                Datos Fiscales del Negocio
+            </h2>
+        </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/fiscal">
                 <div class="grid-form">
@@ -65,7 +75,10 @@ $u      = $usuario ?? [];
 <!-- Tab: Impuestos -->
 <div class="config-panel" id="tab-impuestos">
     <div class="config-seccion">
-        <div class="config-seccion-header"><h2>💰 Impuestos y Envío</h2></div>
+        <div class="config-seccion-header">
+            <img src="<?= BASE_URL ?>images/icons/bolsa-dinero-icon.png" class="icon" alt="logo sistema">    
+            <h2>Impuestos y Envío</h2>
+        </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/impuestos">
                 <div class="grid-form">
@@ -93,7 +106,10 @@ $u      = $usuario ?? [];
 <!-- Tab: Notificaciones -->
 <div class="config-panel" id="tab-notificaciones">
     <div class="config-seccion">
-        <div class="config-seccion-header"><h2>🔔 Preferencias de Notificaciones</h2></div>
+        <div class="config-seccion-header">
+        <img src="<?= BASE_URL ?>images/icons/notificacion-icon.png" class="icon" alt="logo sistema">    
+        <h2>
+             Preferencias de Notificaciones</h2></div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/preferencias">
                 <?php $toggles = [
@@ -124,7 +140,10 @@ $u      = $usuario ?? [];
 <!-- Tab: Mi Perfil -->
 <div class="config-panel" id="tab-perfil">
     <div class="config-seccion">
-        <div class="config-seccion-header"><h2>👤 Mi Perfil</h2></div>
+        <div class="config-seccion-header">
+            <img src="<?= BASE_URL ?>images/icons/user-icon.png" class="icon" alt="logo sistema">    
+            <h2> Mi Perfil</h2>
+        </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/perfil">
                 <div class="grid-form">
@@ -165,7 +184,10 @@ $u      = $usuario ?? [];
 <!-- Tab: Contraseña -->
 <div class="config-panel" id="tab-password">
     <div class="config-seccion">
-        <div class="config-seccion-header"><h2>🔑 Cambiar Contraseña</h2></div>
+        <div class="config-seccion-header">
+            <img src="<?= BASE_URL ?>images/icons/access-icon.png" class="icon" alt="logo sistema">    
+            <h2> Cambiar Contraseña</h2>
+        </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/password">
                 <div class="grid-form">

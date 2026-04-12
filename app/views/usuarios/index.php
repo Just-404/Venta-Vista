@@ -10,7 +10,8 @@
 
 <div class="panel">
     <div class="panel-header">
-        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar usuario...">
+        <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
+        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar usuario...">
     </div>
     <div class="tabla-wrapper">
         <table class="tabla" id="tabla-usuarios">
