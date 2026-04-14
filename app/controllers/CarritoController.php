@@ -6,6 +6,8 @@ use app\core\Controller;
 use app\models\Carrito;
 use app\models\Producto;
 use app\models\Cliente;
+use app\models\Pedido;
+use app\models\DetallePedido;
 
 class CarritoController extends Controller
 {
@@ -38,6 +40,69 @@ class CarritoController extends Controller
             'inactivos' => $inactivos,
         ]);
     }
+    
+    public function checkout(): void
+{
+    $this->requireAuth();
+
+    $idCliente = $this->getIdCliente();
+    $carrito   = $this->obtenerOCrearCarrito($idCliente);
+
+    $items = Carrito::obtenerItems($carrito['idCarrito']);
+
+    if (!$items) {
+        $this->setFlash('error', 'El carrito está vacío.');
+        $this->redirect('carrito/index');
+    }
+
+    $subtotal = Carrito::calcularTotal($carrito['idCarrito']);
+
+    $numeroPedido = Pedido::generarNumeroPedido();
+
+    $idPedido = Pedido::crear([
+        'numeroPedido' => $numeroPedido,
+        'subtotal'     => $subtotal,
+        'descuento'    => 0,
+        'total'        => $subtotal,
+        'notas'        => null,
+        'idCliente'    => $idCliente,
+        'idCupon'      => null,
+    ]);
+
+    $detalle = [];
+
+    foreach ($items as $item) {
+
+        $detalle[] = [
+            'cantidad'       => $item['cantidad'],
+            'precioUnitario' => $item['precioUnitario'],
+            'subtotal'       => $item['cantidad'] * $item['precioUnitario'],
+            'idPedido'       => $idPedido,
+            'idProducto'     => $item['idProducto'],
+            
+        ];
+
+        Producto::actualizarStock(
+            $item['idProducto'],
+            -$item['cantidad']
+        );
+    }
+
+    DetallePedido::crearLote($detalle);
+
+    // Vaciar carrito
+    Carrito::vaciar($carrito['idCarrito']);
+
+    $pedido = Pedido::obtenerPorId($idPedido);
+    $items  = DetallePedido::obtenerPorPedido($idPedido);
+    // Ir a checkout
+    $this->render('pagos/checkout', [
+    'pedido'  => $pedido,
+    'items'   => $items,
+    'total'   => $pedido['total'] ?? 0,
+    'usuario' => $this->usuarioActual()
+]);
+}
 
     // POST /carrito/agregar
     public function agregar(): void

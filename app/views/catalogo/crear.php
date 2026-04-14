@@ -1,4 +1,7 @@
-<?php $categorias = $categorias ?? []; ?>
+<?php 
+$categorias = $categorias ?? []; 
+$rol     = $usuario['rol'] ?? 0;
+?>
 
 <div class="page-header">
     <div>
@@ -62,8 +65,7 @@
                 </select>
             </div>
         </div>
-
-
+        <input type="hidden" name="idVendedor" value="<?= $rol  ?>">
         <div class="form-acciones">
             <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos' ?>"
                 class="btn btn-secundario">Cancelar</a>

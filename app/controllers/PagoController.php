@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\models\Pago;
 use app\models\Pedido;
+use app\models\DetallePedido;
 use app\models\Cliente;
 use app\models\Usuario;
 use app\models\Notificacion;
@@ -23,6 +24,22 @@ class PagoController extends Controller {
             'usuario' => $this->usuarioActual(),
         ]);
     }
+    // GET /pagos/checkout
+    public function checkout(): void {
+
+        $this->requireAuth();
+
+        $idPedido = (int) $this->get('id');
+
+        $pedido = Pedido::obtenerPorId($idPedido);
+        $items  = DetallePedido::obtenerPorPedido($idPedido);
+
+        $this->render('pagos/checkout',[
+            'pedido' => $pedido,
+            'items'  => $items,
+            'total'  => $pedido['total']
+    ]);
+}
 
     // POST /pagos/crear
     public function crear(): void {

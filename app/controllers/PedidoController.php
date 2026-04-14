@@ -33,7 +33,6 @@ class PedidoController extends Controller {
     // POST /pedidos/crear
     public function crear(): void {
         $this->requireAuth();
-        $this->redirect('catalogo/index');
         if ($this->isPost()) {
             // 1. Validar cupón si se envió
             $idCupon  = null;
@@ -102,12 +101,14 @@ class PedidoController extends Controller {
             if ($idCupon) Cupon::registrarUso($idCupon);
 
             $this->setFlash('success', 'Pedido creado correctamente.');
-            $this->redirect('pedidos');
+            $this->redirect('pagos/checkout?id=' . $idPedido);
         }
 
+        $carrito = $_SESSION['carrito'] ?? [];
         $this->render('pedidos/crear', [
             'clientes' => Cliente::obtenerTodos(),
             'productos' => Producto::obtenerActivos(),
+            'carrito'   => $carrito,
             'usuario'  => $this->usuarioActual(),
         ]);
     }

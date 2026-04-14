@@ -41,6 +41,7 @@ class ProductoController extends Controller
                 'stock' => $this->post('stock', 0),
                 'imagenes' => $this->post('imagenes'),
                 'idCategoria' => $this->post('idCategoria'),
+                'idVendedor' => $this->post('idVendedor'),
             ];
 
             $id = Producto::crear($data);

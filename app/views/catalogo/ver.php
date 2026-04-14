@@ -37,7 +37,7 @@ $calificaciones = $calificaciones ?? [];
         <div style="padding:20px">
             <div class="detalle-fila">
                 <span class="detalle-label">Imagen</span>
-                <img src="<?= htmlspecialchars($producto['imagenes']) ?>"
+                <img src="<?= BASE_URL."images/catalogo/".htmlspecialchars($producto['imagenes']) ?>"
                     alt="<?= htmlspecialchars($producto['nombre']) ?>"
                     style="width:30%;height:auto;object-fit:cover;border-radius:6px;margin-bottom:20px"
                     onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';">

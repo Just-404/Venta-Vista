@@ -120,7 +120,7 @@ $estadoProductos = $estadoProductos ?? [];
                         <span style="color:var(--acento)" id="total">RD$ <?= number_format($total, 2) ?></span>
                     </div>
 
-                    <a href="<?= BASE_URL ?>pedidos/crear" class="btn btn-primario btn-completo" style="margin-top:20px">
+                    <a href="<?= BASE_URL ?>carrito/checkout" class="btn btn-primario btn-completo" style="margin-top:20px">
                         Proceder al pago
                     </a>
                 </div>

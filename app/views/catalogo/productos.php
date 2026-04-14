@@ -34,9 +34,11 @@ $categorias = $categorias ?? [];
         <?php foreach ($productos as $producto): ?>
             <?php if ($usuario['rol'] == 3 && !$producto['activo']) continue; ?>
             <div class="producto-card">
-                <span class="imagen"><img src="<?= htmlspecialchars($producto['imagenes']) ?>"
+                <span class="imagen"><img src="<?= BASE_URL."images/catalogo/".htmlspecialchars($producto['imagenes']) ?>"
                         alt="<?= htmlspecialchars($producto['nombre']) ?>" onclick="mostrarImagen(this)"
-                        onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"></span>
+                        onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"
+                        loading="lazy"
+                        ></span>
                 <span class="categoria"><?= htmlspecialchars($producto['categoria']) ?></span>
                 <h3 class="nombre"><?= htmlspecialchars($producto['nombre']) ?></h3>
                 <?php if ($producto['descuento'] > 0): ?>

@@ -35,6 +35,7 @@ return [
     // ── Carrito ─────────────────────────────────────────────────
     'carrito'               => ['controller' => 'CarritoController', 'action' => 'index'],
     'carrito/agregar'       => ['controller' => 'CarritoController', 'action' => 'agregar'],
+    'carrito/checkout'        => ['controller' => 'CarritoController', 'action' => 'checkout'],
     'carrito/actualizar'    => ['controller' => 'CarritoController', 'action' => 'actualizar'],
     'carrito/eliminar-item' => ['controller' => 'CarritoController', 'action' => 'eliminarItem'],
     'carrito/vaciar'        => ['controller' => 'CarritoController', 'action' => 'vaciar'],
@@ -50,6 +51,7 @@ return [
     'pagos'        => ['controller' => 'PagoController', 'action' => 'index'],
     'pagos/crear'  => ['controller' => 'PagoController', 'action' => 'crear'],
     'pagos/estado' => ['controller' => 'PagoController', 'action' => 'estado'],
+    'pagos/checkout' => ['controller' => 'PagoController', 'action' => 'checkout'],
 
     // ── Envios ──────────────────────────────────────────────────
     'envios'           => ['controller' => 'EnvioController', 'action' => 'index'],

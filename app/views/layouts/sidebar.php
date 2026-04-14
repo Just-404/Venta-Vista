@@ -8,8 +8,8 @@ $roles = [
 ];
 
 $nombreRol = $roles[$rol] ?? 'Desconocido';
-
-$nombreUsuario = $usuario['username'] ?? '';
+$usuario = $usuario ?? [];
+$nombreUsuario = $usuario['username'] ?? 'Usuario';
 $current = trim($_GET['url'] ?? '', '/');
 
 $palabras = explode(' ', $nombreUsuario);
