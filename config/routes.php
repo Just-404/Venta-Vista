@@ -50,6 +50,7 @@ return [
     // ── Pagos ───────────────────────────────────────────────────
     'pagos'        => ['controller' => 'PagoController', 'action' => 'index'],
     'pagos/crear'  => ['controller' => 'PagoController', 'action' => 'crear'],
+    'pagos/procesar'  => ['controller' => 'PagoController', 'action' => 'procesar'],
     'pagos/estado' => ['controller' => 'PagoController', 'action' => 'estado'],
     'pagos/checkout' => ['controller' => 'PagoController', 'action' => 'checkout'],
 

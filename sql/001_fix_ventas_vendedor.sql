@@ -1,14 +1,14 @@
 -- ══════════════════════════════════════════════════════════════════════════════
 -- ARCHIVO: sql/001_fix_ventas_vendedor.sql
 --
---Ventas por vendedor no mostraba datos porque la vista SQL 
---v_ventas_vendedor tenía un JOIN imposible, cruzando vendedores 
---con clientes por idUsuario cuando ambos son usuarios distintos 
---que nunca comparten ese campo. Pero el problema de fondo era que 
---el schema no tenía ninguna columna que vinculara los productos con 
---los vendedores, así que agregué idVendedor a la tabla productos, 
---recreé la vista con el join correcto siguiendo la cadena 
---vendedores → productos → detalle_pedido → pedidos
+-- Ventas por vendedor no mostraba datos porque la vista SQL 
+-- v_ventas_vendedor tenía un JOIN imposible, cruzando vendedores 
+-- con clientes por idUsuario cuando ambos son usuarios distintos 
+-- que nunca comparten ese campo. Pero el problema de fondo era que 
+-- el schema no tenía ninguna columna que vinculara los productos con 
+-- los vendedores, así que agregué idVendedor a la tabla productos, 
+-- recreé la vista con el join correcto siguiendo la cadena 
+-- vendedores → productos → detalle_pedido → pedidos
 --
 -- Qué hace:
 --  1. Agrega columna idVendedor a la tabla productos

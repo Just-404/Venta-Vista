@@ -42,67 +42,43 @@ class CarritoController extends Controller
     }
     
     public function checkout(): void
-{
-    $this->requireAuth();
+    {
+        $this->requireAuth();
 
-    $idCliente = $this->getIdCliente();
-    $carrito   = $this->obtenerOCrearCarrito($idCliente);
+        $idCliente = $this->getIdCliente();
+        $carrito   = $this->obtenerOCrearCarrito($idCliente);
 
-    $items = Carrito::obtenerItems($carrito['idCarrito']);
+        $items = Carrito::obtenerItems($carrito['idCarrito']);
 
-    if (!$items) {
-        $this->setFlash('error', 'El carrito está vacío.');
-        $this->redirect('carrito/index');
+        if (!$items) {
+            $this->setFlash('error', 'El carrito está vacío.');
+            $this->redirect('carrito');
+        }
+
+        $subtotal = Carrito::calcularTotal($carrito['idCarrito']);
+
+        $cupon = $_SESSION['cupon'] ?? null;
+        $descuento = 0;
+
+        if ($cupon) {
+            if ($cupon['tipo'] === 'Porcentaje') {
+                $descuento = $subtotal * ($cupon['descuento'] / 100);
+            } else {
+                $descuento = $cupon['descuento'];
+            }
+        }
+        $total = max(0, $subtotal - $descuento);
+
+        // Ir a checkout
+        $this->render('pagos/checkout', [
+        'items'     => $items,
+        'subtotal'  => $subtotal,
+        'descuento' => $descuento,
+        'total'     => $total,
+        'cupon'     => $cupon,
+        'usuario'   => $this->usuarioActual()
+        ]);
     }
-
-    $subtotal = Carrito::calcularTotal($carrito['idCarrito']);
-
-    $numeroPedido = Pedido::generarNumeroPedido();
-
-    $idPedido = Pedido::crear([
-        'numeroPedido' => $numeroPedido,
-        'subtotal'     => $subtotal,
-        'descuento'    => 0,
-        'total'        => $subtotal,
-        'notas'        => null,
-        'idCliente'    => $idCliente,
-        'idCupon'      => null,
-    ]);
-
-    $detalle = [];
-
-    foreach ($items as $item) {
-
-        $detalle[] = [
-            'cantidad'       => $item['cantidad'],
-            'precioUnitario' => $item['precioUnitario'],
-            'subtotal'       => $item['cantidad'] * $item['precioUnitario'],
-            'idPedido'       => $idPedido,
-            'idProducto'     => $item['idProducto'],
-            
-        ];
-
-        Producto::actualizarStock(
-            $item['idProducto'],
-            -$item['cantidad']
-        );
-    }
-
-    DetallePedido::crearLote($detalle);
-
-    // Vaciar carrito
-    Carrito::vaciar($carrito['idCarrito']);
-
-    $pedido = Pedido::obtenerPorId($idPedido);
-    $items  = DetallePedido::obtenerPorPedido($idPedido);
-    // Ir a checkout
-    $this->render('pagos/checkout', [
-    'pedido'  => $pedido,
-    'items'   => $items,
-    'total'   => $pedido['total'] ?? 0,
-    'usuario' => $this->usuarioActual()
-]);
-}
 
     // POST /carrito/agregar
     public function agregar(): void
@@ -128,7 +104,7 @@ class CarritoController extends Controller
         ]);
 
         $this->setFlash('success', 'Producto agregado al carrito.');
-        $this->redirect('carrito/index');
+        $this->redirect('productos');
     }
 
     // POST /carrito/actualizar
@@ -145,7 +121,7 @@ class CarritoController extends Controller
             'idProducto' => (int) $this->post('idProducto'),
         ]);
 
-        $this->redirect('carrito/index');
+        $this->redirect('carrito');
     }
 
     // POST /carrito/eliminar-item
@@ -157,7 +133,7 @@ class CarritoController extends Controller
         $carrito = $this->obtenerOCrearCarrito($idCliente);
 
         Carrito::eliminarItem($carrito['idCarrito'], (int) $this->post('idProducto'));
-        $this->redirect('carrito/index');
+        $this->redirect('carrito');
     }
 
     // POST /carrito/vaciar
@@ -169,7 +145,7 @@ class CarritoController extends Controller
         $carrito = $this->obtenerOCrearCarrito($idCliente);
 
         Carrito::vaciar($carrito['idCarrito']);
-        $this->redirect('carrito/index');
+        $this->redirect('carrito');
     }
 
     // Helpers privados

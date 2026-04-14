@@ -1,4 +1,6 @@
 .sidebar {
+  height: 100vh;
+  align-self: start;
   width: var(--ancho-sidebar);
   min-width: var(--ancho-sidebar);
   background: var(--primario);

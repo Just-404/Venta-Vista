@@ -11,8 +11,9 @@ $pasosCancelado = in_array($estadoActual, ['Cancelado','Devuelto']);
 // Orden del flujo normal (sin cancelado/devuelto)
 $flujo = ['Pendiente','Confirmado','En_proceso','Enviado','Entregado'];
 $idxActual = array_search($estadoActual, $flujo);
-?>
 
+$rol = $usuario['rol'] ?? 0;
+?>
 <!-- ── header ────────────────────────────────────────────── -->
 <div class="page-header">
     <div>
@@ -235,6 +236,7 @@ $idxActual = array_search($estadoActual, $flujo);
         </div>
 
         <!-- Cambiar estado -->
+         <?php if($rol != 3): ?>
         <div class="panel">
             <div class="panel-header"><h2 class="panel-titulo">Cambiar estado</h2></div>
             <div style="padding:20px">
@@ -254,7 +256,7 @@ $idxActual = array_search($estadoActual, $flujo);
                 </form>
             </div>
         </div>
-
+        <?php endif?>
         <!-- Historial rápido -->
         <?php if (!empty($historial)): ?>
         <div class="panel">

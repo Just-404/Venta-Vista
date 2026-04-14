@@ -269,6 +269,10 @@ tbody tr:last-child td { border-bottom: none; }
 tbody tr { transition: .15s; }
 tbody tr:hover { background: var(--fondo); }
 
+.metodo-pago input:not(:checked) ~ .grupo-form {
+opacity:0.5;
+}
+
 @keyframes animarToast {
   from { opacity: 0; transform: translateX(30px); }
   to   { opacity: 1; transform: none; }

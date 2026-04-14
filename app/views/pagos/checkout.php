@@ -1,9 +1,10 @@
 <?php
-$pedido = $pedido ?? [];
 $items  = $items ?? [];
 $total  = $total ?? 0;
+$subtotal = $subtotal ?? 0;
+$descuento = $descuento ?? 0;
+$cupon = $cupon ?? null;
 ?>
-
 <div class="page-header">
     <div>
         <h1 class="page-titulo">Pago del Pedido</h1>
@@ -25,13 +26,9 @@ $total  = $total ?? 0;
             <h2 class="panel-titulo">Método de Pago</h2>
         </div>
 
-        <form method="POST" action="<?= BASE_URL ?>pagos/crear">
-            
-            <input type="hidden" name="idPedido" 
-                value="<?= $pedido['idPedido'] ?>">
+        <form method="POST" action="<?= BASE_URL ?>pagos/procesar">
 
-            <input type="hidden" name="monto" 
-                value="<?= $total ?>">
+            <input type="hidden" name="monto" value="<?= $total ?>">
 
             <div style="padding:20px">
 
@@ -43,16 +40,18 @@ $total  = $total ?? 0;
                                value="Tarjeta_Credito" 
                                checked>
 
-                        <span>
-                            Tarjeta de Crédito
-                        </span>
+                        <span>Tarjeta de Crédito</span>
                     </label>
 
                     <div class="grupo-form">
                         <label class="etiqueta-form">Número de tarjeta</label>
                         <input class="input-form"
                                type="text"
-                               placeholder="0000 0000 0000 0000">
+                               name="numeroTarjeta"
+                               placeholder="0000 0000 0000 0000"
+                               pattern="[0-9\s]{13,19}"
+                               maxlength="19">
+
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -60,14 +59,20 @@ $total  = $total ?? 0;
                             <label class="etiqueta-form">Expiración</label>
                             <input class="input-form"
                                    type="text"
-                                   placeholder="MM/AA">
+                                   name="expiracion"
+                                   placeholder="MM/AA"
+                                   maxlength="5"
+                                   pattern="(0[1-9]|1[0-2])\/[0-9]{2}">                                  
                         </div>
 
                         <div class="grupo-form">
                             <label class="etiqueta-form">CVV</label>
                             <input class="input-form"
                                    type="text"
-                                   placeholder="123">
+                                   name="cvv"
+                                   placeholder="123"
+                                   pattern="[0-9]{3,4}"
+                                   maxlength="4">
                         </div>
                     </div>
                 </div>
@@ -99,7 +104,8 @@ $total  = $total ?? 0;
                         <label class="etiqueta-form">Referencia</label>
                         <input class="input-form"
                                name="referencia"
-                               placeholder="Número de transferencia">
+                               placeholder="Ej: TXN-004-2026"
+                               pattern="[A-Za-z0-9\-]{5,30}">
                     </div>
                 </div>
 
@@ -145,7 +151,7 @@ $total  = $total ?? 0;
                 <?php foreach ($items as $item): ?>
                     <div class="detalle-fila">
                         <span>
-                            <?= htmlspecialchars($item['producto']) ?>
+                            <?= htmlspecialchars($item['nombre']) ?>
                             (x<?= $item['cantidad'] ?>)
                         </span>
                         <span>
@@ -155,23 +161,35 @@ $total  = $total ?? 0;
                 <?php endforeach; ?>
 
                 <div class="separador-seccion"></div>
-
                 <div class="detalle-fila">
                     <span class="detalle-label">
                         Subtotal
                     </span>
                     <span>
-                        RD$ <?= number_format($total, 2) ?>
+                        RD$ <?= number_format($subtotal, 2) ?>
                     </span>
                 </div>
 
+                <?php if ($descuento > 0): ?>
+                <div class="detalle-fila" style="color:var(--exito)">
+                    <span>
+                        Cupón <?= htmlspecialchars($cupon['codigo']) ?>
+                    </span>
+                    <span>
+                        - RD$ <?= number_format($descuento, 2) ?>
+                    </span>
+                </div>
+                <?php endif; ?>
+                
+                <div class="separador-seccion"></div>
+                
                 <div class="detalle-fila"
                      style="font-size:1.1rem;
                             font-weight:700;
                             margin-top:12px">
 
                     <span>Total</span>
-
+                
                     <span style="color:var(--acento)">
                         RD$ <?= number_format($total, 2) ?>
                     </span>
@@ -182,3 +200,58 @@ $total  = $total ?? 0;
     </div>
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+const metodoPago = document.querySelectorAll('input[name="metodoPago"]')
+
+const numeroTarjeta = document.querySelector('[name="numeroTarjeta"]')
+const expiracion = document.querySelector('[name="expiracion"]')
+const cvv = document.querySelector('[name="cvv"]')
+const referencia = document.querySelector('[name="referencia"]')
+
+function actualizarValidaciones(){
+
+const metodo = document.querySelector('input[name="metodoPago"]:checked').value
+
+// Reset
+if(numeroTarjeta) numeroTarjeta.required = false
+if(expiracion) expiracion.required = false
+if(cvv) cvv.required = false
+if(referencia) referencia.required = false
+
+if(metodo === "Tarjeta_Credito"){
+if(numeroTarjeta) numeroTarjeta.required = true
+if(expiracion) expiracion.required = true
+if(cvv) cvv.required = true
+}
+
+if(metodo === "Transferencia"){
+if(referencia) referencia.required = true
+}
+
+}
+
+metodoPago.forEach(radio=>{
+radio.addEventListener('change', actualizarValidaciones)
+})
+
+actualizarValidaciones()
+
+})
+
+document.querySelectorAll('input[name="metodoPago"]').forEach(radio => {
+
+radio.addEventListener('change', function(){
+
+document.querySelectorAll('.metodo-pago').forEach(div=>{
+div.classList.remove('activo')
+})
+
+this.closest('.metodo-pago').classList.add('activo')
+
+})
+
+})
+
+</script>

@@ -56,7 +56,7 @@ $categorias = $categorias ?? [];
                 <span class="stock">Stock: <?= $producto['stock'] ?></span>
                 <?php if ($usuario['rol'] == 3): ?>
                     <div class="acciones-carrito">
-                        <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
+                        <form action="<?= BASE_URL ?>carrito/agregar" method="post" class="form-carrito">
                             <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
                             <input class="input-form" type="number" name="cantidad" value="1" min="1"
                                 max="<?= $producto['stock'] ?>" required>

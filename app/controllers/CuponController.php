@@ -99,9 +99,18 @@ class CuponController extends Controller {
         $cupon  = Cupon::validar($codigo);
  
         if ($cupon) {
+            $_SESSION['cupon'] = [
+                'id' => $cupon['idCupon'],
+                'codigo' => $cupon['codigo'],
+                'tipo' => $cupon['tipo'],
+                'descuento' => $cupon['descuento']
+            ];
+            
             $this->json(['valido' => true, 'cupon' => $cupon]);
         } else {
+            unset($_SESSION['cupon']);
             $this->json(['valido' => false, 'mensaje' => 'Cupón inválido o expirado.'], 404);
         }
+
     }
 }
