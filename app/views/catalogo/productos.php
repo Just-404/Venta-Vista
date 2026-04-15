@@ -17,8 +17,7 @@ $categorias = $categorias ?? [];
 
 <div class="panel">
     <div class="panel-header">
-        <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
-        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar producto...">
+        <input class="input-buscar" type="text" id="buscador" placeholder="🔍 Buscar producto..." style="width: 67%;">
         <select id="filtro-categoria" class="select-form" style="width: 30%;">
             <option value="">Todas las categorías</option>
             <?php foreach ($categorias as $categoria): ?>
@@ -32,13 +31,10 @@ $categorias = $categorias ?? [];
     <div class="catalogo-grid">
         <!-- Tarjeta de producto -->
         <?php foreach ($productos as $producto): ?>
-            <?php if ($usuario['rol'] == 3 && !$producto['activo']) continue; ?>
             <div class="producto-card">
-                <span class="imagen"><img src="<?= BASE_URL."images/catalogo/".htmlspecialchars($producto['imagenes']) ?>"
+                <span class="imagen"><img src="<?= htmlspecialchars($producto['imagenes']) ?>"
                         alt="<?= htmlspecialchars($producto['nombre']) ?>" onclick="mostrarImagen(this)"
-                        onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"
-                        loading="lazy"
-                        ></span>
+                        onerror="this.onerror=null; this.src='https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg';"></span>
                 <span class="categoria"><?= htmlspecialchars($producto['categoria']) ?></span>
                 <h3 class="nombre"><?= htmlspecialchars($producto['nombre']) ?></h3>
                 <?php if ($producto['descuento'] > 0): ?>
@@ -56,7 +52,7 @@ $categorias = $categorias ?? [];
                 <span class="stock">Stock: <?= $producto['stock'] ?></span>
                 <?php if ($usuario['rol'] == 3): ?>
                     <div class="acciones-carrito">
-                        <form action="<?= BASE_URL ?>carrito/agregar" method="post" class="form-carrito">
+                        <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
                             <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
                             <input class="input-form" type="number" name="cantidad" value="1" min="1"
                                 max="<?= $producto['stock'] ?>" required>

@@ -15,13 +15,24 @@ class ProductoController extends Controller
     {
         $this->requireAuth();
 
+        $usuario = $this->usuarioActual();
+        if ($usuario['rol'] == 2) {
+            $productos = Producto::obtenerPorVendedor($usuario['id']);
+        } elseif ($usuario['rol'] == 3) {
+            $productos = Producto::obtenerActivos();
+        } else {
+            $productos = Producto::obtenerTodos();
+        }
+
+
         $this->render('catalogo/productos', [
-            'productos' => Producto::obtenerTodos(),
+            'productos' => $productos,
             'flash' => $this->getFlash(),
-            'usuario' => $this->usuarioActual(),
+            'usuario' => $usuario,
             'categorias' => Categoria::obtenerTodas(),
         ]);
     }
+
 
     // GET  /productos/crear para mostrar formulario
     // POST /productos/crear para procesar creación
