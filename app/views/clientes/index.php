@@ -5,6 +5,7 @@
 $total    = count($clientes);
 $activos  = count(array_filter($clientes, fn($c) => $c['activo']));
 $inactivos = $total - $activos;
+$cont = 0;
 ?>
 <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
     <div class="stat-card">
@@ -77,7 +78,7 @@ $inactivos = $total - $activos;
                 <?php else: ?>
                     <?php foreach ($clientes as $c): ?>
                     <tr data-activo="<?= $c['activo'] ? '1' : '0' ?>">
-                        <td class="texto-muted"><?= $c['idCliente'] ?></td>
+                        <td class="texto-muted"><?= ++$cont ?></td>
                         <td>
                             <div class="avatar-fila">
                                 <div class="avatar-mini"><?= strtoupper(substr($c['nombre'], 0, 1)) ?></div>

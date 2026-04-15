@@ -33,7 +33,25 @@ class Cliente extends Model {
     $stmt->execute(['idUsuario' => $idUsuario]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
     }
- 
+    
+    public static function obtenerPorVendedor(int $idVendedor): array {
+        $sql = "SELECT c.*, u.nombreUsuario, u.email AS emailUsuario, u.activo
+                FROM clientes c
+                JOIN usuarios u ON c.idUsuario = u.idUsuario
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM pedidos p
+                    JOIN detalle_pedido dp ON p.idPedido = dp.idPedido
+                    JOIN productos pr ON dp.idProducto = pr.idProducto
+                    WHERE p.idCliente = c.idCliente
+                    AND pr.idVendedor = :idVendedor
+                )";
+        $stmt = self::db()->prepare($sql);
+        $stmt->execute(['idVendedor' => $idVendedor]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function buscarPorEmail(string $email): array|false {
         $stmt = self::db()->prepare(
             "SELECT * FROM clientes WHERE email = :email"
