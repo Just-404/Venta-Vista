@@ -114,7 +114,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         <?php endif; ?>
 
         <!-- Cliente (idRol = 3) -->
-        <?php if ($rol === 3): ?>
+        <?php if ($rol == 3): ?>
 
             <div class="nav-seccion-titulo">Mi Cuenta</div>
 

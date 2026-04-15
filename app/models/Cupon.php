@@ -87,11 +87,24 @@ class Cupon extends Model {
         );
         return $stmt->execute(['activo' => (int) $activo, 'id' => $id]);
     }
- 
+    
+    // Fuención para comprobar si el cupón ya pasó su fecha de vencimiento. 
+    public static function estaVencido(int $id): bool {
+    $stmt = self::db()->prepare(
+        "SELECT fechaVencimiento FROM cupones WHERE idCupon = :id"
+    );
+    $stmt->execute(['id' => $id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) return false;
+
+    return strtotime($row['fechaVencimiento']) < strtotime('today');
+    }
+    
     public static function eliminar(int $id): bool {
         $stmt = self::db()->prepare(
             "DELETE FROM cupones WHERE idCupon = :id"
         );
         return $stmt->execute(['id' => $id]);
-    }
+    } 
 }
