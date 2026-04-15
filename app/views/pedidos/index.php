@@ -103,11 +103,13 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
                         <td class="texto-muted"><?= date('d/m/Y', strtotime($p['fechaPedido'])) ?></td>
                         <td class="acciones">
                             <a href="<?= BASE_URL ?>pedidos/ver?id=<?= $p['idPedido'] ?>" class="btn-tabla">Ver</a>
+                            <?php if($rol != 1): ?>
                             <form method="POST" action="<?= BASE_URL ?>pedidos/eliminar" style="display:inline"
                                   onsubmit="return confirm('¿Eliminar el pedido <?= htmlspecialchars($p['numeroPedido']) ?>?')">
                                 <input type="hidden" name="id" value="<?= $p['idPedido'] ?>">
                                 <button class="btn-tabla btn-tabla--eliminar" type="submit">Eliminar</button>
                             </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>

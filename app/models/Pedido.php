@@ -92,9 +92,47 @@ class Pedido extends Model {
     }
  
     public static function eliminar(int $id): bool {
-        $stmt = self::db()->prepare(
-            "DELETE FROM pedidos WHERE idPedido = :id"
-        );
-        return $stmt->execute(['id' => $id]);
+    $db = self::db();
+
+    try {
+        $db->beginTransaction();
+
+        // Obtener productos del pedido
+        $sqlDetalles = "SELECT idProducto, cantidad 
+                        FROM detalle_pedido 
+                        WHERE idPedido = :id";
+        $stmtDetalles = $db->prepare($sqlDetalles);
+        $stmtDetalles->execute(['id' => $id]);
+        $detalles = $stmtDetalles->fetchAll(PDO::FETCH_ASSOC);
+
+        // Regresar stock
+        $sqlUpdateStock = "UPDATE productos 
+                           SET stock = stock + :cantidad 
+                           WHERE idProducto = :idProducto";
+        $stmtUpdate = $db->prepare($sqlUpdateStock);
+
+        foreach ($detalles as $detalle) {
+            $stmtUpdate->execute([
+                'cantidad'   => $detalle['cantidad'],
+                'idProducto' => $detalle['idProducto']
+            ]);
+        }
+
+        // Eliminar detalles
+        $db->prepare("DELETE FROM detalle_pedido WHERE idPedido = :id")
+           ->execute(['id' => $id]);
+
+        // Eliminar pedido
+        $db->prepare("DELETE FROM pedidos WHERE idPedido = :id")
+           ->execute(['id' => $id]);
+
+        $db->commit();
+        return true;
+
+    } catch (\Exception $e) {
+        $db->rollBack();
+        return false;
     }
+}
+
 }

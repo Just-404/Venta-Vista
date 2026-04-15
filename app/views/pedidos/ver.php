@@ -246,6 +246,7 @@ $rol = $usuario['rol'] ?? 0;
                         <label>Nuevo estado</label>
                         <select class="select-form" name="estado">
                             <?php foreach ($estados as $est): ?>
+                                <?php if($rol == 1 && $pedido['estado'] != 'Pendiente' && in_array($est, ['Cancelado','Devuelto'])) continue; ?>
                                 <option value="<?= $est ?>" <?= ($pedido['estado'] ?? '') === $est ? 'selected' : '' ?>>
                                     <?= str_replace('_', ' ', $est) ?>
                                 </option>
