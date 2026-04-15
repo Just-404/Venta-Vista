@@ -64,11 +64,11 @@ class Producto extends Model
             JOIN vendedores v ON p.idVendedor = v.idVendedor
             JOIN usuarios u   ON v.idUsuario = u.idUsuario
             JOIN categorias c ON p.idCategoria = c.idCategoria
-            WHERE v.idUsuario = :idUsuario 
+            WHERE v.idVendedor= :idVendedor
             ORDER BY p.nombre";
 
         $stmt = self::db()->prepare($sql);
-        $stmt->execute(['idUsuario' => $idUsuario]);
+        $stmt->execute(['idVendedor' => $idUsuario]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

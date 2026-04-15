@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\models\Producto;
 use app\models\Categoria;
 use app\models\Calificacion;
+use app\models\Vendedor;
 
 class ProductoController extends Controller
 {
@@ -17,7 +18,8 @@ class ProductoController extends Controller
 
         $usuario = $this->usuarioActual();
         if ($usuario['rol'] == 2) {
-            $productos = Producto::obtenerPorVendedor($usuario['id']);
+            $idVendedor = Vendedor::obtenerPorUsuario($usuario['id'])['idVendedor'];
+            $productos = Producto::obtenerPorVendedor($idVendedor);
         } elseif ($usuario['rol'] == 3) {
             $productos = Producto::obtenerActivos();
         } else {

@@ -18,6 +18,23 @@ class Pedido extends Model {
  
         return self::db()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function obtenerPorVendedor($idVendedor): array {
+        $sql = "SELECT DISTINCT p.*, CONCAT(c.nombre,' ',c.apellidos) AS cliente, cu.codigo AS cupon
+                FROM pedidos p
+                LEFT JOIN cupones cu ON p.idCupon = cu.idCupon
+                JOIN detalle_pedido dp ON p.idPedido = dp.idPedido
+                JOIN productos pr ON dp.idProducto = pr.idProducto
+                JOIN vendedores v ON pr.idVendedor = v.idVendedor
+                JOIN clientes c ON p.idCliente = c.idCliente
+                WHERE v.idVendedor = :idVendedor
+                ORDER BY p.fechaPedido DESC";
+
+        $stmt = self::db()->prepare($sql);
+        $stmt->execute(['idVendedor' => $idVendedor]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
  
     public static function obtenerPorId(int $id): array|false {
         $sql = "SELECT p.*,
@@ -34,9 +51,14 @@ class Pedido extends Model {
     }
  
     public static function obtenerPorCliente(int $idCliente): array {
-        $sql = "SELECT * FROM pedidos
-                WHERE idCliente = :idCliente
-                ORDER BY fechaPedido DESC";
+         $sql = "SELECT p.*,
+                 CONCAT(c.nombre,' ',c.apellidos) AS cliente,
+                 cu.codigo AS cupon
+          FROM pedidos p
+          JOIN clientes c ON p.idCliente = c.idCliente
+          LEFT JOIN cupones cu ON p.idCupon = cu.idCupon
+          WHERE c.idCliente = :idCliente
+          ORDER BY p.fechaPedido DESC";
  
         $stmt = self::db()->prepare($sql);
         $stmt->execute(['idCliente' => $idCliente]);
