@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\models\Producto;
 use app\models\Categoria;
 use app\models\Calificacion;
+use app\models\Vendedor;
 
 class ProductoController extends Controller
 {
@@ -15,13 +16,25 @@ class ProductoController extends Controller
     {
         $this->requireAuth();
 
+        $usuario = $this->usuarioActual();
+        if ($usuario['rol'] == 2) {
+            $idVendedor = Vendedor::obtenerPorUsuario($usuario['id'])['idVendedor'];
+            $productos = Producto::obtenerPorVendedor($idVendedor);
+        } elseif ($usuario['rol'] == 3) {
+            $productos = Producto::obtenerActivos();
+        } else {
+            $productos = Producto::obtenerTodos();
+        }
+
+
         $this->render('catalogo/productos', [
-            'productos' => Producto::obtenerTodos(),
+            'productos' => $productos,
             'flash' => $this->getFlash(),
-            'usuario' => $this->usuarioActual(),
+            'usuario' => $usuario,
             'categorias' => Categoria::obtenerTodas(),
         ]);
     }
+
 
     // GET  /productos/crear para mostrar formulario
     // POST /productos/crear para procesar creación

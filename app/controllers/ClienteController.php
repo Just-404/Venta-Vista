@@ -7,15 +7,25 @@ use app\models\Cliente;
 use app\models\Usuario;
 use app\models\Direccion;
 use app\models\Notificacion;
+use app\models\Vendedor;
 
 class ClienteController extends Controller {
 
     // GET /clientes
     public function index(): void {
         $this->requireAuth();
+        
+        $usuario = $this->usuarioActual();
+
+        if ($usuario['rol'] == 2) {
+            $idVendedor = Vendedor::obtenerPorUsuario($usuario['id'])['idVendedor'];
+            $clientes = Cliente::obtenerPorVendedor($idVendedor);
+        } elseif ($usuario['rol'] == 3) {
+            $clientes = Cliente::obtenerTodos();
+        }
 
         $this->render('clientes/index', [
-            'clientes' => Cliente::obtenerTodos(),
+            'clientes' => $clientes,
             'flash'    => $this->getFlash(),
             'usuario'  => $this->usuarioActual(),
         ]);

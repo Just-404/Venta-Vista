@@ -55,16 +55,20 @@ class Producto extends Model
     }
 
     /** Productos asignados a un vendedor específico */
-    public static function obtenerPorVendedor(int $idVendedor): array
+    public static function obtenerPorVendedor(int $idUsuario): array
     {
-        $sql = "SELECT p.*, c.nombre AS categoria
-                FROM productos p
-                JOIN categorias c ON p.idCategoria = c.idCategoria
-                WHERE p.idVendedor = :idVendedor AND p.activo = 1
-                ORDER BY p.nombre";
+        $sql = "SELECT p.*, 
+                   u.nombreUsuario AS vendedor,
+                   c.nombre AS categoria
+            FROM productos p
+            JOIN vendedores v ON p.idVendedor = v.idVendedor
+            JOIN usuarios u   ON v.idUsuario = u.idUsuario
+            JOIN categorias c ON p.idCategoria = c.idCategoria
+            WHERE v.idVendedor= :idVendedor
+            ORDER BY p.nombre";
 
         $stmt = self::db()->prepare($sql);
-        $stmt->execute(['idVendedor' => $idVendedor]);
+        $stmt->execute(['idVendedor' => $idUsuario]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

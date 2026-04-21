@@ -88,7 +88,7 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
         <?php endif; ?>
 
         <!-- Solo Administrador -->
-        <?php if ($rol === 1): ?>
+        <?php if ($rol == 1): ?>
 
             <a href="<?= BASE_URL ?>usuarios"
                class="nav-item <?= str_starts_with($current, 'usuarios') ? 'activo' : '' ?>">

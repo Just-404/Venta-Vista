@@ -15,6 +15,7 @@ use app\models\Notificacion;
 use app\models\Usuario;
 use app\models\Configuracion;
 use app\helpers\MailHelper;
+use app\models\Vendedor;
 
 class PedidoController extends Controller {
 
@@ -22,8 +23,19 @@ class PedidoController extends Controller {
     public function index(): void {
         $this->requireAuth();
 
+        $usuario = $this->usuarioActual();
+        if ($usuario['rol'] == 2) {
+            $idVendedor = Vendedor::obtenerPorUsuario($usuario['id'])['idVendedor'];
+            $pedidos = Pedido::obtenerPorVendedor($idVendedor);
+        } elseif ($usuario['rol'] == 1) {
+            $pedidos = Pedido::obtenerTodos();
+        } else {
+            $idCliente = Cliente::obtenerPorUsuario($usuario['id'])['idCliente'];
+            $pedidos = Pedido::obtenerPorCliente($idCliente);
+        }
+
         $this->render('pedidos/index', [
-            'pedidos' => Pedido::obtenerTodos(),
+            'pedidos' => $pedidos,
             'flash'   => $this->getFlash(),
             'usuario' => $this->usuarioActual(),
         ]);
