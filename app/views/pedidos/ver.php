@@ -253,7 +253,7 @@ $rol = $usuario['rol'] ?? 0;
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <button class="btn btn-primario btn-completo" type="submit">Actualizar estado</button>
+                    <button class="btn btn-primario btn-completo" type="submit" onclick="return confirmarCancelacion(this.form)">Actualizar estado</button>
                 </form>
             </div>
         </div>
@@ -289,3 +289,13 @@ $rol = $usuario['rol'] ?? 0;
     </div><!-- /col derecha -->
 
 </div>
+
+<script>
+    function confirmarCancelacion(form){
+        const estado = form.querySelector('select[name="estado"]').value;
+        if(estado === 'Cancelado' || estado === 'Devuelto'){
+            return confirm('¿Confirma que desea marcar este pedido como "' + estado.replace('_', ' ') + '"?');
+        }
+        return true;
+    }
+</script>
