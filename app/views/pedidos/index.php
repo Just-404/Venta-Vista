@@ -45,7 +45,9 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
         <h1 class="page-titulo">Pedidos</h1>
         <p class="page-sub"><?= $total ?> pedidos en total</p>
     </div>
-    <a href="<?= BASE_URL ?>pedidos/crear" class="btn btn-primario">+ Nuevo pedido</a>
+    <?php if ($rol == 3): ?>
+        <a href="<?= BASE_URL ?>pedidos/crear" class="btn btn-primario">+ Nuevo pedido</a>
+    <?php endif; ?>
 </div>
 
 <!-- ── Panel de tabla ─────────────────────────────────────────── -->

@@ -89,7 +89,12 @@ $iniciales = strtoupper(substr($iniciales, 0, 2));
 
         <!-- Solo Administrador -->
         <?php if ($rol == 1): ?>
-
+            <a href="<?= BASE_URL ?>categorias"
+                class="nav-item <?= str_starts_with($current, 'categorias') ? 'activo' : '' ?>">
+                    <img src="<?= BASE_URL ?>images/icons/catalogo-icon.png" class="icon" alt="categorías">
+                    <span>Categorías</span>
+            </a>
+            
             <a href="<?= BASE_URL ?>usuarios"
                class="nav-item <?= str_starts_with($current, 'usuarios') ? 'activo' : '' ?>">
                 <img src="<?= BASE_URL ?>images/icons/people-icon.png" class="icon" alt="logo sistema">

@@ -66,4 +66,26 @@ class Categoria extends Model {
         );
         return $stmt->execute(['id' => $id]);
     }
+
+    // Todas las categorías con su conteo de productos (incluye las vacías).
+    public static function obtenerTodosConConteo(): array {
+        $sql = "SELECT c.*,
+                    COUNT(p.idProducto) AS totalProductos
+                FROM categorias c
+                LEFT JOIN productos p ON p.idCategoria = c.idCategoria
+                GROUP BY c.idCategoria
+                ORDER BY c.nombre ASC";
+
+        return self::db()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Verifica si ya existe una categoría con ese nombre.
+    public static function existeNombre(string $nombre, int $excluirId = 0): bool {
+        $stmt = self::db()->prepare(
+            "SELECT COUNT(*) FROM categorias
+            WHERE nombre = :nombre AND idCategoria != :excluirId"
+        );
+        $stmt->execute(['nombre' => $nombre, 'excluirId' => $excluirId]);
+        return (int) $stmt->fetchColumn() > 0;
+    }
 }
