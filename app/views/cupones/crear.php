@@ -6,6 +6,12 @@
     <a href="<?= BASE_URL ?>cupones" class="btn btn-contorno">← Volver</a>
 </div>
 
+<?php if (!empty($error)): ?>
+    <div class="alerta alerta--error">
+        ❌ <?= htmlspecialchars($error) ?>
+    </div>
+<?php endif; ?>
+
 <div class="panel" style="max-width:680px">
     <form method="POST" action="<?= BASE_URL ?>cupones/crear">
         <div style="padding:20px">

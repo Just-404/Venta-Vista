@@ -36,7 +36,23 @@ class Cupon extends Model {
         $stmt->execute(['codigo' => $codigo]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
- 
+    
+    // Verifica si ya existe un cupón con ese código.
+    public static function existeCodigo(string $codigo, int $excludeId = 0): bool
+    {
+        $sql = "SELECT COUNT(*) FROM cupones
+                WHERE codigo = :codigo
+                AND idCupon <> :excludeId";
+
+        $stmt = self::db()->prepare($sql);
+        $stmt->execute([
+            'codigo'    => strtoupper(trim($codigo)),
+            'excludeId' => $excludeId,
+        ]);
+
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
     public static function obtenerActivos(): array {
         $sql = "SELECT * FROM cupones
                 WHERE activo = 1
@@ -48,29 +64,29 @@ class Cupon extends Model {
         return self::db()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
  
-    public static function crear(array $data): bool {
-        $sql = "INSERT INTO cupones
-                    (codigo, tipo, descuento, usoMaximo, usosActuales,
-                     fechaInicio, fechaVencimiento, activo)
-                VALUES
-                    (:codigo, :tipo, :descuento, :usoMaximo, :usosActuales,
-                     :fechaInicio, :fechaVencimiento, :activo)";
- 
-        return self::db()->prepare($sql)->execute($data);
+    public static function crear(array $datos): bool
+    {
+        $sql = "INSERT INTO cupones (codigo, tipo, descuento, usoMaximo, usosActuales, fechaInicio, fechaVencimiento, activo)
+                VALUES (:codigo, :tipo, :descuento, :usoMaximo, :usosActuales, :fechaInicio, :fechaVencimiento, :activo)";
+        
+        $stmt = self::db()->prepare($sql);
+        return $stmt->execute($datos);
     }
  
-    public static function actualizar(array $data): bool {
-        $sql = "UPDATE cupones
-                SET codigo           = :codigo,
-                    tipo             = :tipo,
-                    descuento        = :descuento,
-                    usoMaximo        = :usoMaximo,
-                    fechaInicio      = :fechaInicio,
-                    fechaVencimiento = :fechaVencimiento,
-                    activo           = :activo
+    public static function actualizar(array $datos): bool
+    {
+        $sql = "UPDATE cupones SET 
+                codigo = :codigo, 
+                tipo = :tipo, 
+                descuento = :descuento, 
+                usoMaximo = :usoMaximo, 
+                fechaInicio = :fechaInicio, 
+                fechaVencimiento = :fechaVencimiento, 
+                activo = :activo 
                 WHERE idCupon = :idCupon";
- 
-        return self::db()->prepare($sql)->execute($data);
+                
+        $stmt = self::db()->prepare($sql);
+        return $stmt->execute($datos);
     }
  
     /** Incrementa el contador de usos cada vez que se aplica el cupón */
