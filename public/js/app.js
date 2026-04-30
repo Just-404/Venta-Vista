@@ -111,15 +111,37 @@ async function marcarLeida(idNotif, url) {
 }
 
 async function eliminarNotif(idNotif) {
+    // Quitar del DOM inmediatamente (no esperar al servidor)
+    const el = document.querySelector(`.notif-item[data-id="${idNotif}"]`);
+    const eraNoLeida = el && el.classList.contains('no-leida');
+    if (el) el.remove();
+
+    // Mostrar estado vacío si ya no quedan
+    const lista = document.getElementById('notif-lista');
+    if (lista && lista.querySelectorAll('.notif-item').length === 0) {
+        lista.innerHTML = '<div class="notif-vacia">✅ Sin notificaciones</div>';
+    }
+
+    // Actualizar el badge manualmente
+    const badge = document.getElementById('notif-badge');
+    if (badge && eraNoLeida) {
+        const nuevo = Math.max(0, (parseInt(badge.textContent) || 0) - 1);
+        if (nuevo > 0) {
+            badge.textContent = nuevo > 9 ? '9+' : nuevo;
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
     try {
         const fd = new FormData();
         fd.append('id', idNotif);
         await fetch(getBase() + 'notificaciones/limpiar', {
             method: 'POST', body: fd, credentials: 'same-origin'
         });
-        cargarNotificaciones();
     } catch (err) {
         console.warn('[Notificaciones] Error al eliminar:', err);
+        cargarNotificaciones(); // revertir si falla el servidor
     }
 }
 
