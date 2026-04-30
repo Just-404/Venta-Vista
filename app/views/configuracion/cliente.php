@@ -176,7 +176,7 @@ $direcciones = $direcciones ?? [];
                     <div class="grupo-form" id="grupo-rnc"
                          style="<?= ($perfil['tipo_comprobante'] ?? '') !== 'credito_fiscal' ? 'display:none' : '' ?>">
                         <label class="etiqueta-form">RNC de la Empresa</label>
-                        <input class="input-form" type="text" name="rnc_empresa"
+                        <input class="input-form" type="text" name="rnc_empresa" data-val="rnc"
                                value="<?= htmlspecialchars($perfil['rnc_empresa'] ?? '') ?>"
                                placeholder="1-31-00000-0">
                     </div>
