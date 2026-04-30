@@ -82,3 +82,41 @@ $categorias = $categorias ?? [];
     <span class="cerrar" onclick="cerrarModal()">&times;</span>
     <img class="modal-contenido" id="imagenGrande" src="">
 </div>
+
+<script>
+    const buscador = document.getElementById('buscador');
+    const filtroCategoria = document.getElementById('filtro-categoria');
+    const cards = document.querySelectorAll('.producto-card');
+
+    function filtrarProductos() {
+        const query = buscador.value.toLowerCase();
+        const categoriaSeleccionada = filtroCategoria.value.toLowerCase();
+
+        cards.forEach(card => {
+            const nombre = card.querySelector('.nombre').textContent.toLowerCase();
+            const categoria = card.querySelector('.categoria').textContent.toLowerCase();
+
+            const coincideBusqueda = nombre.includes(query) || categoria.includes(query);
+            const coincideCategoria = categoriaSeleccionada === '' || categoria === categoriaSeleccionada.toLowerCase();
+
+            card.style.display = (coincideBusqueda && coincideCategoria) ? '' : 'none';
+        });
+    }
+
+    buscador.addEventListener('input', filtrarProductos);
+    filtroCategoria.addEventListener('change', filtrarProductos);
+
+    function mostrarImagen(img) {
+        const modal = document.getElementById("modalImagen");
+        const imagenGrande = document.getElementById("imagenGrande");
+        imagenGrande.src = img.src;
+        modal.style.display = "flex";
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById("modalImagen");
+        modal.style.display = "none";
+        document.getElementById("imagenGrande").src = ""; // limpiar al cerrar
+    }
+
+</script>
