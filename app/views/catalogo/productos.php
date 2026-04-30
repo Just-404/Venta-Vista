@@ -56,13 +56,17 @@ $categorias = $categorias ?? [];
                 <span class="stock">Stock: <?= $producto['stock'] ?></span>
                 <?php if ($usuario['rol'] == 3): ?>
                     <div class="acciones-carrito">
-                        <form action="<?= BASE_URL ?>carrito/agregar" method="post" class="form-carrito">
-                            <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
-                            <input class="input-form" type="number" name="cantidad" value="1" min="1"
-                                max="<?= $producto['stock'] ?>" required>
-                            <button type="submit" class="btn btn-primario"> Agregar <span
-                                    class="carrito-blanco">🛒</span></button>
-                        </form>
+                        <?php if ((int)$producto['stock'] > 0): ?>
+                            <form action="<?= BASE_URL ?>carrito/agregar" method="post" class="form-carrito">
+                                <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
+                                <input class="input-form" type="number" name="cantidad" value="1" min="1"
+                                    max="<?= $producto['stock'] ?>" required>
+                                <button type="submit" class="btn btn-primario"> Agregar <span
+                                        class="carrito-blanco">🛒</span></button>
+                            </form>
+                        <?php else: ?>
+                            <span class="badge badge--rojo" style="width:100%;justify-content:center;padding:8px 0">🚫 Agotado</span>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
                 <a href="<?= BASE_URL ?>productos/ver?id=<?= $producto['idProducto'] ?>" class="btn btn-secundario">Ver
@@ -78,42 +82,3 @@ $categorias = $categorias ?? [];
     <span class="cerrar" onclick="cerrarModal()">&times;</span>
     <img class="modal-contenido" id="imagenGrande" src="">
 </div>
-
-
-<script>
-    const buscador = document.getElementById('buscador');
-    const filtroCategoria = document.getElementById('filtro-categoria');
-    const cards = document.querySelectorAll('.producto-card');
-
-    function filtrarProductos() {
-        const query = buscador.value.toLowerCase();
-        const categoriaSeleccionada = filtroCategoria.value.toLowerCase();
-
-        cards.forEach(card => {
-            const nombre = card.querySelector('.nombre').textContent.toLowerCase();
-            const categoria = card.querySelector('.categoria').textContent.toLowerCase();
-
-            const coincideBusqueda = nombre.includes(query) || categoria.includes(query);
-            const coincideCategoria = categoriaSeleccionada === '' || categoria === categoriaSeleccionada.toLowerCase();
-
-            card.style.display = (coincideBusqueda && coincideCategoria) ? '' : 'none';
-        });
-    }
-
-    buscador.addEventListener('input', filtrarProductos);
-    filtroCategoria.addEventListener('change', filtrarProductos);
-
-    function mostrarImagen(img) {
-        const modal = document.getElementById("modalImagen");
-        const imagenGrande = document.getElementById("imagenGrande");
-        imagenGrande.src = img.src;
-        modal.style.display = "flex";
-    }
-
-    function cerrarModal() {
-        const modal = document.getElementById("modalImagen");
-        modal.style.display = "none";
-        document.getElementById("imagenGrande").src = ""; // limpiar al cerrar
-    }
-
-</script>
