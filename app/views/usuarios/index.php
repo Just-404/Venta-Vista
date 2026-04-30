@@ -113,18 +113,20 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
                         </td>
                         <td class="acciones">
                             <a href="<?= BASE_URL ?>usuarios/ver?id=<?= $u['idUsuario'] ?>" class="btn-tabla">Ver</a>
-                            <form method="POST" action="<?= BASE_URL ?>usuarios/estado" style="display:inline">
-                                <input type="hidden" name="id"     value="<?= $u['idUsuario'] ?>">
-                                <input type="hidden" name="activo" value="<?= $u['activo'] ? 0 : 1 ?>">
-                                <button class="btn-tabla" type="submit">
-                                    <?= $u['activo'] ? 'Desactivar' : 'Activar' ?>
-                                </button>
-                            </form>
-                            <form method="POST" action="<?= BASE_URL ?>usuarios/eliminar" style="display:inline"
-                                  onsubmit="return confirm('¿Eliminar permanentemente a <?= htmlspecialchars($u['nombreUsuario']) ?>?')">
-                                <input type="hidden" name="id" value="<?= $u['idUsuario'] ?>">
-                                <button class="btn-tabla btn-tabla--eliminar" type="submit">Eliminar</button>
-                            </form>
+                            <?php if ($u['idUsuario'] != 1): ?>
+                                <form method="POST" action="<?= BASE_URL ?>usuarios/estado" style="display:inline">
+                                    <input type="hidden" name="id"     value="<?= $u['idUsuario'] ?>">
+                                    <input type="hidden" name="activo" value="<?= $u['activo'] ? 0 : 1 ?>">
+                                    <button class="btn-tabla" type="submit">
+                                        <?= $u['activo'] ? 'Desactivar' : 'Activar' ?>
+                                    </button>
+                                </form>
+                                <form method="POST" action="<?= BASE_URL ?>usuarios/eliminar" style="display:inline"
+                                      onsubmit="return confirm('¿Eliminar permanentemente a <?= htmlspecialchars($u['nombreUsuario']) ?>?')">
+                                    <input type="hidden" name="id" value="<?= $u['idUsuario'] ?>">
+                                    <button class="btn-tabla btn-tabla--eliminar" type="submit">Eliminar</button>
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
