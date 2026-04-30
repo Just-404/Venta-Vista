@@ -44,6 +44,8 @@
                 <div class="grupo-form">
                     <label>Teléfono</label>
                     <input class="input-form" type="text" name="telefono"
+                           pattern="^\d{3}-\d{3}-\d{4}$"
+                           title="Formato: 829-000-0000"
                            value="<?= htmlspecialchars($cliente['telefono'] ?? '') ?>">
                 </div>
                 <div class="grupo-form completo">
@@ -78,4 +80,3 @@
         </div>
 
     </form>
-</div>
