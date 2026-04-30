@@ -18,18 +18,21 @@ $rol     = $usuario['rol'] ?? 0;
         <div class="grid-form">
             <div class="grupo-form completo">
                 <label class="etiqueta-form">Nombre del producto</label>
-                <input class="input-form" type="text" name="nombre" placeholder="Ej: Camiseta Polo Classic" required>
+                <input class="input-form" type="text" name="nombre"
+                       placeholder="Ej: Camiseta Polo Classic" required
+                       minlength="3" maxlength="120">
             </div>
 
             <div class="grupo-form completo">
                 <label class="etiqueta-form">Descripción</label>
                 <textarea class="input-form" name="descripcion" rows="3"
-                    placeholder="Descripción del producto..."></textarea>
+                    placeholder="Descripción del producto..."
+                    maxlength="500"></textarea>
             </div>
 
             <div class="grupo-form">
                 <label class="etiqueta-form">Precio (RD$)</label>
-                <input class="input-form" type="number" name="precio" step="0.01" min="0" placeholder="0.00" required>
+                <input class="input-form" type="number" name="precio" step="0.01" min="0.01" placeholder="0.00" required>
             </div>
 
             <div class="grupo-form">
