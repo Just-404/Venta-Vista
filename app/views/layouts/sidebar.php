@@ -9,17 +9,40 @@ $roles = [
 
 $nombreRol = $roles[$rol] ?? 'Desconocido';
 $usuario = $usuario ?? [];
-$nombreUsuario = $usuario['username'] ?? 'Usuario';
 $current = trim($_GET['url'] ?? '', '/');
 
-$palabras = explode(' ', $nombreUsuario);
+// Obtener nombre real desde la tabla correspondiente al rol
+$tablas = [
+    1 => 'administradores',
+    2 => 'vendedores',
+    3 => 'clientes',
+];
 
+$nombreUsuario = $usuario['username'] ?? 'Usuario'; // fallback
+
+if (isset($tablas[$rol])) {
+    $db   = \app\core\Database::getConnection();
+    $stmt = $db->prepare(
+        "SELECT CONCAT(nombre, ' ', apellidos) AS nombreCompleto
+         FROM {$tablas[$rol]}
+         WHERE idUsuario = :id"
+    );
+    $stmt->execute(['id' => $usuario['id']]);
+    $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    if ($fila) {
+        $nombreUsuario = $fila['nombreCompleto'];
+    }
+}
+
+$palabras  = explode(' ', $nombreUsuario);
 $iniciales = '';
 foreach ($palabras as $p) {
     $iniciales .= $p[0];
 }
 
 $iniciales = strtoupper(substr($iniciales, 0, 2));
+
 ?>
 
 <aside class="sidebar" id="sidebar">

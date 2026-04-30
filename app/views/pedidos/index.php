@@ -72,7 +72,7 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
             <thead>
                 <tr>
                     <th>Número</th>
-                   <th>Cliente</th>
+                    <?php if ($rol != 3): ?><th>Cliente</th><?php endif; ?>
                     <th>Subtotal</th>
                     <th>Descuento</th>
                     <th>Total</th>
@@ -83,17 +83,19 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
             </thead>
             <tbody>
                 <?php if (empty($pedidos)): ?>
-                    <tr><td colspan="8" class="tabla-vacia">No hay pedidos registrados.</td></tr>
+                    <tr><td colspan="8" class="tabla-vacia">No hay pedidos registrados.</td></tr><tr><td colspan="<?= $rol == 3 ? 7 : 8 ?>" class="tabla-vacia">No hay pedidos registrados.</td></tr>
                 <?php else: ?>
                     <?php foreach ($pedidos as $p): ?>
                     <tr data-estado="<?= htmlspecialchars($p['estado']) ?>">
                         <td><span class="codigo"><?= htmlspecialchars($p['numeroPedido']) ?></span></td>
-                        <td>
-                            <div class="avatar-fila">
-                                <div class="avatar-mini"><?= strtoupper(substr($p['cliente'], 0, 1)) ?></div>
-                                <span><?= htmlspecialchars($p['cliente']) ?></span>
-                            </div>
-                        </td>
+                        <?php if ($rol != 3): ?>
+                            <td>
+                                <div class="avatar-fila">
+                                    <div class="avatar-mini"><?= strtoupper(substr($p['cliente'], 0, 1)) ?></div>
+                                    <span><?= htmlspecialchars($p['cliente']) ?></span>
+                                </div>
+                            </td>
+                        <?php endif; ?>
                         <td class="texto-muted">RD$ <?= number_format($p['subtotal'], 2) ?></td>
                         <td class="texto-muted">
                             <?= $p['descuento'] > 0
