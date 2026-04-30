@@ -9,13 +9,16 @@
 </div>
 
 <div class="panel" style="max-width:680px">
-    <form method="POST" action="<?= BASE_URL ?>cupones/editar?id=<?= $cupon['idCupon'] ?>">
+    <form method="POST" action="<?= BASE_URL ?>cupones/editar?id=<?= $cupon['idCupon'] ?>" id="form-cupon">
         <div style="padding:20px">
             <div class="grid-form">
                 <div class="grupo-form">
                     <label class="etiqueta-form">Código</label>
                     <input class="input-form" type="text" name="codigo"
-                           value="<?= htmlspecialchars($cupon['codigo'] ?? '') ?>" required style="text-transform:uppercase">
+                           value="<?= htmlspecialchars($cupon['codigo'] ?? '') ?>" required
+                           style="text-transform:uppercase" maxlength="20"
+                           pattern="^[A-Za-z0-9_\-]{3,20}$"
+                           title="Solo letras, números, guiones. Entre 3 y 20 caracteres.">
                 </div>
                 <div class="grupo-form">
                     <label class="etiqueta-form">Tipo</label>
@@ -39,12 +42,12 @@
                 </div>
                 <div class="grupo-form">
                     <label class="etiqueta-form">Fecha inicio</label>
-                    <input class="input-form" type="date" name="fechaInicio"
+                    <input class="input-form" type="date" name="fechaInicio" id="fechaInicio"
                            value="<?= $cupon['fechaInicio'] ?? '' ?>" required>
                 </div>
                 <div class="grupo-form">
                     <label class="etiqueta-form">Fecha vencimiento</label>
-                    <input class="input-form" type="date" name="fechaVencimiento"
+                    <input class="input-form" type="date" name="fechaVencimiento" id="fechaVencimiento"
                            value="<?= $cupon['fechaVencimiento'] ?? '' ?>" required>
                 </div>
                 <div class="grupo-form">
@@ -62,3 +65,15 @@
         </div>
     </form>
 </div>
+
+<script>
+document.getElementById('form-cupon').addEventListener('submit', function(e) {
+    const ini = document.getElementById('fechaInicio').value;
+    const fin = document.getElementById('fechaVencimiento').value;
+    if (ini && fin && fin <= ini) {
+        e.preventDefault();
+        alert('La fecha de vencimiento debe ser posterior a la fecha de inicio.');
+        document.getElementById('fechaVencimiento').focus();
+    }
+});
+</script>
