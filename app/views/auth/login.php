@@ -54,8 +54,10 @@
              placeholder="Contraseña" value="" name="password" required/>
     </div>
 
-    <a class="login-olvidaste">¿Olvidaste tu contraseña?</a>
-
+    <div class="grupo-links">
+      <a class="login-olvidaste">¿Olvidaste tu contraseña?</a>
+      <a class="login-registrarse">Registrarse</a>
+    </div>
     <button class="btn btn-primario btn-completo" type="submit">Iniciar Sesión</button>
 
     </form>

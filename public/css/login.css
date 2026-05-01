@@ -111,8 +111,13 @@
   position: relative;
 }
 
+.grupo-links{
+  display: flex;
+  justify-content: space-between;
+}
 /* Enlace de recuperación de contraseña */
-.login-olvidaste {
+.login-olvidaste, 
+.login-registrarse {
   font-size: .82rem;
   color: var(--acento);
   font-weight: 500;

@@ -98,12 +98,18 @@ class Pedido extends Model {
     /* Genera un número de pedido con formato PED-YYYY-NNNNN */
     public static function generarNumeroPedido(): string {
         $year = date('Y');
-        $stmt = self::db()->prepare(
-            "SELECT COUNT(*) FROM pedidos WHERE YEAR(fechaPedido) = :year"
-        );
+
+        $stmt = self::db()->prepare("
+            SELECT MAX(idPedido) 
+            FROM pedidos 
+            WHERE YEAR(fechaPedido) = :year
+        ");
+
         $stmt->execute(['year' => $year]);
-        $count = (int) $stmt->fetchColumn() + 1;
-        return sprintf('PED-%s-%05d', $year, $count);
+
+        $max = (int) $stmt->fetchColumn() + 1;
+
+        return sprintf('PED-%s-%05d', $year, $max);
     }
  
     public static function actualizarEstado(int $id, string $estado): bool {
