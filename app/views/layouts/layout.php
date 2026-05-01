@@ -61,5 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <script src="<?= BASE_URL ?>js/app.js"></script>
+<script src="<?= BASE_URL ?>js/validaciones.js"></script>
 </body>
 </html>

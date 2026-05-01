@@ -15,12 +15,16 @@ $calificaciones = $calificaciones ?? [];
         <?php endif; ?>
         <?php if ($usuario['rol'] == 3): ?>
             <div class="acciones-carrito">
-                <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
-                    <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
-                    <input class="input-form" type="number" name="cantidad" value="1" min="1"
-                        max="<?= $producto['stock'] ?>" required>
-                    <button type="submit" class="btn btn-primario"> Agregar <span class="carrito-blanco">🛒</span></button>
-                </form>
+                <?php if ((int)($producto['stock'] ?? 0) > 0): ?>
+                    <form action="<?= BASE_URL ?>/carrito/agregar" method="post" class="form-carrito">
+                        <input type="hidden" name="idProducto" value="<?= $producto['idProducto'] ?>">
+                        <input class="input-form" type="number" name="cantidad" value="1" min="1"
+                            max="<?= $producto['stock'] ?>" required>
+                        <button type="submit" class="btn btn-primario"> Agregar <span class="carrito-blanco">🛒</span></button>
+                    </form>
+                <?php else: ?>
+                    <span class="badge badge--rojo" style="padding:8px 16px;font-size:.9rem">🚫 Producto Agotado</span>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
         <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos' ?>" class="btn btn-contorno">← Volver</a>

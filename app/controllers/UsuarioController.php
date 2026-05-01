@@ -84,8 +84,16 @@ class UsuarioController extends Controller {
     // POST /usuarios/estado  — activar / desactivar
     public function estado(): void {
         $this->requireAuth();
- 
-        $id     = (int)  $this->post('id');
+
+        $id = (int) $this->post('id');
+
+        // Proteger al administrador principal
+        if ($id === 1) {
+            $this->setFlash('error', 'No se puede modificar el estado del administrador principal.');
+            $this->redirect('usuarios');
+            return;
+        }
+
         $activo = (bool) $this->post('activo');
         $ok     = Usuario::cambiarEstado($id, $activo);
  
@@ -112,8 +120,16 @@ class UsuarioController extends Controller {
     // POST /usuarios/eliminar
     public function eliminar(): void {
         $this->requireAuth();
- 
+
         $id = (int) $this->post('id');
+
+        // Proteger al administrador principal
+        if ($id === 1) {
+            $this->setFlash('error', 'No se puede eliminar al administrador principal.');
+            $this->redirect('usuarios');
+            return;
+        }
+
         $ok = Usuario::eliminarFisico($id);
  
         $this->setFlash($ok ? 'success' : 'error',

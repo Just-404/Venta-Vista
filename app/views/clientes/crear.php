@@ -40,6 +40,8 @@
                     <label>Teléfono</label>
                     <input class="input-form" type="text" name="telefono"
                            placeholder="829-000-0000"
+                           pattern="^\d{3}-\d{3}-\d{4}$"
+                           title="Formato: 829-000-0000"
                            value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>">
                 </div>
                 <div class="grupo-form completo">

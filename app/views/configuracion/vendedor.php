@@ -1,127 +1,82 @@
-<?php
-$prefs  = $prefs  ?? [];
-$perfil = $perfil ?? [];
-$u      = $usuario ?? [];
-?>
+<?php $cliente = $cliente ?? []; ?>
 
+<!-- ── header ────────────────────────────────────────────── -->
 <div class="page-header">
     <div>
-        <h1 class="page-titulo">Configuración</h1>
-        <p class="page-sub">Ajusta tu perfil y preferencias personales</p>
+        <h1 class="page-titulo">Editar Cliente</h1>
+        <p class="page-sub">
+            <?= htmlspecialchars(($cliente['nombre'] ?? '') . ' ' . ($cliente['apellidos'] ?? '')) ?>
+        </p>
+    </div>
+    <div style="display:flex;gap:8px">
+        <a href="<?= BASE_URL ?>clientes/ver?id=<?= $cliente['idCliente'] ?? '' ?>" class="btn btn-contorno">← Ver perfil</a>
+        <a href="<?= BASE_URL ?>clientes" class="btn btn-contorno">Lista</a>
     </div>
 </div>
 
-<div class="config-tabs">
-    <button class="config-tab-btn activo" data-tab="perfil">👤 Mi Perfil</button>
-    <button class="config-tab-btn" data-tab="notificaciones">🔔 Notificaciones</button>
-    <button class="config-tab-btn" data-tab="password">🔑 Contraseña</button>
-</div>
+<div class="panel" style="max-width:740px">
+    <form method="POST" action="<?= BASE_URL ?>clientes/editar?id=<?= $cliente['idCliente'] ?? '' ?>"
+          style="display:block">
 
-<!-- Tab: Perfil -->
-<div class="config-panel activo" id="tab-perfil">
-    <div class="config-seccion">
-        <div class="config-seccion-header"><h2>👤 Mi Perfil</h2></div>
-        <div class="config-seccion-body">
-            <form method="POST" action="<?= BASE_URL ?>configuracion/perfil">
-                <div class="grid-form">
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Nombre</label>
-                        <input class="input-form" type="text" name="nombre"
-                               value="<?= htmlspecialchars($perfil['nombre'] ?? '') ?>" required>
-                    </div>
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Apellidos</label>
-                        <input class="input-form" type="text" name="apellidos"
-                               value="<?= htmlspecialchars($perfil['apellidos'] ?? '') ?>" required>
-                    </div>
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Cédula</label>
-                        <input class="input-form" type="text" name="cedula"
-                               value="<?= htmlspecialchars($perfil['cedula'] ?? '') ?>">
-                    </div>
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Teléfono</label>
-                        <input class="input-form" type="text" name="telefono"
-                               value="<?= htmlspecialchars($perfil['telefono'] ?? '') ?>">
-                    </div>
-                    <div class="grupo-form completo">
-                        <label class="etiqueta-form">Correo</label>
-                        <input class="input-form" type="email" name="email"
-                               value="<?= htmlspecialchars($u['email'] ?? '') ?>">
-                    </div>
+        <div style="padding:24px">
+
+            <!-- Sección 1: Datos personales -->
+            <p class="panel-titulo" style="margin-bottom:16px">Datos personales</p>
+            <div class="grid-form">
+                <div class="grupo-form">
+                    <label>Nombre</label>
+                    <input class="input-form" type="text" name="nombre" required
+                           value="<?= htmlspecialchars($cliente['nombre'] ?? '') ?>">
                 </div>
-                <div class="config-acciones">
-                    <button type="submit" class="btn btn-primario">Actualizar Perfil</button>
+                <div class="grupo-form">
+                    <label>Apellidos</label>
+                    <input class="input-form" type="text" name="apellidos" required
+                           value="<?= htmlspecialchars($cliente['apellidos'] ?? '') ?>">
                 </div>
-            </form>
+                <div class="grupo-form">
+                    <label>Cédula</label>
+                    <input class="input-form" type="text" name="cedula" required
+                           maxlength="13" minlength="13"
+                           pattern="^\d{3}-\d{7}-\d{1}$"
+                           title="Formato: 001-0000000-0"
+                           value="<?= htmlspecialchars($cliente['cedula'] ?? '') ?>">
+                </div>
+                <div class="grupo-form">
+                    <label>Teléfono</label>
+                    <input class="input-form" type="text" name="telefono"
+                           pattern="^\d{3}-\d{3}-\d{4}$"
+                           title="Formato: 829-000-0000"
+                           value="<?= htmlspecialchars($cliente['telefono'] ?? '') ?>">
+                </div>
+                <div class="grupo-form completo">
+                    <label>Email</label>
+                    <input class="input-form" type="email" name="email" required
+                           value="<?= htmlspecialchars($cliente['email'] ?? '') ?>">
+                </div>
+            </div>
+
+            <!-- Separador -->
+            <div class="separador-seccion" style="margin:20px 0"></div>
+
+            <!-- Sección 2: Estado -->
+            <p class="panel-titulo" style="margin-bottom:16px">Estado de la cuenta</p>
+            <div class="grid-form">
+                <div class="grupo-form">
+                    <label>Estado</label>
+                    <select class="select-form" name="activo">
+                        <option value="1" <?= ($cliente['activo'] ?? 0) ? 'selected' : '' ?>>Activo</option>
+                        <option value="0" <?= !($cliente['activo'] ?? 1) ? 'selected' : '' ?>>Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
 
-<!-- Tab: Notificaciones -->
-<div class="config-panel" id="tab-notificaciones">
-    <div class="config-seccion">
-        <div class="config-seccion-header"><h2>🔔 Notificaciones</h2></div>
-        <div class="config-seccion-body">
-            <form method="POST" action="<?= BASE_URL ?>configuracion/preferencias">
-                <?php $toggles = [
-                    'confirmar_pedido'    => 'Recibir correo al confirmar un pedido',
-                    'alerta_stock'        => 'Alerta cuando el stock sea ≤ 5 unidades',
-                    'notif_estado_pedido' => 'Notificación al cambiar estado de un pedido',
-                ]; ?>
-                <?php foreach ($toggles as $key => $label): ?>
-                    <div class="toggle-fila">
-                        <span class="toggle-label"><?= $label ?></span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" name="<?= $key ?>" value="1"
-                                   <?= !empty($prefs[$key]) ? 'checked' : '' ?>>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-                <div class="config-acciones">
-                    <button type="submit" class="btn btn-primario">Guardar Preferencias</button>
-                </div>
-            </form>
+        <!-- Acciones -->
+        <div class="form-acciones" style="padding:0 24px 24px">
+            <a href="<?= BASE_URL ?>clientes/ver?id=<?= $cliente['idCliente'] ?? '' ?>"
+               class="btn btn-secundario">Cancelar</a>
+            <button class="btn btn-primario" type="submit">Guardar cambios</button>
         </div>
-    </div>
-</div>
 
-<!-- Tab: Contraseña -->
-<div class="config-panel" id="tab-password">
-    <div class="config-seccion">
-        <div class="config-seccion-header"><h2>🔑 Cambiar Contraseña</h2></div>
-        <div class="config-seccion-body">
-            <form method="POST" action="<?= BASE_URL ?>configuracion/password">
-                <div class="grid-form">
-                    <div class="grupo-form completo">
-                        <label class="etiqueta-form">Contraseña Actual</label>
-                        <input class="input-form" type="password" name="password_actual" required>
-                    </div>
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Nueva Contraseña</label>
-                        <input class="input-form" type="password" name="password_nueva" minlength="6" required>
-                    </div>
-                    <div class="grupo-form">
-                        <label class="etiqueta-form">Confirmar Nueva</label>
-                        <input class="input-form" type="password" name="password_confirma" minlength="6" required>
-                    </div>
-                </div>
-                <div class="config-acciones">
-                    <button type="submit" class="btn btn-primario">Cambiar Contraseña</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-document.querySelectorAll('.config-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.config-tab-btn').forEach(b => b.classList.remove('activo'));
-        document.querySelectorAll('.config-panel').forEach(p => p.classList.remove('activo'));
-        btn.classList.add('activo');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('activo');
-    });
-});
-</script>
+    </form>

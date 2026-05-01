@@ -40,11 +40,15 @@ $direcciones = $direcciones ?? [];
                     <div class="grupo-form">
                         <label class="etiqueta-form">Cédula / Pasaporte</label>
                         <input class="input-form" type="text" name="cedula"
+                               pattern="^\d{3}-\d{7}-\d{1}$"
+                               title="Formato: 001-0000000-0"
                                value="<?= htmlspecialchars($perfil['cedula'] ?? '') ?>">
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Teléfono</label>
                         <input class="input-form" type="text" name="telefono"
+                               pattern="^\d{3}-\d{3}-\d{4}$"
+                               title="Formato: 829-000-0000"
                                value="<?= htmlspecialchars($perfil['telefono'] ?? '') ?>">
                     </div>
                     <div class="grupo-form completo">
@@ -172,7 +176,7 @@ $direcciones = $direcciones ?? [];
                     <div class="grupo-form" id="grupo-rnc"
                          style="<?= ($perfil['tipo_comprobante'] ?? '') !== 'credito_fiscal' ? 'display:none' : '' ?>">
                         <label class="etiqueta-form">RNC de la Empresa</label>
-                        <input class="input-form" type="text" name="rnc_empresa"
+                        <input class="input-form" type="text" name="rnc_empresa" data-val="rnc"
                                value="<?= htmlspecialchars($perfil['rnc_empresa'] ?? '') ?>"
                                placeholder="1-31-00000-0">
                     </div>
@@ -226,7 +230,7 @@ $direcciones = $direcciones ?? [];
     <div class="config-seccion">
         <div class="config-seccion-header"><h2>🔑 Cambiar Contraseña</h2></div>
         <div class="config-seccion-body">
-            <form method="POST" action="<?= BASE_URL ?>configuracion/password">
+            <form method="POST" action="<?= BASE_URL ?>configuracion/password" id="form-password-cliente">
                 <div class="grid-form">
                     <div class="grupo-form completo">
                         <label class="etiqueta-form">Contraseña Actual</label>
@@ -234,11 +238,11 @@ $direcciones = $direcciones ?? [];
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Nueva Contraseña</label>
-                        <input class="input-form" type="password" name="password_nueva" minlength="6" required>
+                        <input class="input-form" type="password" name="password_nueva" id="pw-nueva-c" minlength="8" required>
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Confirmar Nueva</label>
-                        <input class="input-form" type="password" name="password_confirma" minlength="6" required>
+                        <input class="input-form" type="password" name="password_confirma" id="pw-conf-c" minlength="8" required>
                     </div>
                 </div>
                 <div class="config-acciones">
@@ -263,5 +267,15 @@ document.getElementById('tipo_comprobante')?.addEventListener('change', function
     const show = this.value === 'credito_fiscal';
     document.getElementById('grupo-rnc').style.display           = show ? '' : 'none';
     document.getElementById('grupo-nombre-empresa').style.display = show ? '' : 'none';
+});
+
+document.getElementById('form-password-cliente').addEventListener('submit', function(e) {
+    const nueva    = document.getElementById('pw-nueva-c').value;
+    const confirma = document.getElementById('pw-conf-c').value;
+    if (nueva !== confirma) {
+        e.preventDefault();
+        alert('Las contraseñas nuevas no coinciden.');
+        document.getElementById('pw-conf-c').focus();
+    }
 });
 </script>

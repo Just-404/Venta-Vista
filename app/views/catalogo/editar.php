@@ -19,17 +19,19 @@ $categorias = $categorias ?? [];
             <div class="grupo-form completo">
                 <label class="etiqueta-form">Nombre del producto</label>
                 <input class="input-form" type="text" name="nombre"
-                       value="<?= htmlspecialchars($producto['nombre'] ?? '') ?>" required>
+                       value="<?= htmlspecialchars($producto['nombre'] ?? '') ?>" required
+                       minlength="3" maxlength="120">
             </div>
 
             <div class="grupo-form completo">
                 <label class="etiqueta-form">Descripción</label>
-                <textarea class="input-form" name="descripcion" rows="3"><?= htmlspecialchars($producto['descripcion'] ?? '') ?></textarea>
+                <textarea class="input-form" name="descripcion" rows="3"
+                          maxlength="500"><?= htmlspecialchars($producto['descripcion'] ?? '') ?></textarea>
             </div>
 
             <div class="grupo-form">
                 <label class="etiqueta-form">Precio (RD$)</label>
-                <input class="input-form" type="number" name="precio" step="0.01" min="0"
+                <input class="input-form" type="number" name="precio" step="0.01" min="0.01"
                        value="<?= $producto['precio'] ?? 0 ?>" required>
             </div>
 
@@ -71,7 +73,6 @@ $categorias = $categorias ?? [];
                 </select>
             </div>
         </div>
-
 
         <div class="form-acciones">
             <a href="<?= BASE_URL ?><?= $origen === 'inventario' ? 'inventario' : 'productos' ?>" class="btn btn-secundario">Cancelar</a>

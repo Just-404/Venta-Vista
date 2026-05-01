@@ -31,9 +31,7 @@ $u      = $usuario ?? [];
     <div class="config-seccion">
         <div class="config-seccion-header">
             <img src="<?= BASE_URL ?>images/icons/reporte-fiscal-icon.png" class="icon" alt="logo sistema">
-            <h2>
-                Datos Fiscales del Negocio
-            </h2>
+            <h2>Datos Fiscales del Negocio</h2>
         </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/fiscal">
@@ -41,17 +39,22 @@ $u      = $usuario ?? [];
                     <div class="grupo-form completo">
                         <label class="etiqueta-form">Nombre del Negocio</label>
                         <input class="input-form" type="text" name="negocio_nombre"
-                               value="<?= htmlspecialchars($config['negocio_nombre'] ?? '') ?>" required>
+                               value="<?= htmlspecialchars($config['negocio_nombre'] ?? '') ?>"
+                               required maxlength="100">
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">RNC / Cédula Fiscal</label>
-                        <input class="input-form" type="text" name="negocio_rnc"
-                               value="<?= htmlspecialchars($config['negocio_rnc'] ?? '') ?>">
+                        <input class="input-form" type="text" name="negocio_rnc" data-val="rnc"
+                               value="<?= htmlspecialchars($config['negocio_rnc'] ?? '') ?>"
+                               placeholder="1-31-00000-0">
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Teléfono</label>
                         <input class="input-form" type="text" name="negocio_telefono"
-                               value="<?= htmlspecialchars($config['negocio_telefono'] ?? '') ?>">
+                               value="<?= htmlspecialchars($config['negocio_telefono'] ?? '') ?>"
+                               placeholder="829-000-0000"
+                               pattern="^\d{3}-\d{3}-\d{4}$"
+                               title="Formato: 829-000-0000">
                     </div>
                     <div class="grupo-form completo">
                         <label class="etiqueta-form">Dirección</label>
@@ -108,8 +111,7 @@ $u      = $usuario ?? [];
     <div class="config-seccion">
         <div class="config-seccion-header">
         <img src="<?= BASE_URL ?>images/icons/notificacion-icon.png" class="icon" alt="logo sistema">    
-        <h2>
-             Preferencias de Notificaciones</h2></div>
+        <h2>Preferencias de Notificaciones</h2></div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/preferencias">
                 <?php $toggles = [
@@ -142,7 +144,7 @@ $u      = $usuario ?? [];
     <div class="config-seccion">
         <div class="config-seccion-header">
             <img src="<?= BASE_URL ?>images/icons/user-icon.png" class="icon" alt="logo sistema">    
-            <h2> Mi Perfil</h2>
+            <h2>Mi Perfil</h2>
         </div>
         <div class="config-seccion-body">
             <form method="POST" action="<?= BASE_URL ?>configuracion/perfil">
@@ -160,11 +162,15 @@ $u      = $usuario ?? [];
                     <div class="grupo-form">
                         <label class="etiqueta-form">Cédula</label>
                         <input class="input-form" type="text" name="cedula"
+                               pattern="^\d{3}-\d{7}-\d{1}$"
+                               title="Formato: 001-0000000-0"
                                value="<?= htmlspecialchars($perfil['cedula'] ?? '') ?>">
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Teléfono</label>
                         <input class="input-form" type="text" name="telefono"
+                               pattern="^\d{3}-\d{3}-\d{4}$"
+                               title="Formato: 829-000-0000"
                                value="<?= htmlspecialchars($perfil['telefono'] ?? '') ?>">
                     </div>
                     <div class="grupo-form completo">
@@ -186,10 +192,10 @@ $u      = $usuario ?? [];
     <div class="config-seccion">
         <div class="config-seccion-header">
             <img src="<?= BASE_URL ?>images/icons/access-icon.png" class="icon" alt="logo sistema">    
-            <h2> Cambiar Contraseña</h2>
+            <h2>Cambiar Contraseña</h2>
         </div>
         <div class="config-seccion-body">
-            <form method="POST" action="<?= BASE_URL ?>configuracion/password">
+            <form method="POST" action="<?= BASE_URL ?>configuracion/password" id="form-password-admin">
                 <div class="grid-form">
                     <div class="grupo-form completo">
                         <label class="etiqueta-form">Contraseña Actual</label>
@@ -197,11 +203,11 @@ $u      = $usuario ?? [];
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Nueva Contraseña</label>
-                        <input class="input-form" type="password" name="password_nueva" minlength="6" required>
+                        <input class="input-form" type="password" name="password_nueva" id="pw-nueva-a" minlength="8" required>
                     </div>
                     <div class="grupo-form">
                         <label class="etiqueta-form">Confirmar Nueva</label>
-                        <input class="input-form" type="password" name="password_confirma" minlength="6" required>
+                        <input class="input-form" type="password" name="password_confirma" id="pw-conf-a" minlength="8" required>
                     </div>
                 </div>
                 <div class="config-acciones">
@@ -221,5 +227,14 @@ document.querySelectorAll('.config-tab-btn').forEach(btn => {
         document.getElementById('tab-' + btn.dataset.tab).classList.add('activo');
     });
 });
-</script>
 
+document.getElementById('form-password-admin').addEventListener('submit', function(e) {
+    const nueva    = document.getElementById('pw-nueva-a').value;
+    const confirma = document.getElementById('pw-conf-a').value;
+    if (nueva !== confirma) {
+        e.preventDefault();
+        alert('Las contraseñas nuevas no coinciden.');
+        document.getElementById('pw-conf-a').focus();
+    }
+});
+</script>
