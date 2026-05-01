@@ -56,7 +56,7 @@
 
     <div class="grupo-links">
       <a class="login-olvidaste">¿Olvidaste tu contraseña?</a>
-      <a class="login-registrarse">Registrarse</a>
+      <a class="login-registrarse" href="<?= BASE_URL ?>registro">Registrarse</a>
     </div>
     <button class="btn btn-primario btn-completo" type="submit">Iniciar Sesión</button>
 
