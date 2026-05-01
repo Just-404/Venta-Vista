@@ -34,8 +34,6 @@ class ClienteController extends Controller {
     // GET  /clientes/crear
     // POST /clientes/crear
     public function crear(): void {
-        $this->requireAuth();
-
         if ($this->isPost()) {
             // 1. Crear usuario
             $passwordHash = password_hash($this->post('password'), PASSWORD_DEFAULT);

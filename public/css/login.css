@@ -43,8 +43,15 @@
   overflow: hidden;
 }
 
+.grid-form{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
 /* Caja blanca centrada que contiene el formulario de login */
-.login-box {
+.login-box,
+.register-box {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -55,6 +62,41 @@
   max-width: calc(100vw - 40px);
   box-shadow: 0 24px 80px rgba(0,0,0,.35);
   animation: animarLogin .5s ease; /* Animación de entrada suave */
+}
+
+.register-box{
+  width: 800px;
+  padding: 30px;
+}
+.pass-strength { height:4px; background:var(--border); border-radius:4px; margin-bottom:6px; overflow:hidden; }
+.ps-bar        { height:100%; border-radius:4px; transition:width .3s; }
+.ps-label      { font-size:12px; color:var(--gray); margin-bottom:20px; }
+h3{
+  margin: 20px 0 10px;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.grupo-form{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-form, input{
+  transition: .2s;
+}
+
+input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0,0,0,.05);
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  .grid-form{
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Animación de entrada de la caja de login */

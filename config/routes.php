@@ -6,6 +6,8 @@ return [
     ''       => ['controller' => 'AuthController', 'action' => 'login'],
     'login'  => ['controller' => 'AuthController', 'action' => 'autenticar'],
     'logout' => ['controller' => 'AuthController', 'action' => 'logout'],
+    'registro' => ['controller' => 'AuthController', 'action' => 'registrarUsuario'],
+    'registrarCliente' => ['controller' => 'AuthController', 'action' => 'procesarRegistro'],
 
     // ── Dashboard ───────────────────────────────────────────────
     'dashboard' => ['controller' => 'DashboardController', 'action' => 'index'],
