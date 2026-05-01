@@ -50,13 +50,13 @@ ventas_catalogo/
 │   └── .htaccess           # Para cambiar las reglas
 └── README.md
 
-Credenciales de prueba
-Rol         Usuario         Contraseña
-Administrador admin         Admin2026!
-Vendedor v  endedor1        Test2026! 
-Vendedor     vendedor2      Test2026!
-Cliente     cliente1        Test2026!
-Cliente     cliente2        Test2026!
+Credenciales de prueba:
+Rol                 Usuario         Contraseña
+Administrador       admin           Admin2026!
+Vendedor            vendedor1       Test2026! 
+Vendedor            vendedor2       Test2026!
+Cliente             cliente1        Test2026!
+Cliente             cliente2        Test2026!
 
 Solución de problemas frecuentes:
 

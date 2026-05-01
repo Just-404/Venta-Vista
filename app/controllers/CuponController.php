@@ -24,8 +24,22 @@ class CuponController extends Controller {
         $this->requireAuth();
  
         if ($this->isPost()) {
+            $codigo = strtoupper(trim($this->post('codigo')));
+
+            // 1. Validar si el código ya existe
+            if (Cupon::existeCodigo($codigo)) {
+                // En vez de redirigir, renderizamos la vista de nuevo y le pasamos los datos previos
+                $this->render('cupones/crear', [
+                    'error'   => "Ya existe un cupón con el código «{$codigo}». Intenta con otro.",
+                    'old'     => $_POST, // Pasamos lo que el usuario escribió
+                    'usuario' => $this->usuarioActual()
+                ]);
+                return; // Detenemos la ejecución
+            }
+
+            // 2. Si no existe, lo creamos
             $ok = Cupon::crear([
-                'codigo'           => strtoupper($this->post('codigo')),
+                'codigo'           => $codigo,
                 'tipo'             => $this->post('tipo'),
                 'descuento'        => $this->post('descuento'),
                 'usoMaximo'        => $this->post('usoMaximo', 1),
@@ -36,8 +50,9 @@ class CuponController extends Controller {
             ]);
  
             $this->setFlash($ok ? 'success' : 'error',
-                $ok ? 'Cupón creado.' : 'Error al crear el cupón.');
-            $this->redirect('cupones');
+                $ok ? 'Cupón creado con éxito.' : 'Error al crear el cupón.');
+            $this->redirect('cupones'); // Si todo sale bien, va al índice
+            return;
         }
  
         $this->render('cupones/crear', ['usuario' => $this->usuarioActual()]);
@@ -54,11 +69,29 @@ class CuponController extends Controller {
         if (!$cupon) {
             $this->setFlash('error', 'Cupón no encontrado.');
             $this->redirect('cupones');
+            return;
         }
  
         if ($this->isPost()) {
+            $codigo = strtoupper(trim($this->post('codigo')));
+
+            // 1. Validar duplicado excluyendo el ID de este mismo cupón
+            if (Cupon::existeCodigo($codigo, $id)) {
+                // Combinamos los datos de la base de datos con los que el usuario intentó enviar
+                // Así mantenemos sus cambios en pantalla sin perderlos
+                $cuponEditado = array_merge($cupon, $_POST);
+                
+                $this->render('cupones/editar', [
+                    'error'   => "El código «{$codigo}» ya está siendo utilizado por otro cupón.",
+                    'cupon'   => $cuponEditado,
+                    'usuario' => $this->usuarioActual()
+                ]);
+                return; // Detenemos la ejecución
+            }
+
+            // 2. Si todo está en orden, actualizamos
             $ok = Cupon::actualizar([
-                'codigo'           => strtoupper($this->post('codigo')),
+                'codigo'           => $codigo,
                 'tipo'             => $this->post('tipo'),
                 'descuento'        => $this->post('descuento'),
                 'usoMaximo'        => $this->post('usoMaximo'),
@@ -69,8 +102,9 @@ class CuponController extends Controller {
             ]);
  
             $this->setFlash($ok ? 'success' : 'error',
-                $ok ? 'Cupón actualizado.' : 'Error al actualizar.');
+                $ok ? 'Cupón actualizado correctamente.' : 'Error al actualizar el cupón.');
             $this->redirect('cupones');
+            return;
         }
  
         $this->render('cupones/editar', [

@@ -608,3 +608,24 @@
         min-width: 100%;
     }
 }
+
+/* ── Alertas de sesión ── */
+.alerta {
+    padding: .85rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: .95rem;
+}
+.alerta--advertencia { background: #fff8e1; border-left: 4px solid #f59e0b; color: #78350f; }
+.alerta--exito       { background: #ecfdf5; border-left: 4px solid #22c55e; color: #14532d; }
+.alerta--error       { background: #fef2f2; border-left: 4px solid #ef4444; color: #7f1d1d; }
+
+/* ── Badge vencido ── */
+.badge--gris { background: #e5e7eb; color: #6b7280; }
+
+/* ── Botón eliminar deshabilitado ── */
+.btn-tabla--deshabilitado {
+    opacity: .45;
+    cursor: not-allowed;
+    pointer-events: auto; /* mantener el title/tooltip visible */
+}

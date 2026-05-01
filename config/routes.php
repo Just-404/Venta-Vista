@@ -95,4 +95,10 @@ return [
     'notificaciones/leer-todas' => ['controller' => 'NotificacionController', 'action' => 'leerTodas'],
     'notificaciones/limpiar'       => ['controller' => 'NotificacionController', 'action' => 'limpiar'],
     'notificaciones/limpiar-todas' => ['controller' => 'NotificacionController', 'action' => 'limpiarTodas'],
+
+    // ── Categorías ───────────────────────────────────────────────
+    'categorias'          => ['controller' => 'CategoriaController', 'action' => 'index'],
+    'categorias/crear'    => ['controller' => 'CategoriaController', 'action' => 'crear'],
+    'categorias/editar'   => ['controller' => 'CategoriaController', 'action' => 'editar'],
+    'categorias/eliminar' => ['controller' => 'CategoriaController', 'action' => 'eliminar'],
 ];
