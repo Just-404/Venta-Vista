@@ -41,7 +41,9 @@
                     <th>Usos</th>
                     <th>Vigencia</th>
                     <th>Estado</th>
+                    <?php if($rol == 1): ?>
                     <th>Acciones</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -77,6 +79,7 @@
                                 <?= $c['activo'] ? 'Activo' : 'Inactivo' ?>
                             </span>
                         </td>
+                        <?php if($rol == 1): ?>
                         <td class="acciones">
                             <a href="<?= BASE_URL ?>cupones/editar?id=<?= $c['idCupon'] ?>"
                                class="btn-tabla btn-tabla--editar">Editar</a>
@@ -102,6 +105,7 @@
                                 </button>
                             <?php endif; ?>
                         </td>
+                    <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

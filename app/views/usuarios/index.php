@@ -5,6 +5,7 @@
 $total    = count($usuarios);
 $admins   = count(array_filter($usuarios, fn($u) => $u['idRol'] == 1));
 $vendedores = count(array_filter($usuarios, fn($u) => $u['idRol'] == 2));
+$clientes = count(array_filter($usuarios, fn($u) => $u['idRol'] == 3));
 $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
 ?>
 <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
@@ -30,6 +31,13 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
         </div>
     </div>
     <div class="stat-card">
+        <div class="stat-icono stat-icono--naranja">🏷️</div>
+        <div>
+            <div class="stat-valor"><?= $clientes ?></div>
+            <div class="stat-label">Clientes</div>
+        </div>
+    </div>
+    <div class="stat-card">
         <div class="stat-icono stat-icono--verde">✅</div>
         <div>
             <div class="stat-valor"><?= $activos ?></div>
@@ -52,10 +60,11 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
     <div class="panel-header">
         <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="busqueda">
         <input class="input-buscar" type="text" id="buscador" placeholder="Buscar usuario...">
-        <select class="select-form" id="filtro-rol" style="width:auto" onchange="filtrar()">
+        <select class="select-form" id="filtro-rol" onchange="filtrar()" style="width:200px">
             <option value="">Todos los roles</option>
             <option value="Administrador">Administrador</option>
             <option value="Vendedor">Vendedor</option>
+            <option value="Cliente">Cliente</option>
         </select>
     </div>
 

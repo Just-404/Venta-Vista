@@ -55,7 +55,7 @@ $facturado  = array_sum(array_column(array_filter($pedidos, fn($p) => $p['estado
     <div class="panel-header">
         <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="logo sistema">
         <input class="input-buscar" type="text" id="buscador" placeholder="Buscar pedido...">
-        <select class="select-form" id="filtro-estado" style="width:auto">
+        <select class="select-form" id="filtro-estado" style="width:200px">
             <option value="">Todos los estados</option>
             <option>Pendiente</option>
             <option>Confirmado</option>
