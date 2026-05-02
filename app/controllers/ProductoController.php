@@ -81,6 +81,9 @@ class ProductoController extends Controller
         $this->requireAuth();
 
         $id = (int) $this->get('id');
+        $idUsuario =  $this->usuarioActual()["id"];
+        $idVendedor = Vendedor::obtenerPorUsuario($idUsuario)["idVendedor"]; 
+
         $producto = Producto::obtenerPorId($id);
         $origen = $_GET['origen'] ?? 'catalogo';
 
@@ -98,6 +101,7 @@ class ProductoController extends Controller
                 'stock' => $this->post('stock'),
                 'imagenes' => $this->post('imagenes'),
                 'idCategoria' => $this->post('idCategoria'),
+                'idVendedor' => $idVendedor,
                 'idProducto' => $id,
             ];
 
