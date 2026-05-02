@@ -17,31 +17,24 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--azul">🔑</div>
+        <div class="stat-icono stat-icono--azul">👤</div>
         <div>
             <div class="stat-valor"><?= $admins ?></div>
             <div class="stat-label">Administradores</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--naranja">🏷️</div>
+        <div class="stat-icono stat-icono--naranja">👤</div>
         <div>
             <div class="stat-valor"><?= $vendedores ?></div>
             <div class="stat-label">Vendedores</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icono stat-icono--naranja">🏷️</div>
+        <div class="stat-icono stat-icono--naranja">👤</div>
         <div>
             <div class="stat-valor"><?= $clientes ?></div>
             <div class="stat-label">Clientes</div>
-        </div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-icono stat-icono--verde">✅</div>
-        <div>
-            <div class="stat-valor"><?= $activos ?></div>
-            <div class="stat-label">Activos</div>
         </div>
     </div>
 </div>
