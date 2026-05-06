@@ -8,6 +8,7 @@ $vendedores = count(array_filter($usuarios, fn($u) => $u['idRol'] == 2));
 $clientes = count(array_filter($usuarios, fn($u) => $u['idRol'] == 3));
 $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
 ?>
+
 <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
     <div class="stat-card">
         <div class="stat-icono stat-icono--naranja">👤</div>
@@ -50,17 +51,24 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
 
 <!-- ── Panel de tabla ─────────────────────────────────────────── -->
 <div class="panel">
-    <div class="panel-header">
+    <div class="panel-header" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
         <img src="<?= BASE_URL ?>images/icons/search-icon.png" class="icon" alt="busqueda">
-        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar usuario...">
+        <input class="input-buscar" type="text" id="buscador" placeholder="Buscar usuario..." onkeyup="filtrar()">
+
         <select class="select-form" id="filtro-rol" onchange="filtrar()" style="width:200px">
             <option value="">Todos los roles</option>
             <option value="Administrador">Administrador</option>
             <option value="Vendedor">Vendedor</option>
             <option value="Cliente">Cliente</option>
         </select>
-    </div>
 
+        <select class="select-form" id="filtro-estado" onchange="filtrar()" style="width:200px">
+            <option value="">Todos los estados</option>
+            <option value="1">Activos</option>
+            <option value="0">Inactivos</option>
+        </select>
+    </div>
+    
     <div class="tabla-wrapper">
         <table class="tabla" id="tabla-usuarios">
             <thead>
@@ -91,7 +99,7 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
                             default => 'background:var(--exito,#22c55e)'
                         };
                     ?>
-                    <tr data-rol="<?= htmlspecialchars($u['rol'] ?? '') ?>">
+                    <tr data-rol="<?= htmlspecialchars($u['rol'] ?? '') ?>" data-estado="<?= $u['activo'] ? '1' : '0' ?>">
                         <td class="texto-muted"><?= $u['idUsuario'] ?></td>
                         <td>
                             <div class="avatar-fila">
@@ -142,12 +150,15 @@ $activos  = count(array_filter($usuarios, fn($u) => $u['activo']));
 document.getElementById('buscador').addEventListener('input', filtrar);
 
 function filtrar() {
-    const q   = document.getElementById('buscador').value.toLowerCase();
+    const q = document.getElementById('buscador').value.toLowerCase();
     const rol = document.getElementById('filtro-rol').value;
+    const estado = document.getElementById('filtro-estado').value;
+
     document.querySelectorAll('#tabla-usuarios tbody tr').forEach(tr => {
         const textoOk = tr.textContent.toLowerCase().includes(q);
-        const rolOk   = !rol || tr.dataset.rol === rol;
-        tr.style.display = textoOk && rolOk ? '' : 'none';
+        const rolOk = !rol || tr.dataset.rol === rol;
+        const estadoOk = !estado || tr.dataset.estado === estado;
+        tr.style.display = (textoOk && rolOk && estadoOk) ? '' : 'none';
     });
 }
 </script>
