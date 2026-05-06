@@ -5,7 +5,9 @@
         <h1 class="page-titulo">Inventario</h1>
         <p class="page-sub">Control de stock de productos</p>
     </div>
-    <a href="<?= BASE_URL ?>productos/crear?origen=inventario" class="btn btn-primario">+ Nuevo producto</a>
+    <?php if($rol == 2):?>
+        <a href="<?= BASE_URL ?>productos/crear?origen=inventario" class="btn btn-primario">+ Nuevo producto</a>
+    <?php endif; ?>
 </div>
 
 <!-- Alertas de stock bajo -->
@@ -78,8 +80,10 @@
                             } ?>"><?= $stockLabel ?></span>
                         </td>
                         <td class="acciones">
+                            <?php if($rol == 2):?>
                             <a href="<?= BASE_URL ?>productos/editar?id=<?= $p['idProducto'] ?>&origen=inventario"
                                class="btn-tabla btn-tabla--editar">Editar</a>
+                            <?php endif; ?>
                             <form method="POST" action="<?= BASE_URL ?>/productos/cambiarEstado?origen=inventario" onsubmit="return confirm('¿Desea cambiar el estado de este producto?');" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $p['idProducto'] ?>">
                                 <input type="hidden" name="activo" value="<?= $p['activo'] ? 0 : 1 ?>">

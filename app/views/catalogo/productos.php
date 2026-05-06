@@ -10,7 +10,7 @@ $categorias = $categorias ?? [];
         <h1 class="page-titulo">Catálogo de Productos</h1>
         <p class="page-sub"><?= count($productos) ?> productos registrados</p>
     </div>
-    <?php if ($usuario['rol'] != 3): ?>
+    <?php if ($usuario['rol'] == 2): ?>
         <a href="<?= BASE_URL ?>productos/crear" class="btn btn-primario">+ Nuevo producto</a>
     <?php endif; ?>
 </div>
